@@ -1,0 +1,225 @@
+﻿/* === VARIABLES GLOBALES === */
+:root {
+    --sidebar-width: 260px;
+    --sidebar-collapsed-width: 70px;
+    --navbar-height: 56px;
+}
+
+/* === AJUSTES GENERALES === */
+body {
+    overflow-x: hidden;
+}
+
+/* === NAVBAR === */
+.navbar {
+    z-index: 1030;
+}
+
+/* === SIDEBAR === */
+.sidebar {
+    position: fixed;
+    top: var(--navbar-height);
+    left: 0;
+    width: var(--sidebar-width);
+    height: calc(100vh - var(--navbar-height));
+    z-index: 1020;
+    overflow-y: auto;
+    overflow-x: hidden;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-content {
+    width: var(--sidebar-width);
+    transition: width 0.3s ease-in-out;
+}
+
+/* Enlaces del sidebar */
+.sidebar .nav-link {
+    padding: 0.75rem 1rem;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+    .sidebar .nav-link:hover {
+        background-color: rgba(var(--bs-primary-rgb), 0.1);
+        color: var(--bs-primary);
+    }
+
+    .sidebar .nav-link.active {
+        background-color: var(--bs-primary);
+        color: white;
+    }
+
+    .sidebar .nav-link i {
+        font-size: 1.2rem;
+        min-width: 24px;
+        transition: transform 0.2s ease;
+    }
+
+    .sidebar .nav-link:hover i {
+        transform: scale(1.1);
+    }
+
+/* === OVERLAY MÓVIL === */
+.sidebar-overlay {
+    position: fixed;
+    top: var(--navbar-height);
+    left: 0;
+    width: 100%;
+    height: calc(100vh - var(--navbar-height));
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1010;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+    .sidebar-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+/* === CONTENIDO PRINCIPAL === */
+.main-content {
+    margin-left: 0;
+    margin-top: var(--navbar-height);
+    min-height: calc(100vh - var(--navbar-height));
+    transition: margin-left 0.3s ease-in-out;
+    padding: 0;
+}
+
+/* === MODO MÓVIL (menor a 992px) === */
+@media (max-width: 991.98px) {
+    .sidebar.active {
+        transform: translateX(0);
+    }
+}
+
+
+@media (min-width: 992px) {
+
+    .sidebar {
+        transform: translateX(0);
+    }
+
+   
+    .main-content {
+        margin-left: var(--sidebar-width);
+    }
+
+ 
+    body.sidebar-collapsed .sidebar {
+        width: var(--sidebar-collapsed-width);
+    }
+
+    body.sidebar-collapsed .sidebar-content {
+        width: var(--sidebar-collapsed-width);
+    }
+
+    body.sidebar-collapsed .main-content {
+        margin-left: var(--sidebar-collapsed-width);
+    }
+
+
+    body.sidebar-collapsed .sidebar-text {
+        opacity: 0;
+        visibility: hidden;
+        width: 0;
+        overflow: hidden;
+        transition: opacity 0.2s ease, visibility 0.2s ease;
+    }
+
+
+    body.sidebar-collapsed .sidebar .nav-link {
+        justify-content: center;
+        padding: 0.75rem 0.5rem;
+    }
+
+  
+    body.sidebar-collapsed .sidebar hr,
+    body.sidebar-collapsed .sidebar h5 {
+        display: none;
+    }
+
+
+    .sidebar-overlay {
+        display: none !important;
+    }
+}
+
+/* === TEMA OSCURO === */
+[data-bs-theme="dark"] {
+    --bs-body-bg: #0d1117;
+    --bs-body-color: #c9d1d9;
+}
+
+    [data-bs-theme="dark"] .sidebar {
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+        [data-bs-theme="dark"] .sidebar .nav-link:hover {
+            background-color: rgba(var(--bs-primary-rgb), 0.2);
+        }
+
+/* === SCROLLBAR PERSONALIZADO === */
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: rgba(var(--bs-primary-rgb), 0.3);
+    border-radius: 3px;
+}
+
+    .sidebar::-webkit-scrollbar-thumb:hover {
+        background: rgba(var(--bs-primary-rgb), 0.5);
+    }
+
+/* === ANIMACIONES === */
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+.sidebar.active {
+    animation: slideIn 0.3s ease-in-out;
+}
+
+
+.sidebar .nav-link:focus,
+.navbar button:focus,
+#btnTheme:focus {
+    outline: 2px solid var(--bs-primary);
+    outline-offset: 2px;
+}
+
+
+@media (max-width: 576px) {
+    .sidebar {
+        width: 280px;
+    }
+
+    .sidebar-content {
+        width: 280px;
+    }
+}
+
+
+.modal {
+    z-index: 1060 !important;
+}
+
+.modal-backdrop {
+    z-index: 1050 !important;
+}
