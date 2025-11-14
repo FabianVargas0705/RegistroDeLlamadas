@@ -46,8 +46,7 @@
               "RelativeToolTip": "RegistroLlamadas.Api\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-11-13T03:11:31.162Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-13T03:11:31.162Z"
             },
             {
               "$type": "Document",
@@ -59,8 +58,7 @@
               "RelativeToolTip": "RegistroLlamadas.Api\\Models\\ValidarSesionRequestModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-13T02:49:37.67Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-13T02:49:37.67Z"
             },
             {
               "$type": "Document",
@@ -70,7 +68,7 @@
               "RelativeDocumentMoniker": "RegistroLlamadas.Api\\Controllers\\AuthController.cs",
               "ToolTip": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Controllers\\AuthController.cs",
               "RelativeToolTip": "RegistroLlamadas.Api\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAAB8AAAAAAAAAAAAAwCAAAAAQAAAAAAAAAA==",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAAwDMAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-13T02:47:29.387Z",
               "EditorCaption": ""
@@ -85,21 +83,19 @@
               "RelativeToolTip": "RegistroLlamadas.Api\\Models\\DatosUsuarioResponseModel.cs",
               "ViewState": "AgIAAAUAAAAAAAAAAAAQwBYAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-13T02:50:54.148Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-13T02:50:54.148Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "RegistroLlamadas.Api",
+              "Title": "RegistroLlamadas.Api.csproj",
               "DocumentMoniker": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj",
               "RelativeDocumentMoniker": "RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj",
               "ToolTip": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj",
               "RelativeToolTip": "RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-11-13T02:49:25.054Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-13T02:49:25.054Z"
             }
           ]
         }

@@ -80,3 +80,4 @@ D:\PrograAvanzadaWeb\ProyectoRegistroLlamadas\RegistroDeLlamadas\RegistroLlamada
 D:\PrograAvanzadaWeb\ProyectoRegistroLlamadas\RegistroDeLlamadas\RegistroLlamadas.Api\RegistroLlamadas.Api\obj\Debug\net9.0\RegistroLlamadas.Api.pdb
 D:\PrograAvanzadaWeb\ProyectoRegistroLlamadas\RegistroDeLlamadas\RegistroLlamadas.Api\RegistroLlamadas.Api\obj\Debug\net9.0\RegistroLlamadas.Api.genruntimeconfig.cache
 D:\PrograAvanzadaWeb\ProyectoRegistroLlamadas\RegistroDeLlamadas\RegistroLlamadas.Api\RegistroLlamadas.Api\obj\Debug\net9.0\ref\RegistroLlamadas.Api.dll
+D:\PrograAvanzadaWeb\ProyectoRegistroLlamadas\RegistroDeLlamadas\RegistroLlamadas.Api\RegistroLlamadas.Api\obj\Debug\net9.0\RegistroLlamadas.Api.sourcelink.json

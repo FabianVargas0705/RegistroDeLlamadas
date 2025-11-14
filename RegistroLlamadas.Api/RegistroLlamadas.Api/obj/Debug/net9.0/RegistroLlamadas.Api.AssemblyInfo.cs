@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RegistroLlamadas.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7d610b9dd120e978f5a6d70c43d3f8c49d17a9c5")]
 [assembly: System.Reflection.AssemblyProductAttribute("RegistroLlamadas.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RegistroLlamadas.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
