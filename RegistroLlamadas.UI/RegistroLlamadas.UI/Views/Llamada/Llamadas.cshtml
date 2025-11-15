@@ -1,8 +1,12 @@
-﻿@model IEnumerable<LlamadaModel>
+﻿@model LlamadasViewModel
 
 @{
     ViewData["Title"] = "Gestión de Llamadas";
 }
+
+<!-- Agregar CSS de Select2 -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
 
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -26,13 +30,12 @@
                     <th>Promat</th>
                     <th>Asunto</th>
                     <th>Estado</th>
-                    <th>Tipo Atención</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
 
             <tbody>
-                @foreach (var item in Model)
+                @foreach (var item in Model.Llamadas)
                 {
                     <tr>
                         <td>@(item.Usuario?.Nombre ?? "-")</td>
@@ -45,12 +48,22 @@
                         <td>@(item.Promat ?? "-")</td>
                         <td>@(item.Asunto ?? "-")</td>
                         <td>@(item.Estado?.Descripcion ?? "-")</td>
-                        <td>@(item.TipoAtencion?.Nombre ?? "-")</td>
                         <td>
-                            <button class="btn btn-sm btn-outline-secondary" data-id="@item.IdLlamada">
+                            @if (item.UsuarioId == ViewBag.UsuarioIdActual && item.EstadoId != 3)
+                            {
+                                <!-- Botón Finalizar solo si está asignado al usuario actual y no está finalizada -->
+                                <button type="button"
+                                        class="btn btn-success btn-finalizar"
+                                        data-id="@item.IdLlamada"
+                                        data-bs-toggle="tooltip"
+                                        title="Finalizar llamada">
+                                    <i class="bi bi-check-circle"></i>
+                                </button>
+                            }
+                            <button class="btn btn-sm btn-outline-secondary btn-editar" data-id="@item.IdLlamada">
                                 <i class="bi bi-pencil-square"></i>
                             </button>
-                            <button class="btn btn-sm btn-outline-danger" data-id="@item.IdLlamada">
+                            <button class="btn btn-sm btn-outline-danger btn-eliminar" data-id="@item.IdLlamada">
                                 <i class="bi bi-trash"></i>
                             </button>
                         </td>
@@ -61,6 +74,7 @@
     </div>
 </div>
 
+<!-- Modal Nueva/Editar Llamada -->
 <div class="modal fade" id="modalNuevaLlamada" tabindex="-1" aria-labelledby="modalNuevaLlamadaLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
@@ -68,18 +82,18 @@
                 <h5 class="modal-title" id="modalNuevaLlamadaLabel">
                     <i class="bi bi-telephone-plus"></i> Registrar Nueva Llamada
                 </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
 
             <form id="formNuevaLlamada">
                 <div class="modal-body">
                     <div class="row g-3">
                         <div class="col-md-4">
-                            <label for="fecha" class="form-label">Fecha</label>
+                            <label for="fecha" class="form-label">Fecha <span class="text-danger">*</span></label>
                             <input type="date" class="form-control" id="fecha" required />
                         </div>
                         <div class="col-md-4">
-                            <label for="horaInicio" class="form-label">Hora Inicio</label>
+                            <label for="horaInicio" class="form-label">Hora Inicio <span class="text-danger">*</span></label>
                             <input type="time" class="form-control" id="horaInicio" required />
                         </div>
                         <div class="col-md-4">
@@ -88,58 +102,177 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label for="promat" class="form-label">Promat</label>
-                            <input type="text" class="form-control" id="promat" maxlength="20" />
-                        </div>
-
-                        <div class="col-md-6">
-                            <label for="asunto" class="form-label">Asunto</label>
-                            <input type="text" class="form-control" id="asunto" maxlength="200" />
-                        </div>
-
-                        <div class="col-md-4">
-                            <label for="correoEnviado" class="form-label">Correo Enviado</label>
-                            <select id="correoEnviado" class="form-select">
-                                <option value="true">Sí</option>
-                                <option value="false" selected>No</option>
+                            <label for="usuarioId" class="form-label">Responsable <span class="text-danger">*</span></label>
+                            <select id="usuarioId" class="form-select select2" required>
+                                <option value="">Seleccione un responsable</option>
+                                @if (Model.Usuarios != null)
+                                {
+                                    @foreach (var usuario in Model.Usuarios)
+                                    {
+                                        <option value="@usuario.ID">@usuario.Nombre</option>
+                                    }
+                                }
                             </select>
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-6">
+                            <label for="centroId" class="form-label">Centro/Lugar <span class="text-danger">*</span></label>
+                            <select id="centroId" class="form-select select2" required>
+                                <option value="">Seleccione un centro</option>
+                                @if (Model.Centros != null)
+                                {
+                                    @foreach (var centro in Model.Centros)
+                                    {
+                                        <option value="@centro.ID">@centro.Nombre</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="clienteId" class="form-label">Cliente <span class="text-danger">*</span></label>
+                            <select id="clienteId" class="form-select select2" required>
+                                <option value="">Seleccione un cliente</option>
+                                @if (Model.Clientes != null)
+                                {
+                                    @foreach (var cliente in Model.Clientes)
+                                    {
+                                        <option value="@cliente.ID" data-identificacion="@cliente.Identificacion">
+                                            @cliente.Identificacion - @cliente.Nombre
+                                        </option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
                             <label for="equipoId" class="form-label">Equipo</label>
-                            <input type="number" class="form-control" id="equipoId" placeholder="ID Equipo" />
+                            <select id="equipoId" class="form-select select2">
+                                <option value="">Seleccione un equipo</option>
+                                @if (Model.Equipos != null)
+                                {
+                                    @foreach (var equipo in Model.Equipos)
+                                    {
+                                        <option value="@equipo.ID">@equipo.Nombre</option>
+                                    }
+                                }
+                            </select>
                         </div>
 
-                        <div class="col-md-4">
-                            <label for="usuarioId" class="form-label">Usuario</label>
-                            <input type="number" class="form-control" id="usuarioId" placeholder="ID Usuario" />
+                        <div class="col-md-6">
+                            <label for="estadoId" class="form-label">Estado <span class="text-danger">*</span></label>
+                            <select id="estadoId" class="form-select select2" required>
+                                <option value="">Seleccione un estado</option>
+                                @if (Model.Estados != null)
+                                {
+                                    @foreach (var estado in Model.Estados)
+                                    {
+                                        <option value="@estado.ID">@estado.Nombre</option>
+                                    }
+                                }
+                            </select>
                         </div>
 
-                        <div class="col-md-4">
-                            <label for="clienteId" class="form-label">Cliente</label>
-                            <input type="number" class="form-control" id="clienteId" placeholder="ID Cliente" />
+
+
+                        <div class="col-md-6">
+                            <label for="promat" class="form-label">Promat</label>
+                            <input type="text" class="form-control" id="promat" maxlength="20" placeholder="Ingrese código Promat" />
                         </div>
 
-                        <div class="col-md-4">
-                            <label for="centroId" class="form-label">Centro</label>
-                            <input type="number" class="form-control" id="centroId" placeholder="ID Centro" />
+                        <div class="col-md-6">
+                            <label for="correoEnviado" class="form-label">Correo Enviado</label>
+                            <select id="correoEnviado" class="form-select">
+                                <option value="false" selected>No</option>
+                                <option value="true">Sí</option>
+                            </select>
                         </div>
 
-                        <div class="col-md-4">
-                            <label for="estadoId" class="form-label">Estado</label>
-                            <input type="number" class="form-control" id="estadoId" placeholder="ID Estado" />
-                        </div>
-
-                        <div class="col-md-4">
-                            <label for="tipoAtencionId" class="form-label">Tipo de Atención</label>
-                            <input type="number" class="form-control" id="tipoAtencionId" placeholder="ID Tipo" />
+                        <div class="col-12">
+                            <label for="asunto" class="form-label">Asunto</label>
+                            <textarea class="form-control" id="asunto" rows="3" maxlength="200" placeholder="Describa el asunto de la llamada"></textarea>
                         </div>
                     </div>
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-save"></i> Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Finalizar Llamada -->
+<div class="modal fade" id="modalFinalizarLlamada" tabindex="-1" aria-labelledby="modalFinalizarLlamadaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="modalFinalizarLlamadaLabel">
+                    <i class="bi bi-check-circle-fill"></i> Finalizar Llamada
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            <form id="formFinalizarLlamada">
+                <div class="modal-body">
+                    <div class="alert alert-info d-flex align-items-center" role="alert">
+                        <i class="bi bi-info-circle-fill me-2"></i>
+                        <div>
+                            Describa detalladamente las acciones realizadas y la solución aplicada para esta llamada.
+                        </div>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label for="descripcionSolucion" class="form-label">
+                                Descripción de la Solución <span class="text-danger">*</span>
+                            </label>
+                            <textarea class="form-control"
+                                      id="descripcionSolucion"
+                                      rows="6"
+                                      maxlength="1000"
+                                      placeholder="Describa las acciones realizadas, problemas encontrados y solución aplicada..."
+                                      required></textarea>
+                            <div class="form-text">
+                                <span id="contadorCaracteres">0</span> / 1000 caracteres
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="horaFinalizacion" class="form-label">
+                                Hora de Finalización <span class="text-danger">*</span>
+                            </label>
+                            <input type="time"
+                                   class="form-control"
+                                   id="horaFinalizacion"
+                                   required />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="correoEnviadoFinal" class="form-label">
+                                ¿Enviar correo al cliente?
+                            </label>
+                            <select id="correoEnviadoFinal" class="form-select">
+                                <option value="false">No</option>
+                                <option value="true">Sí</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="bi bi-check-circle"></i> Finalizar Llamada
+                    </button>
                 </div>
             </form>
         </div>
@@ -147,50 +280,423 @@
 </div>
 
 @section Scripts {
+    <!-- Select2 JS -->
+    
+
     <script>
         $(document).ready(function () {
             // Inicializa DataTable
-            $('#tablaLlamadas').DataTable({
-                language: { url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json' },
-                pageLength: 5,
-                responsive: true
+            const tabla = $('#tablaLlamadas').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
+                },
+                pageLength: 10,
+                responsive: true,
+                order: [[4, 'desc']] // Ordenar por fecha descendente
             });
 
-            // Restablece el formulario al cerrar el modal (para empezar de nuevo)
+            // Función para inicializar Select2
+            function initSelect2() {
+                // Destruir instancias previas
+                $('.select2').each(function() {
+                    if ($(this).hasClass('select2-hidden-accessible')) {
+                        $(this).select2('destroy');
+                    }
+                });
+
+                // Inicializar Select2
+                $('.select2').select2({
+                    theme: 'bootstrap-5',
+                    language: 'es',
+                    width: '100%',
+                    dropdownParent: $('#modalNuevaLlamada'),
+                    placeholder: function() {
+                        return $(this).find('option:first').text();
+                    },
+                    allowClear: true,
+                    minimumResultsForSearch: 0 // Siempre mostrar búsqueda
+                });
+            }
+
+            // Evento cuando se muestra el modal
+            $('#modalNuevaLlamada').on('shown.bs.modal', function () {
+                // Inicializar Select2 cuando el modal esté visible
+                initSelect2();
+
+                // Establecer fecha actual si está vacía
+                if (!$('#fecha').val()) {
+                    const hoy = new Date().toISOString().split('T')[0];
+                    $('#fecha').val(hoy);
+                }
+
+                // Dar foco al primer campo
+                $('#fecha').focus();
+            });
+
+            // Restablece el formulario al cerrar el modal
             $('#modalNuevaLlamada').on('hidden.bs.modal', function () {
                 $('#formNuevaLlamada')[0].reset();
+                $('#formNuevaLlamada').removeClass('was-validated');
+
+                // Limpiar Select2
+                $('.select2').each(function() {
+                    if ($(this).hasClass('select2-hidden-accessible')) {
+                        $(this).val(null).trigger('change');
+                    }
+                });
+
+                $('#modalNuevaLlamadaLabel').html('<i class="bi bi-telephone-plus"></i> Registrar Nueva Llamada');
             });
 
-            // Manejo del formulario del modal
-            $('#formNuevaLlamada').on('submit', function (e) {
-                e.preventDefault();
+            // Manejo del formulario
+                   // Manejo del formulario
+        $('#formNuevaLlamada').on('submit', function(e) {
+            e.preventDefault();
 
-                const nueva = {
-                    fecha: $('#fecha').val(),
-                    horaInicio: $('#horaInicio').val(),
-                    horaFinal: $('#horaFinal').val(),
-                    promat: $('#promat').val(),
-                    asunto: $('#asunto').val(),
-                    correoEnviado: $('#correoEnviado').val() === "true",
-                    equipoId: $('#equipoId').val() || null,
-                    usuarioId: $('#usuarioId').val() || null,
-                    clienteId: $('#clienteId').val() || null,
-                    centroId: $('#centroId').val() || null,
-                    estadoId: $('#estadoId').val() || null,
-                    tipoAtencionId: $('#tipoAtencionId').val() || null
-                };
+            const idLlamada = $(this).find('button[type="submit"]').data('id-llamada') || 0;
 
-                console.log("Datos a enviar (simulación):", nueva);
+            var llamadaData = {
+                IdLlamada: idLlamada,
+                Fecha: $('#fecha').val(),
+                HoraInicio: $('#horaInicio').val(),
+                HoraFinal: $('#horaFinal').val(),
+                Promat: $('#promat').val(),
+                Asunto: $('#asunto').val(),
+                CorreoEnviado: $('#correoEnviado').val() === 'true',
+                UsuarioId: $('#usuarioId').val(),
+                EquipoId: $('#equipoId').val() || null,
+                ClienteId: $('#clienteId').val(),
+                CentroId: $('#centroId').val(),
+                EstadoId: $('#estadoId').val()
+            };
 
-                // Cierra el modal después de procesar el envío (simulado)
-                const modalElement = document.getElementById('modalNuevaLlamada');
-                // Obtiene la instancia del modal de Bootstrap y la oculta
-                const modalBootstrap = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
-                modalBootstrap.hide();
+            // Validación básica con SweetAlert2
+            if (!llamadaData.Fecha || !llamadaData.HoraInicio || !llamadaData.UsuarioId || !llamadaData.ClienteId || !llamadaData.CentroId || !llamadaData.EstadoId) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Campos incompletos',
+                    text: 'Por favor complete todos los campos obligatorios marcados con *',
+                    confirmButtonText: 'Entendido'
+                });
+                return;
+            }
 
-                // Aquí iría el código AJAX real para guardar los datos.
+            // Determinar si es crear o actualizar
+            const url = idLlamada > 0 ? '/Llamada/ActualizarLlamada' : '/Llamada/RegistrarLlamada';
+            const mensaje = idLlamada > 0 ? 'actualizada' : 'registrada';
+            const accion = idLlamada > 0 ? 'Actualizando' : 'Guardando';
 
+            // Mostrar loading
+            Swal.fire({
+                title: accion + '...',
+                text: 'Por favor espere',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
             });
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(llamadaData),
+                success: function(response) {
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: '¡Éxito!',
+                            text: 'Llamada ' + mensaje + ' correctamente',
+                            confirmButtonText: 'Aceptar',
+                            timer: 2000,
+                            timerProgressBar: true
+                        }).then(() => {
+                            $('#modalNuevaLlamada').modal('hide');
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: response.mensaje || 'Ocurrió un error al guardar',
+                            confirmButtonText: 'Cerrar'
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    let mensajeError = 'Error al guardar la llamada';
+
+                    // Intentar obtener mensaje del servidor
+                    if (xhr.responseJSON && xhr.responseJSON.mensaje) {
+                        mensajeError = xhr.responseJSON.mensaje;
+                    } else if (xhr.responseText) {
+                        try {
+                            const response = JSON.parse(xhr.responseText);
+                            mensajeError = response.mensaje || mensajeError;
+                        } catch (e) {
+                            mensajeError += ': ' + error;
+                        }
+                    }
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: mensajeError,
+                        confirmButtonText: 'Cerrar'
+                    });
+                }
+            });
+        });
+
+                    // Botón editar
+        $(document).on('click', '.btn-editar', function() {
+            const idLlamada = $(this).data('id');
+            console.log('Editar llamada:', idLlamada);
+
+            // Cambiar título del modal
+            $('#modalNuevaLlamadaLabel').html('<i class="bi bi-pencil-square"></i> Editar Llamada');
+
+            // Cargar datos de la llamada
+            $.ajax({
+                url: '/Llamada/ObtenerLlamadaPorId',
+                type: 'GET',
+                data: { idLlamada: idLlamada },
+                success: function(response) {
+                    if (response.success) {
+                        const llamada = response.data;
+
+                        // Llenar los campos del formulario
+                        $('#fecha').val(llamada.fecha ? llamada.fecha.split('T')[0] : '');
+                        $('#horaInicio').val(llamada.horaInicio);
+                        $('#horaFinal').val(llamada.horaFinal);
+                        $('#promat').val(llamada.promat);
+                        $('#asunto').val(llamada.asunto);
+                        $('#correoEnviado').val(llamada.correoEnviado ? 'true' : 'false');
+
+                        // Llenar los selects
+                        $('#usuarioId').val(llamada.usuarioId).trigger('change');
+                        $('#equipoId').val(llamada.equipoId).trigger('change');
+                        $('#clienteId').val(llamada.clienteId).trigger('change');
+                        $('#centroId').val(llamada.centroId).trigger('change');
+                        $('#estadoId').val(llamada.estadoId).trigger('change');
+
+                        // Guardar el ID en un data attribute del botón guardar
+                        $('#formNuevaLlamada button[type="submit"]').data('id-llamada', idLlamada);
+
+                        // Mostrar modal
+                        $('#modalNuevaLlamada').modal('show');
+                    } else {
+                        alert('Error al cargar los datos: ' + response.mensaje);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    alert('Error al cargar los datos: ' + error);
+                }
+            });
+        });
+
+            // Botón eliminar
+                    $(document).on('click', '.btn-eliminar', function() {
+            const idLlamada = $(this).data('id');
+
+            Swal.fire({
+                title: '¿Está seguro?',
+                text: "Esta acción no se puede deshacer",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/Llamada/EliminarLlamada',
+                        type: 'DELETE',
+                        data: { idLlamada: idLlamada },
+                        success: function(response) {
+                            if (response.success) {
+                                Swal.fire(
+                                    '¡Eliminado!',
+                                    'La llamada ha sido eliminada correctamente.',
+                                    'success'
+                                ).then(() => {
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire(
+                                    'Error',
+                                    response.mensaje,
+                                    'error'
+                                );
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire(
+                                'Error',
+                                'No se pudo eliminar la llamada: ' + error,
+                                'error'
+                            );
+                        }
+                    });
+                }
+            });
+        });
+
+                $('#descripcionSolucion').on('input', function() {
+            const length = $(this).val().length;
+            $('#contadorCaracteres').text(length);
+        });
+
+        // Botón finalizar
+        $(document).on('click', '.btn-finalizar', function() {
+            const idLlamada = $(this).data('id');
+
+            // Establecer hora actual
+            const now = new Date();
+            const horaActual = now.getHours().toString().padStart(2, '0') + ':' +
+                               now.getMinutes().toString().padStart(2, '0');
+            $('#horaFinalizacion').val(horaActual);
+
+            // Limpiar textarea
+            $('#descripcionSolucion').val('');
+            $('#contadorCaracteres').text('0');
+
+            // Guardar ID en el botón submit
+            $('#formFinalizarLlamada button[type="submit"]').data('id-llamada', idLlamada);
+
+            // Mostrar modal
+            $('#modalFinalizarLlamada').modal('show');
+        });
+
+        // Enviar formulario de finalización
+        $('#formFinalizarLlamada').on('submit', function(e) {
+            e.preventDefault();
+
+            const idLlamada = $(this).find('button[type="submit"]').data('id-llamada');
+            const descripcion = $('#descripcionSolucion').val().trim();
+            const horaFinal = $('#horaFinalizacion').val();
+            const correoEnviado = $('#correoEnviadoFinal').val() === 'true';
+
+            // Validación
+            if (!descripcion) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Campo requerido',
+                    text: 'Por favor ingrese la descripción de la solución',
+                    confirmButtonText: 'Entendido'
+                });
+                return;
+            }
+
+            if (descripcion.length < 20) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Descripción muy corta',
+                    text: 'Por favor proporcione una descripción más detallada (mínimo 20 caracteres)',
+                    confirmButtonText: 'Entendido'
+                });
+                return;
+            }
+
+            if (!horaFinal) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Campo requerido',
+                    text: 'Por favor ingrese la hora de finalización',
+                    confirmButtonText: 'Entendido'
+                });
+                return;
+            }
+
+            // Confirmar finalización
+            Swal.fire({
+                title: '¿Finalizar llamada?',
+                text: "Esta acción marcará la llamada como completada",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#198754',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Sí, finalizar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    finalizarLlamada(idLlamada, descripcion, horaFinal, correoEnviado);
+                }
+            });
+        });
+
+        function finalizarLlamada(idLlamada, descripcion, horaFinal, correoEnviado) {
+            Swal.fire({
+                title: 'Finalizando...',
+                text: 'Por favor espere',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            const data = {
+                IdLlamada: idLlamada,
+                DescripcionSolucion: descripcion,
+                HoraFinal: horaFinal,
+                CorreoEnviado: correoEnviado
+            };
+
+            $.ajax({
+                url: '/Llamada/FinalizarLlamada',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function(response) {
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: '¡Llamada finalizada!',
+                            text: 'La llamada ha sido marcada como completada',
+                            confirmButtonText: 'Aceptar',
+                            timer: 2000,
+                            timerProgressBar: true
+                        }).then(() => {
+                            $('#modalFinalizarLlamada').modal('hide');
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: response.mensaje || 'No se pudo finalizar la llamada',
+                            confirmButtonText: 'Cerrar'
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    let mensajeError = 'Error al finalizar la llamada';
+
+                    if (xhr.responseJSON && xhr.responseJSON.mensaje) {
+                        mensajeError = xhr.responseJSON.mensaje;
+                    }
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: mensajeError,
+                        confirmButtonText: 'Cerrar'
+                    });
+                }
+            });
+        }
+
+        // Limpiar modal al cerrar
+        $('#modalFinalizarLlamada').on('hidden.bs.modal', function () {
+            $('#formFinalizarLlamada')[0].reset();
+            $('#contadorCaracteres').text('0');
+            $('#formFinalizarLlamada button[type="submit"]').removeData('id-llamada');
+        });
         });
     </script>
 }

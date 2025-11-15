@@ -1,0 +1,587 @@
+USE [RegistroLlamadas]
+GO
+/****** Object:  Table [dbo].[asignaciones]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[asignaciones](
+	[id_asignacion] [int] IDENTITY(1,1) NOT NULL,
+	[llamada_id] [int] NOT NULL,
+	[personal_id] [int] NOT NULL,
+	[fecha_asignacion] [datetime] NOT NULL,
+	[prioridad] [varchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id_asignacion] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[bitacora]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[bitacora](
+	[id_bitacora] [int] IDENTITY(1,1) NOT NULL,
+	[usuario_id] [int] NOT NULL,
+	[accion] [varchar](20) NOT NULL,
+	[fecha] [datetime] NOT NULL,
+	[tabla_afectada] [varchar](50) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id_bitacora] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[centro]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[centro](
+	[id_centro] [int] IDENTITY(1,1) NOT NULL,
+	[nombre] [varchar](200) NOT NULL,
+	[estado_id] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id_centro] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[cliente]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[cliente](
+	[id_cliente] [int] IDENTITY(1,1) NOT NULL,
+	[identificacion] [varchar](50) NOT NULL,
+	[nombre] [varchar](50) NOT NULL,
+	[primer_apellido] [varchar](50) NULL,
+	[segundo_apellido] [varchar](50) NULL,
+	[correo] [varchar](100) NOT NULL,
+	[telefono] [varchar](20) NULL,
+	[estado_id] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id_cliente] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[correo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[equipos]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[equipos](
+	[id_equipo] [int] IDENTITY(1,1) NOT NULL,
+	[nombre] [varchar](50) NOT NULL,
+	[modelo] [varchar](50) NOT NULL,
+	[marca] [varchar](50) NOT NULL,
+	[condicion] [varchar](50) NOT NULL,
+	[serie] [varchar](100) NULL,
+	[activo] [varchar](20) NULL,
+	[centro_id] [int] NULL,
+	[estado_id] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id_equipo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[estado]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[estado](
+	[id_estado] [int] IDENTITY(1,1) NOT NULL,
+	[descripcion] [varchar](100) NOT NULL,
+	[tipo_estado] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id_estado] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[llamadas]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[llamadas](
+	[id_llamada] [int] IDENTITY(1,1) NOT NULL,
+	[fecha] [datetime] NOT NULL,
+	[hora_inicio] [time](7) NOT NULL,
+	[hora_final] [time](7) NULL,
+	[promat] [varchar](20) NULL,
+	[asunto] [varchar](200) NULL,
+	[correo_enviado] [bit] NULL,
+	[equipo_id] [int] NULL,
+	[usuario_id] [int] NULL,
+	[estado_id] [int] NULL,
+	[cliente_id] [int] NULL,
+	[centro_id] [int] NULL,
+	[descripcionSolucion] [varchar](1000) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id_llamada] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[rol]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[rol](
+	[id_rol] [int] IDENTITY(1,1) NOT NULL,
+	[nombre] [varchar](50) NOT NULL,
+	[descripcion] [varchar](200) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id_rol] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[usuario]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[usuario](
+	[id_usuario] [int] IDENTITY(1,1) NOT NULL,
+	[usuario] [varchar](20) NOT NULL,
+	[contrasena] [varchar](250) NOT NULL,
+	[nombre] [varchar](50) NOT NULL,
+	[primer_apellido] [varchar](50) NULL,
+	[segundo_apellido] [varchar](50) NULL,
+	[correo] [varchar](100) NULL,
+	[telefono] [varchar](20) NULL,
+	[estado_id] [int] NOT NULL,
+	[rol_id] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id_usuario] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[asignaciones]  WITH CHECK ADD FOREIGN KEY([llamada_id])
+REFERENCES [dbo].[llamadas] ([id_llamada])
+GO
+ALTER TABLE [dbo].[asignaciones]  WITH CHECK ADD FOREIGN KEY([personal_id])
+REFERENCES [dbo].[usuario] ([id_usuario])
+GO
+ALTER TABLE [dbo].[bitacora]  WITH CHECK ADD FOREIGN KEY([usuario_id])
+REFERENCES [dbo].[usuario] ([id_usuario])
+GO
+ALTER TABLE [dbo].[centro]  WITH CHECK ADD FOREIGN KEY([estado_id])
+REFERENCES [dbo].[estado] ([id_estado])
+GO
+ALTER TABLE [dbo].[cliente]  WITH CHECK ADD FOREIGN KEY([estado_id])
+REFERENCES [dbo].[estado] ([id_estado])
+GO
+ALTER TABLE [dbo].[equipos]  WITH CHECK ADD FOREIGN KEY([centro_id])
+REFERENCES [dbo].[centro] ([id_centro])
+GO
+ALTER TABLE [dbo].[equipos]  WITH CHECK ADD FOREIGN KEY([estado_id])
+REFERENCES [dbo].[estado] ([id_estado])
+GO
+ALTER TABLE [dbo].[llamadas]  WITH CHECK ADD FOREIGN KEY([centro_id])
+REFERENCES [dbo].[centro] ([id_centro])
+GO
+ALTER TABLE [dbo].[llamadas]  WITH CHECK ADD FOREIGN KEY([cliente_id])
+REFERENCES [dbo].[cliente] ([id_cliente])
+GO
+ALTER TABLE [dbo].[llamadas]  WITH CHECK ADD FOREIGN KEY([equipo_id])
+REFERENCES [dbo].[equipos] ([id_equipo])
+GO
+ALTER TABLE [dbo].[llamadas]  WITH CHECK ADD FOREIGN KEY([estado_id])
+REFERENCES [dbo].[estado] ([id_estado])
+GO
+ALTER TABLE [dbo].[llamadas]  WITH CHECK ADD FOREIGN KEY([usuario_id])
+REFERENCES [dbo].[usuario] ([id_usuario])
+GO
+ALTER TABLE [dbo].[usuario]  WITH CHECK ADD FOREIGN KEY([estado_id])
+REFERENCES [dbo].[estado] ([id_estado])
+GO
+ALTER TABLE [dbo].[usuario]  WITH CHECK ADD FOREIGN KEY([rol_id])
+REFERENCES [dbo].[rol] ([id_rol])
+GO
+/****** Object:  StoredProcedure [dbo].[sp_actualizar_llamada]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_actualizar_llamada]
+    @IdLlamada INT,
+    @Fecha DATE,
+    @HoraInicio TIME,
+    @HoraFinal TIME,
+    @Promat VARCHAR(50),
+    @Asunto VARCHAR(500),
+    @CorreoEnviado BIT,
+    @UsuarioId INT,
+    @EquipoId INT,
+    @ClienteId INT,
+    @CentroId INT,
+    @EstadoId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    BEGIN TRY
+        BEGIN TRANSACTION;
+        
+        -- Verificar que la llamada existe
+        IF NOT EXISTS (SELECT 1 FROM llamadas WHERE id_llamada = @IdLlamada)
+        BEGIN
+            RAISERROR('La llamada con ID %d no existe', 16, 1, @IdLlamada);
+            RETURN;
+        END
+        
+        -- Actualizar la llamada
+        UPDATE llamadas
+        SET fecha = @Fecha,
+            hora_inicio = @HoraInicio,
+            hora_final = @HoraFinal,
+            promat = @Promat,
+            asunto = @Asunto,
+            correo_enviado = @CorreoEnviado,
+            usuario_id = @UsuarioId,
+            equipo_id = @EquipoId,
+            cliente_id = @ClienteId,
+            centro_id = @CentroId,
+            estado_id = @EstadoId
+        WHERE id_llamada = @IdLlamada;
+        
+        COMMIT TRANSACTION;
+        
+       
+        SELECT @IdLlamada AS IdLlamada;
+        
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+            
+        DECLARE @ErrorMessage NVARCHAR(4000) = ERROR_MESSAGE();
+        DECLARE @ErrorSeverity INT = ERROR_SEVERITY();
+        DECLARE @ErrorState INT = ERROR_STATE();
+        
+        RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
+    END CATCH
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[sp_eliminar_llamada]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_eliminar_llamada]
+    @IdLlamada INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    BEGIN TRY
+        BEGIN TRANSACTION;
+        
+        -- Verificar que la llamada existe
+        IF NOT EXISTS (SELECT 1 FROM llamadas WHERE id_llamada = @IdLlamada)
+        BEGIN
+            RAISERROR('La llamada con ID %d no existe', 16, 1, @IdLlamada);
+            RETURN;
+        END
+        
+        -- Eliminación lógica 
+        UPDATE llamadas
+        SET estado_id = 2
+        WHERE id_llamada = @IdLlamada;
+        
+        COMMIT TRANSACTION;
+        
+        -- Retornar éxito
+        SELECT 1 AS Success;
+        
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+            
+        DECLARE @ErrorMessage NVARCHAR(4000) = ERROR_MESSAGE();
+        DECLARE @ErrorSeverity INT = ERROR_SEVERITY();
+        DECLARE @ErrorState INT = ERROR_STATE();
+        
+        RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
+    END CATCH
+END;
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_finalizar_llamada]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_finalizar_llamada]
+    @IdLlamada INT,
+    @DescripcionSolucion VARCHAR(1000),
+    @HoraFinal TIME,
+    @CorreoEnviado BIT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    BEGIN TRY
+        BEGIN TRANSACTION;
+        
+        -- Verificar que la llamada existe
+        IF NOT EXISTS (SELECT 1 FROM llamadas WHERE id_llamada = @IdLlamada)
+        BEGIN
+            RAISERROR('La llamada con ID %d no existe', 16, 1, @IdLlamada);
+            RETURN;
+        END
+        
+        -- Actualizar la llamada (estado 3 = Finalizada/Completada)
+        UPDATE llamadas
+        SET hora_final = @HoraFinal,
+            descripcionSolucion = CASE 
+                WHEN descripcionSolucion IS NULL OR descripcionSolucion = '' THEN @DescripcionSolucion
+                ELSE descripcionSolucion + CHAR(13) + CHAR(10) + '--- SOLUCIÓN ---' + CHAR(13) + CHAR(10) + @DescripcionSolucion
+            END,
+            correo_enviado = @CorreoEnviado,
+            estado_id = 3  -- Estado: Finalizada
+        WHERE id_llamada = @IdLlamada;
+        
+        COMMIT TRANSACTION;
+        
+        SELECT 1 AS Success;
+        
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+            
+        DECLARE @ErrorMessage NVARCHAR(4000) = ERROR_MESSAGE();
+        DECLARE @ErrorSeverity INT = ERROR_SEVERITY();
+        DECLARE @ErrorState INT = ERROR_STATE();
+        
+        RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
+    END CATCH
+END;
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_obtener_llamadas]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_obtener_llamadas]
+    @IdLlamada INT = 0,
+    @Fecha DATE = NULL,
+	@UsuarioId INT = NULL 
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    IF (@Fecha IS NULL)
+        SET @Fecha = CONVERT(date, GETDATE());
+
+    SELECT
+        l.id_llamada AS IdLlamada,
+        l.fecha AS Fecha,
+        l.hora_inicio AS HoraInicio,
+        l.hora_final AS HoraFinal,
+        l.promat AS Promat,
+        l.asunto AS Asunto,
+        l.correo_enviado AS CorreoEnviado,
+        l.usuario_id AS UsuarioId,
+        l.equipo_id AS equipoId,
+        l.cliente_id AS ClienteId,
+        l.centro_id AS CentroId,
+        l.estado_id AS EstadoId,
+        u.id_usuario AS ConsecutivoUsuario,
+        u.nombre + ' ' + u.primer_apellido + ' '+ u.segundo_apellido AS Nombre,
+        u.correo AS CorreoElectronico,
+        u.estado_id AS Estado,
+        c.id_cliente AS IdCliente,
+        c.identificacion AS Identificacion,
+        c.nombre + ' ' + c.primer_apellido + ' ' + c.segundo_apellido AS Nombre,
+        c.primer_apellido AS PrimerApellido,
+        c.segundo_apellido AS SegundoApellido,
+        c.correo AS Correo,
+        c.telefono AS Telefono,
+        c.estado_id AS EstadoId,
+        e.id_equipo AS IdEquipo,
+        e.nombre AS Nombre,
+        e.modelo AS Modelo,
+        e.marca AS Marca,
+        e.condicion AS Condicion,
+        e.serie AS Serie,
+        e.activo AS Activo,
+        e.centro_id AS CentroId,
+        e.estado_id AS EstadoId,
+        cen.id_centro AS IdCentro,
+        cen.nombre AS Nombre,
+        cen.estado_id AS EstadoId,
+        es.id_estado AS IdEstado,
+        es.descripcion AS Descripcion
+
+    FROM llamadas l
+        JOIN usuario u ON l.usuario_id = u.id_usuario
+        JOIN equipos e ON l.equipo_id = e.id_equipo
+        JOIN cliente c ON l.cliente_id = c.id_cliente
+        JOIN centro cen ON l.centro_id = cen.id_centro
+        JOIN estado es ON l.estado_id = es.id_estado
+
+    WHERE
+        (@IdLlamada = 0 OR l.id_llamada = @IdLlamada)
+        AND CONVERT(date, l.fecha) = @Fecha and l.estado_id not in (2) AND (@UsuarioId IS NULL OR l.usuario_id = @UsuarioId);
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ObtenerCatalogos]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_ObtenerCatalogos]
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Equipos
+    SELECT 
+        id_equipo AS ID, 
+        modelo AS Nombre
+    FROM equipos;
+
+    -- Centros
+    SELECT 
+        id_centro AS ID, 
+        nombre AS Nombre
+    FROM centro
+    WHERE estado_id = 1;
+
+    -- Usuarios (técnicos)
+    SELECT 
+        id_usuario AS ID,
+        nombre + ' ' + primer_apellido + ' ' + segundo_apellido AS Nombre
+    FROM usuario
+    WHERE rol_id = 3;
+
+    -- Estados
+    SELECT 
+        id_estado AS ID,
+        descripcion AS Nombre
+    FROM estado
+    WHERE tipo_estado = 2;
+
+    -- Clientes
+    SELECT 
+        id_cliente AS ID,
+        identificacion AS Identificacion,
+        nombre + ' ' + primer_apellido + ' ' + segundo_apellido AS Nombre
+    FROM cliente;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_registrar_llamada]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_registrar_llamada]
+    @Fecha DATE,
+    @HoraInicio TIME,
+    @HoraFinal TIME,
+    @Promat VARCHAR(50),
+    @Asunto VARCHAR(500),
+    @CorreoEnviado BIT = 0,
+    @UsuarioId INT,
+    @EquipoId INT,
+    @ClienteId INT,
+    @CentroId INT,
+    @EstadoId INT = 1,
+    @IdLlamadaGenerado INT OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    BEGIN TRY
+        BEGIN TRANSACTION;
+        
+        INSERT INTO llamadas (
+            fecha,
+            hora_inicio,
+            hora_final,
+            promat,
+            asunto,
+            correo_enviado,
+            usuario_id,
+            equipo_id,
+            cliente_id,
+            centro_id,
+            estado_id
+        )
+        VALUES (
+            @Fecha,
+            @HoraInicio,
+            @HoraFinal,
+            @Promat,
+            @Asunto,
+            @CorreoEnviado,
+            @UsuarioId,
+            @EquipoId,
+            @ClienteId,
+            @CentroId,
+            @EstadoId
+        );
+        
+        SET @IdLlamadaGenerado = SCOPE_IDENTITY();
+        
+        COMMIT TRANSACTION;
+        
+        SELECT @IdLlamadaGenerado AS IdLlamada;
+        
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+            
+        THROW;
+    END CATCH
+END;
+
+GO
+/****** Object:  StoredProcedure [dbo].[ValidarSesion]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[ValidarSesion]
+	@CorreoElectronico VARCHAR(100),
+    @Contrasenna VARCHAR(10)
+AS
+BEGIN
+
+    SELECT  u.id_usuario as ConsecutivoUsuario,
+            u.usuario,
+            u.nombre as Nombre,
+            u.correo as CorreoElectronico,
+            u.contrasena,
+            e.descripcion,
+            U.rol_id,
+            P.descripcion 'NombrePerfil'
+      FROM  dbo.usuario U
+      INNER JOIN dbo.rol P ON rol_id = P.id_rol
+	  join estado e on u.estado_id = e.id_estado
+      WHERE u.correo = @CorreoElectronico
+        AND u.contrasena = @Contrasenna
+        AND e.descripcion = 'Activo'
+
+END
+GO
