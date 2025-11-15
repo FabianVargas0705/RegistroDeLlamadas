@@ -3,24 +3,24 @@
   "WorkspaceRootPath": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.Api\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.api\\registrollamadas.api\\controllers\\llamadacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|solutionrelative:registrollamadas.api\\controllers\\llamadacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.api\\registrollamadas.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|solutionrelative:registrollamadas.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.api\\registrollamadas.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|solutionrelative:registrollamadas.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.api\\registrollamadas.api\\models\\llamadamodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|solutionrelative:registrollamadas.api\\models\\llamadamodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.api\\registrollamadas.api\\models\\requestobtenerllamada.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|solutionrelative:registrollamadas.api\\models\\requestobtenerllamada.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.api\\registrollamadas.api\\registrollamadas.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|solutionrelative:registrollamadas.api\\registrollamadas.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.api\\registrollamadas.api\\models\\datosusuarioresponsemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|solutionrelative:registrollamadas.api\\models\\datosusuarioresponsemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.api\\registrollamadas.api\\models\\validarsesionrequestmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|solutionrelative:registrollamadas.api\\models\\validarsesionrequestmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,64 +38,68 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\appsettings.json",
-              "RelativeDocumentMoniker": "RegistroLlamadas.Api\\appsettings.json",
-              "ToolTip": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\appsettings.json",
-              "RelativeToolTip": "RegistroLlamadas.Api\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-11-13T03:11:31.162Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ValidarSesionRequestModel.cs",
-              "DocumentMoniker": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Models\\ValidarSesionRequestModel.cs",
-              "RelativeDocumentMoniker": "RegistroLlamadas.Api\\Models\\ValidarSesionRequestModel.cs",
-              "ToolTip": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Models\\ValidarSesionRequestModel.cs",
-              "RelativeToolTip": "RegistroLlamadas.Api\\Models\\ValidarSesionRequestModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAA/AAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "LlamadaModel.cs",
+              "DocumentMoniker": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Models\\LlamadaModel.cs",
+              "RelativeDocumentMoniker": "RegistroLlamadas.Api\\Models\\LlamadaModel.cs",
+              "ToolTip": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Models\\LlamadaModel.cs",
+              "RelativeToolTip": "RegistroLlamadas.Api\\Models\\LlamadaModel.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAowBcAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-13T02:49:37.67Z"
+              "WhenOpened": "2025-11-15T15:43:59.808Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "AuthController.cs",
               "DocumentMoniker": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "RegistroLlamadas.Api\\Controllers\\AuthController.cs",
               "ToolTip": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Controllers\\AuthController.cs",
               "RelativeToolTip": "RegistroLlamadas.Api\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAAB8AAAAAAAAAAAAAwDMAAAA4AAAAAAAAAA==",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAACIAAABEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-13T02:47:29.387Z",
+              "WhenOpened": "2025-11-15T15:41:19.785Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "DatosUsuarioResponseModel.cs",
-              "DocumentMoniker": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Models\\DatosUsuarioResponseModel.cs",
-              "RelativeDocumentMoniker": "RegistroLlamadas.Api\\Models\\DatosUsuarioResponseModel.cs",
-              "ToolTip": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Models\\DatosUsuarioResponseModel.cs",
-              "RelativeToolTip": "RegistroLlamadas.Api\\Models\\DatosUsuarioResponseModel.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAQwBYAAAAXAAAAAAAAAA==",
+              "Title": "RequestObtenerLlamada.cs",
+              "DocumentMoniker": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Models\\RequestObtenerLlamada.cs",
+              "RelativeDocumentMoniker": "RegistroLlamadas.Api\\Models\\RequestObtenerLlamada.cs",
+              "ToolTip": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Models\\RequestObtenerLlamada.cs",
+              "RelativeToolTip": "RegistroLlamadas.Api\\Models\\RequestObtenerLlamada.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-13T02:50:54.148Z"
+              "WhenOpened": "2025-11-15T15:37:15.043Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
+              "Title": "LlamadaController.cs",
+              "DocumentMoniker": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Controllers\\LlamadaController.cs",
+              "RelativeDocumentMoniker": "RegistroLlamadas.Api\\Controllers\\LlamadaController.cs",
+              "ToolTip": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Controllers\\LlamadaController.cs",
+              "RelativeToolTip": "RegistroLlamadas.Api\\Controllers\\LlamadaController.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABcAAABOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-15T15:34:14.238Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "RegistroLlamadas.Api.csproj",
               "DocumentMoniker": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj",
               "RelativeDocumentMoniker": "RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj",
               "ToolTip": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj",
               "RelativeToolTip": "RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-11-13T02:49:25.054Z"
+              "WhenOpened": "2025-11-13T02:49:25.054Z",
+              "EditorCaption": ""
             }
           ]
         }

@@ -97,3 +97,4 @@ D:\PrograAvanzadaWeb\ProyectoRegistroLlamadas\RegistroDeLlamadas\RegistroLlamada
 D:\PrograAvanzadaWeb\ProyectoRegistroLlamadas\RegistroDeLlamadas\RegistroLlamadas.UI\RegistroLlamadas.UI\obj\Debug\net9.0\compressed\0mqkr2ttc6-2jhs8tlagt.gz
 D:\PrograAvanzadaWeb\ProyectoRegistroLlamadas\RegistroDeLlamadas\RegistroLlamadas.UI\RegistroLlamadas.UI\obj\Debug\net9.0\compressed\0owp44ocll-lugp5lz13u.gz
 D:\PrograAvanzadaWeb\ProyectoRegistroLlamadas\RegistroDeLlamadas\RegistroLlamadas.UI\RegistroLlamadas.UI\obj\Debug\net9.0\compressed\jvw624rqij-8egqs3r9pv.gz
+D:\PrograAvanzadaWeb\ProyectoRegistroLlamadas\RegistroDeLlamadas\RegistroLlamadas.UI\RegistroLlamadas.UI\obj\Debug\net9.0\RegistroLlamadas.UI.sourcelink.json

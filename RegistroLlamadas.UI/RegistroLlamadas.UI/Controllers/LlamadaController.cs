@@ -1,91 +1,386 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RegistroLlamadas.UI.Models;
+using System.Net.Http.Headers;
+using System.Text.Json;
+using static System.Net.WebRequestMethods;
 
 namespace RegistroLlamadas.UI.Controllers
 {
     public class LlamadaController : Controller
     {
         // GET: LlamadaController
-        
-        public ActionResult Llamadas()
+        private readonly IHttpClientFactory _http;
+        private readonly IConfiguration _configuration;
+
+        public LlamadaController(IHttpClientFactory http, IConfiguration configuration)
         {
-            List<LlamadaModel> llamadas = new List<LlamadaModel>()
+            _configuration = configuration;
+            _http = http;
+        }
+
+        public async Task<ActionResult> Llamadas(DateTime? fecha = null)
+        {
+            var catalogos = ObtenerCatalogos();
+
+            if (catalogos == null)
             {
-                new LlamadaModel() { IdLlamada = 1},
-                new LlamadaModel() { IdLlamada = 2},
-                new LlamadaModel() { IdLlamada = 3}
+                ViewBag.Error = "No se pudieron cargar los catálogos.";
+                return View();
+            }
+            var llamadas = await ObtenerLlamadasAPI(0, fecha);
+            if (llamadas == null)
+            {
+                ViewBag.Error = "No se pudieron cargar las llamadas.";
+                llamadas = new List<LlamadaModel>();
+            }
+
+            var modelo = new LlamadasViewModel
+            {
+                Llamadas = llamadas,
+                Equipos = catalogos.Equipos,
+                Centros = catalogos.Centros,
+                Usuarios = catalogos.Usuarios,
+                Estados = catalogos.Estados,
+                Clientes = catalogos.Clientes
+            };
+            ViewBag.UsuarioIdActual = HttpContext.Session.GetInt32("ConsecutivoUsuario");
+
+            return View(modelo); 
+        }
+
+        private CatalogosDTO ObtenerCatalogos()
+        {
+            using (var client = _http.CreateClient())
+            {
+                var urlApi = _configuration["Valores:UrlAPI"] + "Catalogo/GetCatalogos";
+
+                
+                var token = HttpContext.Session.GetString("Token");
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                var respuesta = client.GetAsync(urlApi).Result;
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    var options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+
+                    var catalogos = respuesta.Content.ReadFromJsonAsync<CatalogosDTO>(options).Result;
+                    return catalogos!;
+                }
+
+                return null;
+            }
+        }
+
+
+        private async Task<List<LlamadaModel>> ObtenerLlamadasAPI(int idLlamada = 0, DateTime? fecha = null)
+        {
+            using (var client = _http.CreateClient())
+            {
+                var request = new RequestObtenerLlamada
+                {
+                    IdLlamada = idLlamada,
+                    Fecha = fecha ?? DateTime.Now
+                };
+
+                var urlApi = _configuration["Valores:UrlAPI"] + "Llamada/obtenerLlamada";
+
+                var token = HttpContext.Session.GetString("Token");
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                var respuesta = await client.PostAsJsonAsync(urlApi, request);
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    var options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    var llamadas = await respuesta.Content.ReadFromJsonAsync<List<LlamadaModel>>(options);
+                    return llamadas ?? new List<LlamadaModel>();
+                }
+
+                return null;
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RegistrarLlamada([FromBody] LlamadaModel llamada)
+        {
+            try
+            {
+                using (var client = _http.CreateClient())
+                {
+                    var urlApi = _configuration["Valores:UrlAPI"] + "Llamada/registrarLlamada";
+
+                    var token = HttpContext.Session.GetString("Token");
+                    if (!string.IsNullOrEmpty(token))
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                    var respuesta = await client.PostAsJsonAsync(urlApi, llamada);
+
+                    if (respuesta.IsSuccessStatusCode)
+                    {
+                        var options = new JsonSerializerOptions
+                        {
+                            PropertyNameCaseInsensitive = true
+                        };
+                        var resultado = await respuesta.Content.ReadFromJsonAsync<dynamic>(options);
+                        return Ok(resultado);
+                    }
+
+                    var errorContent = await respuesta.Content.ReadAsStringAsync();
+                    return BadRequest(new { success = false, mensaje = errorContent });
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, mensaje = "Error al registrar la llamada: " + ex.Message });
+            }
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ActualizarLlamada([FromBody] LlamadaModel llamada)
+        {
+            try
+            {
+                using (var client = _http.CreateClient())
+                {
+                    var urlApi = _configuration["Valores:UrlAPI"] + "Llamada/actualizarLlamada";
+
+                    var token = HttpContext.Session.GetString("Token");
+                    if (!string.IsNullOrEmpty(token))
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                    var respuesta = await client.PostAsJsonAsync(urlApi, llamada);
+
+                    if (respuesta.IsSuccessStatusCode)
+                    {
+                        var options = new JsonSerializerOptions
+                        {
+                            PropertyNameCaseInsensitive = true
+                        };
+                        var resultado = await respuesta.Content.ReadFromJsonAsync<dynamic>(options);
+                        return Ok(resultado);
+                    }
+
+                    var errorContent = await respuesta.Content.ReadAsStringAsync();
+                    return BadRequest(new { success = false, mensaje = errorContent });
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, mensaje = "Error al actualizar la llamada: " + ex.Message });
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ObtenerLlamadaPorId(int idLlamada)
+        {
+            try
+            {
+                var llamadas = await ObtenerLlamadasAPI(idLlamada);
+
+                if (llamadas == null)
+                {
+                    return BadRequest(new { success = false, mensaje = "Error al obtener la llamada" });
+                }
+
+                var llamada = llamadas.FirstOrDefault();
+
+                if (llamada != null)
+                {
+                    return Ok(new { success = true, data = llamada });
+                }
+
+                return NotFound(new { success = false, mensaje = "Llamada no encontrada" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, mensaje = "Error: " + ex.Message });
+            }
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> EliminarLlamada(int idLlamada)
+        {
+            try
+            {
+                using (var client = _http.CreateClient())
+                {
+                    var urlApi = _configuration["Valores:UrlAPI"] + $"Llamada/eliminarLlamada/{idLlamada}";
+
+                    var token = HttpContext.Session.GetString("Token");
+                    if (!string.IsNullOrEmpty(token))
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                    var respuesta = await client.DeleteAsync(urlApi);
+
+                    if (respuesta.IsSuccessStatusCode)
+                    {
+                        var options = new JsonSerializerOptions
+                        {
+                            PropertyNameCaseInsensitive = true
+                        };
+                        var resultado = await respuesta.Content.ReadFromJsonAsync<dynamic>(options);
+                        return Ok(resultado);
+                    }
+
+                    var errorContent = await respuesta.Content.ReadAsStringAsync();
+                    return BadRequest(new { success = false, mensaje = errorContent });
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, mensaje = "Error al eliminar la llamada: " + ex.Message });
+            }
+        }
+
+        public async Task<ActionResult> MisLlamadas(DateTime? fecha = null)
+        {
+            var catalogos =  ObtenerCatalogos();
+            if (catalogos == null)
+            {
+                ViewBag.Error = "No se pudieron cargar los catálogos.";
+                return View();
+            }
+
+            // Obtener el ID del usuario actual desde la sesión
+            var usuarioId = HttpContext.Session.GetInt32("ConsecutivoUsuario");
+
+            if (usuarioId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            var llamadas = await ObtenerMisLlamadasAPI(usuarioId.Value, fecha);
+
+            if (llamadas == null)
+            {
+                ViewBag.Error = "No se pudieron cargar las llamadas.";
+                llamadas = new List<LlamadaModel>();
+            }
+
+            var modelo = new LlamadasViewModel
+            {
+                Llamadas = llamadas,
+                Equipos = catalogos.Equipos,
+                Centros = catalogos.Centros,
+                Usuarios = catalogos.Usuarios,
+                Estados = catalogos.Estados,
+                Clientes = catalogos.Clientes
             };
 
-            return View(llamadas); 
+            ViewBag.Titulo = "Mis Llamadas Asignadas";
+            return View("Llamadas", modelo); // Reutiliza la misma vista
         }
 
-        // GET: LlamadaController/Details/5
-        public ActionResult Details(int id)
+        private async Task<List<LlamadaModel>> ObtenerMisLlamadasAPI(int usuarioId, DateTime? fecha = null)
         {
-            return View();
+            using (var client = _http.CreateClient())
+            {
+                var request = new RequestObtenerLlamada
+                {
+                    IdLlamada = 0,
+                    Fecha = fecha ?? DateTime.Now,
+                    UsuarioId = usuarioId // Agregar este campo al RequestObtenerLlamada
+                };
+
+                var urlApi = _configuration["Valores:UrlAPI"] + "Llamada/obtenerLlamada";
+
+                var token = HttpContext.Session.GetString("Token");
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                var respuesta = await client.PostAsJsonAsync(urlApi, request);
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    var options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    var llamadas = await respuesta.Content.ReadFromJsonAsync<List<LlamadaModel>>(options);
+                    return llamadas ?? new List<LlamadaModel>();
+                }
+
+                return null;
+            }
         }
 
-        // GET: LlamadaController/Create
-        public ActionResult Create()
+        public async Task<ActionResult> LlamadasPendientes(DateTime? fecha = null)
         {
-            return View();
+            var catalogos =  ObtenerCatalogos();
+            if (catalogos == null)
+            {
+                ViewBag.Error = "No se pudieron cargar los catálogos.";
+                return View();
+            }
+
+            var llamadas = await ObtenerLlamadasAPI(0, fecha);
+
+            if (llamadas != null)
+            {
+                llamadas = llamadas.Where(l => l.EstadoId == 3).ToList();
+            }
+            else
+            {
+                llamadas = new List<LlamadaModel>();
+            }
+
+            var modelo = new LlamadasViewModel
+            {
+                Llamadas = llamadas,
+                Equipos = catalogos.Equipos,
+                Centros = catalogos.Centros,
+                Usuarios = catalogos.Usuarios,
+                Estados = catalogos.Estados,
+                Clientes = catalogos.Clientes
+            };
+
+            ViewBag.Titulo = "Llamadas Pendientes";
+            return View("Llamadas", modelo);
         }
 
-        // POST: LlamadaController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> FinalizarLlamada([FromBody] FinalizarLlamadaModel modelo)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+                using (var client = _http.CreateClient())
+                {
+                    var urlApi = _configuration["Valores:UrlAPI"] + "Llamada/finalizarLlamada";
 
-        // GET: LlamadaController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+                    var token = HttpContext.Session.GetString("Token");
+                    if (!string.IsNullOrEmpty(token))
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-        // POST: LlamadaController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+                    var respuesta = await client.PostAsJsonAsync(urlApi, modelo);
 
-        // GET: LlamadaController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+                    if (respuesta.IsSuccessStatusCode)
+                    {
+                        var options = new JsonSerializerOptions
+                        {
+                            PropertyNameCaseInsensitive = true
+                        };
+                        var resultado = await respuesta.Content.ReadFromJsonAsync<dynamic>(options);
+                        return Ok(resultado);
+                    }
 
-        // POST: LlamadaController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
+                    var errorContent = await respuesta.Content.ReadAsStringAsync();
+                    return BadRequest(new { success = false, mensaje = errorContent });
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return BadRequest(new { success = false, mensaje = "Error al finalizar la llamada: " + ex.Message });
             }
         }
     }
