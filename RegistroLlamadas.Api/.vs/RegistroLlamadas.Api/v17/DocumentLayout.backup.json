@@ -1,13 +1,45 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.Api\\",
+  "WorkspaceRootPath": "C:\\Users\\Danny\\Documents\\ProyectoFinal\\RegistroDeLlamadas\\RegistroLlamadas.Api\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.api\\registrollamadas.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|c:\\users\\danny\\documents\\proyectofinal\\registrodellamadas\\registrollamadas.api\\registrollamadas.api\\models\\estadomodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|solutionrelative:registrollamadas.api\\models\\estadomodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|c:\\users\\danny\\documents\\proyectofinal\\registrodellamadas\\registrollamadas.api\\registrollamadas.api\\controllers\\centrocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|solutionrelative:registrollamadas.api\\controllers\\centrocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|c:\\users\\danny\\documents\\proyectofinal\\registrodellamadas\\registrollamadas.api\\registrollamadas.api\\models\\centromodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|solutionrelative:registrollamadas.api\\models\\centromodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|c:\\users\\danny\\documents\\proyectofinal\\registrodellamadas\\registrollamadas.api\\registrollamadas.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|solutionrelative:registrollamadas.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.api\\registrollamadas.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|c:\\users\\danny\\documents\\proyectofinal\\registrodellamadas\\registrollamadas.api\\registrollamadas.api\\controllers\\estadocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|solutionrelative:registrollamadas.api\\controllers\\estadocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|c:\\users\\danny\\documents\\proyectofinal\\registrodellamadas\\registrollamadas.api\\registrollamadas.api\\controllers\\rolcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|solutionrelative:registrollamadas.api\\controllers\\rolcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|c:\\users\\danny\\documents\\proyectofinal\\registrodellamadas\\registrollamadas.api\\registrollamadas.api\\models\\datosusuarioresponsemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|solutionrelative:registrollamadas.api\\models\\datosusuarioresponsemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|c:\\users\\danny\\documents\\proyectofinal\\registrodellamadas\\registrollamadas.api\\registrollamadas.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|solutionrelative:registrollamadas.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|c:\\users\\danny\\documents\\proyectofinal\\registrodellamadas\\registrollamadas.api\\registrollamadas.api\\models\\validarsesionrequestmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|solutionrelative:registrollamadas.api\\models\\validarsesionrequestmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|c:\\users\\danny\\documents\\proyectofinal\\registrodellamadas\\registrollamadas.api\\registrollamadas.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|solutionrelative:registrollamadas.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -18,34 +50,133 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Program.cs",
-              "RelativeDocumentMoniker": "RegistroLlamadas.Api\\Program.cs",
-              "ToolTip": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Program.cs",
-              "RelativeToolTip": "RegistroLlamadas.Api\\Program.cs",
+              "Title": "CentroController.cs",
+              "DocumentMoniker": "C:\\Users\\Danny\\Documents\\ProyectoFinal\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Controllers\\CentroController.cs",
+              "RelativeDocumentMoniker": "RegistroLlamadas.Api\\Controllers\\CentroController.cs",
+              "ToolTip": "C:\\Users\\Danny\\Documents\\ProyectoFinal\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Controllers\\CentroController.cs",
+              "RelativeToolTip": "RegistroLlamadas.Api\\Controllers\\CentroController.cs",
+              "ViewState": "AgIAAJcAAAAAAAAAAAAcwLsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T18:19:03.853Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CentroModel.cs",
+              "DocumentMoniker": "C:\\Users\\Danny\\Documents\\ProyectoFinal\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Models\\CentroModel.cs",
+              "RelativeDocumentMoniker": "RegistroLlamadas.Api\\Models\\CentroModel.cs",
+              "ToolTip": "C:\\Users\\Danny\\Documents\\ProyectoFinal\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Models\\CentroModel.cs",
+              "RelativeToolTip": "RegistroLlamadas.Api\\Models\\CentroModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T02:07:12.337Z",
+              "WhenOpened": "2025-11-20T18:18:21.167Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "EstadoController.cs",
+              "DocumentMoniker": "C:\\Users\\Danny\\Documents\\ProyectoFinal\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Controllers\\EstadoController.cs",
+              "RelativeDocumentMoniker": "RegistroLlamadas.Api\\Controllers\\EstadoController.cs",
+              "ToolTip": "C:\\Users\\Danny\\Documents\\ProyectoFinal\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Controllers\\EstadoController.cs",
+              "RelativeToolTip": "RegistroLlamadas.Api\\Controllers\\EstadoController.cs",
+              "ViewState": "AgIAAJ0AAAAAAAAAAAAQwLsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T16:56:37.903Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "EstadoModel.cs",
+              "DocumentMoniker": "C:\\Users\\Danny\\Documents\\ProyectoFinal\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Models\\EstadoModel.cs",
+              "RelativeDocumentMoniker": "RegistroLlamadas.Api\\Models\\EstadoModel.cs",
+              "ToolTip": "C:\\Users\\Danny\\Documents\\ProyectoFinal\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Models\\EstadoModel.cs",
+              "RelativeToolTip": "RegistroLlamadas.Api\\Models\\EstadoModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T16:54:10.232Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "RolController.cs",
+              "DocumentMoniker": "C:\\Users\\Danny\\Documents\\ProyectoFinal\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Controllers\\RolController.cs",
+              "RelativeDocumentMoniker": "RegistroLlamadas.Api\\Controllers\\RolController.cs",
+              "ToolTip": "C:\\Users\\Danny\\Documents\\ProyectoFinal\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Controllers\\RolController.cs",
+              "RelativeToolTip": "RegistroLlamadas.Api\\Controllers\\RolController.cs",
+              "ViewState": "AgIAAKMAAAAAAAAAAAAQwMEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T16:35:45.88Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "DatosUsuarioResponseModel.cs",
+              "DocumentMoniker": "C:\\Users\\Danny\\Documents\\ProyectoFinal\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Models\\DatosUsuarioResponseModel.cs",
+              "RelativeDocumentMoniker": "RegistroLlamadas.Api\\Models\\DatosUsuarioResponseModel.cs",
+              "ToolTip": "C:\\Users\\Danny\\Documents\\ProyectoFinal\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Models\\DatosUsuarioResponseModel.cs",
+              "RelativeToolTip": "RegistroLlamadas.Api\\Models\\DatosUsuarioResponseModel.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAACAAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T14:06:39.183Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ValidarSesionRequestModel.cs",
+              "DocumentMoniker": "C:\\Users\\Danny\\Documents\\ProyectoFinal\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Models\\ValidarSesionRequestModel.cs",
+              "RelativeDocumentMoniker": "RegistroLlamadas.Api\\Models\\ValidarSesionRequestModel.cs",
+              "ToolTip": "C:\\Users\\Danny\\Documents\\ProyectoFinal\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Models\\ValidarSesionRequestModel.cs",
+              "RelativeToolTip": "RegistroLlamadas.Api\\Models\\ValidarSesionRequestModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T14:06:15.793Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Danny\\Documents\\ProyectoFinal\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\appsettings.json",
+              "RelativeDocumentMoniker": "RegistroLlamadas.Api\\appsettings.json",
+              "ToolTip": "C:\\Users\\Danny\\Documents\\ProyectoFinal\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\appsettings.json",
+              "RelativeToolTip": "RegistroLlamadas.Api\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-11-20T13:43:50.106Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Danny\\Documents\\ProyectoFinal\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Program.cs",
+              "RelativeDocumentMoniker": "RegistroLlamadas.Api\\Program.cs",
+              "ToolTip": "C:\\Users\\Danny\\Documents\\ProyectoFinal\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Program.cs",
+              "RelativeToolTip": "RegistroLlamadas.Api\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T02:07:12.337Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "AuthController.cs",
-              "DocumentMoniker": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Controllers\\AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\Danny\\Documents\\ProyectoFinal\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "RegistroLlamadas.Api\\Controllers\\AuthController.cs",
-              "ToolTip": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\Danny\\Documents\\ProyectoFinal\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Controllers\\AuthController.cs",
               "RelativeToolTip": "RegistroLlamadas.Api\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAqwEEAAAA3AAAAAAAAAA==",
+              "ViewState": "AgIAACkAAAAAAAAAAAAAAD4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-20T01:31:10.464Z",
               "EditorCaption": ""

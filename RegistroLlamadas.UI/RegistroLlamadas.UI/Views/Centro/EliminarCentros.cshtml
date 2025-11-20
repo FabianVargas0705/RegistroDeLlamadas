@@ -1,0 +1,55 @@
+﻿@model RegistroLlamadas.UI.Models.CentroModel
+
+@{
+    ViewData["Title"] = "Eliminar Centro";
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">
+                        <i class="bi bi-trash"></i> Eliminar Centro
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-danger fw-bold">
+                        ¿Está seguro que desea eliminar este centro?
+                    </p>
+
+                    <dl class="row">
+                        <dt class="col-sm-3">ID</dt>
+                        <dd class="col-sm-9">@Model.IdCentro</dd>
+
+                        <dt class="col-sm-3">Nombre</dt>
+                        <dd class="col-sm-9">@Model.Nombre</dd>
+
+                        <dt class="col-sm-3">Estado Id</dt>
+                        <dd class="col-sm-9">@Model.EstadoId</dd>
+                    </dl>
+
+                    <form asp-action="EliminarCentros" method="post">
+                        <input type="hidden" asp-for="IdCentro" />
+                        <div class="d-flex justify-content-between">
+                            <a href="@Url.Action("ConsultarCentros", "Centro")" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-danger">
+                                <i class="bi bi-trash"></i> Eliminar Definitivamente
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

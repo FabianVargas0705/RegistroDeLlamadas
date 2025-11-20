@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["Title"] = "Gestión de Estados";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">
+                <i class="bi bi-ui-checks-grid"></i> Gestión de Estados
+            </h2>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="bi bi-search display-4 text-primary mb-3"></i>
+                    <h5 class="card-title">Consultar Estados</h5>
+                    <p class="card-text text-muted">Ver todos los estados registrados</p>
+                    <a href="@Url.Action("ConsultarEstados", "Estado")" class="btn btn-primary">
+                        <i class="bi bi-arrow-right"></i> Ir a Consultar
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="bi bi-plus-circle display-4 text-success mb-3"></i>
+                    <h5 class="card-title">Agregar Estado</h5>
+                    <p class="card-text text-muted">Registrar un nuevo estado</p>
+                    <a href="@Url.Action("AgregarEstados", "Estado")" class="btn btn-success">
+                        <i class="bi bi-arrow-right"></i> Ir a Agregar
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="bi bi-pencil-square display-4 text-warning mb-3"></i>
+                    <h5 class="card-title">Actualizar Estado</h5>
+                    <p class="card-text text-muted">Modificar un estado existente</p>
+                    <a href="@Url.Action("ConsultarEstados", "Estado")" class="btn btn-warning">
+                        <i class="bi bi-arrow-right"></i> Ir a Consultar
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="bi bi-trash display-4 text-danger mb-3"></i>
+                    <h5 class="card-title">Eliminar Estado</h5>
+                    <p class="card-text text-muted">Eliminar un estado del sistema</p>
+                    <a href="@Url.Action("ConsultarEstados", "Estado")" class="btn btn-danger">
+                        <i class="bi bi-arrow-right"></i> Ir a Consultar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
