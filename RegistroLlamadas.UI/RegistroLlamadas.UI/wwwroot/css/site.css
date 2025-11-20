@@ -1,21 +1,20 @@
-﻿/* === VARIABLES GLOBALES === */
+﻿
 :root {
     --sidebar-width: 260px;
     --sidebar-collapsed-width: 70px;
     --navbar-height: 56px;
 }
 
-/* === AJUSTES GENERALES === */
+
 body {
     overflow-x: hidden;
 }
 
-/* === NAVBAR === */
+
 .navbar {
     z-index: 1030;
 }
 
-/* === SIDEBAR === */
 .sidebar {
     position: fixed;
     top: var(--navbar-height);
@@ -35,7 +34,7 @@ body {
     transition: width 0.3s ease-in-out;
 }
 
-/* Enlaces del sidebar */
+
 .sidebar .nav-link {
     padding: 0.75rem 1rem;
     transition: all 0.2s ease;
@@ -73,7 +72,7 @@ body.sidebar-hidden .main-content {
     margin-left: 0 !important;
     transition: margin-left 0.3s ease-in-out;
 }
-/* === OVERLAY MÓVIL === */
+
 .sidebar-overlay {
     position: fixed;
     top: var(--navbar-height);
@@ -92,7 +91,6 @@ body.sidebar-hidden .main-content {
         visibility: visible;
     }
 
-/* === CONTENIDO PRINCIPAL === */
 .main-content {
     margin-left: 0;
     margin-top: var(--navbar-height);
@@ -101,7 +99,7 @@ body.sidebar-hidden .main-content {
     padding: 0;
 }
 
-/* === MODO MÓVIL (menor a 992px) === */
+
 @media (max-width: 991.98px) {
     .sidebar.active {
         transform: translateX(0);
@@ -160,7 +158,7 @@ body.sidebar-hidden .main-content {
     }
 }
 
-/* === TEMA OSCURO === */
+
 [data-bs-theme="dark"] {
     --bs-body-bg: #0d1117;
     --bs-body-color: #c9d1d9;
@@ -174,7 +172,7 @@ body.sidebar-hidden .main-content {
             background-color: rgba(var(--bs-primary-rgb), 0.2);
         }
 
-/* === SCROLLBAR PERSONALIZADO === */
+
 .sidebar::-webkit-scrollbar {
     width: 6px;
 }
@@ -192,7 +190,7 @@ body.sidebar-hidden .main-content {
         background: rgba(var(--bs-primary-rgb), 0.5);
     }
 
-/* === ANIMACIONES === */
+
 @keyframes slideIn {
     from {
         transform: translateX(-100%);

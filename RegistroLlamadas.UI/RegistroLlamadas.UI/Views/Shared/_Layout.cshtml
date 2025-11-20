@@ -41,7 +41,7 @@
                         <li><a class="dropdown-item" href="#"><i class="bi bi-person"></i> Perfil</a></li>
                         <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Configuración</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
+                        <li><a class="dropdown-item text-danger" asp-action="logout" asp-controller="Home"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
                     </ul>
                 </div>
             </div>
@@ -78,10 +78,7 @@
                                 <i class="bi bi-person-check-fill"></i>
                                 <span class="sidebar-text">Mis Llamadas</span>
                             </a>
-                            <a href="/Llamada/LlamadasPendientes" class="nav-link rounded d-flex align-items-center gap-2">
-                                <i class="bi bi-clock-fill"></i>
-                                <span class="sidebar-text">Pendientes</span>
-                            </a>
+              
                         </nav>
                     </div>
                 </div>

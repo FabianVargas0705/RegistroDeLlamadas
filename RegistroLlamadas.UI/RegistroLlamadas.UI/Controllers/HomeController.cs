@@ -24,8 +24,12 @@ namespace RegistroLlamadas.UI.Controllers
             return View();
         }
 
-        public IActionResult Login()
+        public IActionResult Login(string mensaje)
         {
+            if (!string.IsNullOrEmpty(mensaje))
+            {
+                ViewBag.Mensaje = Uri.UnescapeDataString(mensaje);
+            }
             return View();
         }
         [HttpPost]
@@ -46,13 +50,20 @@ namespace RegistroLlamadas.UI.Controllers
                         HttpContext.Session.SetString("NombreUsuario", datosApi.Nombre);
                         HttpContext.Session.SetString("NombrePerfil", datosApi.NombrePerfil);
                         HttpContext.Session.SetString("Token", datosApi.Token);
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("DashboardView", "Dashboard");
                     }
                 }
 
                 ViewBag.Mensaje = "No se ha validado la información";
                 return View();
             }
+        }
+
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login", "Home");
         }
 
         public IActionResult Privacy()
