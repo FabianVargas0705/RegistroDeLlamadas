@@ -1,13 +1,14 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
     const toggleBtn = document.getElementById('toggleSidebar');
     const closeBtn = document.getElementById('closeSidebar');
+    const hideBtn = document.getElementById('hideSidebar');
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('sidebarOverlay');
     const btnTheme = document.getElementById('btnTheme');
     const html = document.documentElement;
     const body = document.body;
 
-    // === TEMA (MODO OSCURO/CLARO) ===
+    // === TEMA OSCURO/CLARO ===
     function applyTheme(theme) {
         html.setAttribute('data-bs-theme', theme);
 
@@ -25,27 +26,21 @@
         }
     }
 
-    // Cargar tema guardado
     const savedTheme = localStorage.getItem('theme') || 'light';
     applyTheme(savedTheme);
 
-    // Cambiar tema
     if (btnTheme) {
         btnTheme.addEventListener('click', function () {
             const currentTheme = html.getAttribute('data-bs-theme');
             const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-
             localStorage.setItem('theme', newTheme);
             applyTheme(newTheme);
 
-            // Animación suave
             btnTheme.style.transform = 'rotate(360deg)';
             setTimeout(() => {
                 btnTheme.style.transform = 'rotate(0deg)';
             }, 300);
         });
-
-        // Transición suave para el botón
         btnTheme.style.transition = 'transform 0.3s ease';
     }
 
@@ -57,23 +52,39 @@
     function openSidebar() {
         sidebar.classList.add('active');
         overlay.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Prevenir scroll en móvil
+        document.body.style.overflow = 'hidden';
     }
 
     function closeSidebar() {
         sidebar.classList.remove('active');
         overlay.classList.remove('active');
-        document.body.style.overflow = ''; // Restaurar scroll
+        document.body.style.overflow = '';
+    }
+
+    function hideSidebarCompletely() {
+        body.classList.add('sidebar-hidden');
+        body.classList.remove('sidebar-collapsed');
+        localStorage.setItem('sidebarHidden', 'true');
+        localStorage.setItem('sidebarCollapsed', 'false');
+    }
+
+    function showSidebar() {
+        body.classList.remove('sidebar-hidden');
+        localStorage.setItem('sidebarHidden', 'false');
     }
 
     function toggleSidebar() {
         if (isDesktop()) {
-            // En desktop: colapsar/expandir
-            body.classList.toggle('sidebar-collapsed');
-            const isCollapsed = body.classList.contains('sidebar-collapsed');
-            localStorage.setItem('sidebarCollapsed', isCollapsed);
+            // Si está completamente escondida, mostrar normal
+            if (body.classList.contains('sidebar-hidden')) {
+                showSidebar();
+            }
+            // Si está abierta (normal o colapsada), esconder completamente
+            else {
+                hideSidebarCompletely();
+            }
         } else {
-            // En móvil: abrir/cerrar
+            // En móvil, abrir/cerrar con overlay
             if (sidebar.classList.contains('active')) {
                 closeSidebar();
             } else {
@@ -82,9 +93,13 @@
         }
     }
 
-    // Restaurar estado colapsado en desktop
-    if (isDesktop() && localStorage.getItem('sidebarCollapsed') === 'true') {
-        body.classList.add('sidebar-collapsed');
+    // Restaurar estados
+    if (isDesktop()) {
+        if (localStorage.getItem('sidebarHidden') === 'true') {
+            body.classList.add('sidebar-hidden');
+        } else if (localStorage.getItem('sidebarCollapsed') === 'true') {
+            body.classList.add('sidebar-collapsed');
+        }
     }
 
     // Event listeners
@@ -102,51 +117,49 @@
         });
     }
 
-    if (overlay) {
-        overlay.addEventListener('click', closeSidebar);
+    if (hideBtn) {
+        hideBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            hideSidebarCompletely();
+        });
     }
 
-    // Cerrar sidebar en móvil al hacer clic en un enlace
+    if (overlay) overlay.addEventListener('click', closeSidebar);
+
     const sidebarLinks = sidebar.querySelectorAll('.nav-link');
     sidebarLinks.forEach(link => {
         link.addEventListener('click', function () {
-            if (!isDesktop()) {
-                closeSidebar();
-            }
+            if (!isDesktop()) closeSidebar();
         });
     });
 
-    // Ajustar en resize
+    // Ajuste en resize
     let resizeTimer;
     window.addEventListener('resize', function () {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(function () {
             if (isDesktop()) {
-                // Limpiar estados de móvil
                 closeSidebar();
                 body.style.overflow = '';
             } else {
-                // Limpiar estado colapsado de desktop
-                body.classList.remove('sidebar-collapsed');
+                body.classList.remove('sidebar-collapsed', 'sidebar-hidden');
             }
         }, 250);
     });
 
-    // === MEJORAS DE ACCESIBILIDAD ===
-    // Cerrar sidebar con tecla Escape
+    // Cerrar sidebar con Escape
     document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && !isDesktop() && sidebar.classList.contains('active')) {
             closeSidebar();
         }
     });
 
-    // === ANIMACIÓN SUAVE AL CARGAR ===
+    // Animación suave al cargar
     setTimeout(() => {
         sidebar.style.transition = 'transform 0.3s ease-in-out, width 0.3s ease-in-out';
     }, 100);
 
-    // === TOOLTIP DE BOOTSTRAP (opcional) ===
-    // Inicializar tooltips si existen
+    // Tooltips de Bootstrap
     const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl);
