@@ -24,6 +24,26 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXERhc2hib2FyZFZpZXcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/PrograAvanzadaWeb/ProyectoRegistroLlamadas/RegistroDeLlamadas/RegistroLlamadas.UI/RegistroLlamadas.UI/Views/Equipo/ActualizarEquipos.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXF1aXBvXEFjdHVhbGl6YXJFcXVpcG9zLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/PrograAvanzadaWeb/ProyectoRegistroLlamadas/RegistroDeLlamadas/RegistroLlamadas.UI/RegistroLlamadas.UI/Views/Equipo/AgregarEquipos.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXF1aXBvXEFncmVnYXJFcXVpcG9zLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/PrograAvanzadaWeb/ProyectoRegistroLlamadas/RegistroDeLlamadas/RegistroLlamadas.UI/RegistroLlamadas.UI/Views/Equipo/ConsultarEquipos.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXF1aXBvXENvbnN1bHRhckVxdWlwb3MuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/PrograAvanzadaWeb/ProyectoRegistroLlamadas/RegistroDeLlamadas/RegistroLlamadas.UI/RegistroLlamadas.UI/Views/Equipo/EliminarEquipos.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXF1aXBvXEVsaW1pbmFyRXF1aXBvcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/PrograAvanzadaWeb/ProyectoRegistroLlamadas/RegistroDeLlamadas/RegistroLlamadas.UI/RegistroLlamadas.UI/Views/Equipo/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXF1aXBvXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/PrograAvanzadaWeb/ProyectoRegistroLlamadas/RegistroDeLlamadas/RegistroLlamadas.UI/RegistroLlamadas.UI/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -38,6 +58,26 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/PrograAvanzadaWeb/ProyectoRegistroLlamadas/RegistroDeLlamadas/RegistroLlamadas.UI/RegistroLlamadas.UI/Views/Llamada/Llamadas.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGxhbWFkYVxMbGFtYWRhcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/PrograAvanzadaWeb/ProyectoRegistroLlamadas/RegistroDeLlamadas/RegistroLlamadas.UI/RegistroLlamadas.UI/Views/Rol/ActualizarRoles.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sXEFjdHVhbGl6YXJSb2xlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/PrograAvanzadaWeb/ProyectoRegistroLlamadas/RegistroDeLlamadas/RegistroLlamadas.UI/RegistroLlamadas.UI/Views/Rol/AgregarRoles.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sXEFncmVnYXJSb2xlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/PrograAvanzadaWeb/ProyectoRegistroLlamadas/RegistroDeLlamadas/RegistroLlamadas.UI/RegistroLlamadas.UI/Views/Rol/ConsultarRoles.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sXENvbnN1bHRhclJvbGVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/PrograAvanzadaWeb/ProyectoRegistroLlamadas/RegistroDeLlamadas/RegistroLlamadas.UI/RegistroLlamadas.UI/Views/Rol/EliminarRoles.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sXEVsaW1pbmFyUm9sZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/PrograAvanzadaWeb/ProyectoRegistroLlamadas/RegistroDeLlamadas/RegistroLlamadas.UI/RegistroLlamadas.UI/Views/Rol/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/PrograAvanzadaWeb/ProyectoRegistroLlamadas/RegistroDeLlamadas/RegistroLlamadas.UI/RegistroLlamadas.UI/Views/Shared/Error.cshtml]

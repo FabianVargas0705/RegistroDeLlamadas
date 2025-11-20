@@ -34,7 +34,7 @@ namespace RegistroLlamadas.UI.Controllers
         {
             var catalogos = ObtenerCatalogos();
             ViewBag.Centros = catalogos?.Centros ?? new List<CatalogoItem>();
-            ViewBag.Estados = catalogos?.Estados ?? new List<CatalogoItem>();
+            ViewBag.Estados = catalogos?.Estados.Where(e => e.TipoEstado == 1) ?? new List<CatalogoItem>();
             return View(new EquipoModel());
         }
 
@@ -47,7 +47,7 @@ namespace RegistroLlamadas.UI.Controllers
             {
                 var catalogos = ObtenerCatalogos();
                 ViewBag.Centros = catalogos?.Centros ?? new List<CatalogoItem>();
-                ViewBag.Estados = catalogos?.Estados ?? new List<CatalogoItem>();
+                ViewBag.Estados = catalogos?.Estados.Where(e => e.TipoEstado == 1) ?? new List<CatalogoItem>(); ;
                 return View(equipo);
             }
 
@@ -110,7 +110,7 @@ namespace RegistroLlamadas.UI.Controllers
                         {
                             var catalogos = ObtenerCatalogos();
                             ViewBag.Centros = catalogos?.Centros ?? new List<CatalogoItem>();
-                            ViewBag.Estados = catalogos?.Estados ?? new List<CatalogoItem>();
+                            ViewBag.Estados = catalogos?.Estados.Where(e => e.TipoEstado == 1) ?? new List<CatalogoItem>(); ;
                             
                             return View(equipo);
                         }
@@ -134,7 +134,7 @@ namespace RegistroLlamadas.UI.Controllers
             {
                 var catalogos = ObtenerCatalogos();
                 ViewBag.Centros = catalogos?.Centros ?? new List<CatalogoItem>();
-                ViewBag.Estados = catalogos?.Estados ?? new List<CatalogoItem>();
+                ViewBag.Estados = catalogos?.Estados.Where(e => e.TipoEstado == 1) ?? new List<CatalogoItem>();
                 return View(equipo);
             }
 

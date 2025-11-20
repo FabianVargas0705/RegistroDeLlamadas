@@ -41,7 +41,7 @@ namespace RegistroLlamadas.UI.Controllers
                 Equipos = catalogos.Equipos,
                 Centros = catalogos.Centros,
                 Usuarios = catalogos.Usuarios,
-                Estados = catalogos.Estados,
+                Estados = catalogos.Estados.Where(e => e.TipoEstado == 2).ToList(),
                 Clientes = catalogos.Clientes
             };
             ViewBag.UsuarioIdActual = HttpContext.Session.GetInt32("ConsecutivoUsuario");

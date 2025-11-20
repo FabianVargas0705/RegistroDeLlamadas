@@ -9,5 +9,8 @@ namespace RegistroLlamadas.UI.Models
 
         [JsonPropertyName("nombre")]
         public string Nombre { get; set; }
+
+        [JsonPropertyName("tipoestado")]
+        public int TipoEstado { get; set; }
     }
 }

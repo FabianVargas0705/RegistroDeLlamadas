@@ -123,6 +123,80 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "RegistroLlamadas.Api.Controllers.EquipoController",
+    "Method": "ActualizarEquipo",
+    "RelativePath": "api/Equipo/ActualizarEquipo",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "equipo",
+        "Type": "RegistroLlamadas.Api.Models.EquipoModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RegistroLlamadas.Api.Controllers.EquipoController",
+    "Method": "EliminarEquipo",
+    "RelativePath": "api/Equipo/EliminarEquipo/{idEquipo}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idEquipo",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RegistroLlamadas.Api.Controllers.EquipoController",
+    "Method": "ObtenerEquipoPorId",
+    "RelativePath": "api/Equipo/ObtenerEquipoPorId/{idEquipo}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idEquipo",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RegistroLlamadas.Api.Controllers.EquipoController",
+    "Method": "ObtenerEquipos",
+    "RelativePath": "api/Equipo/ObtenerEquipos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RegistroLlamadas.Api.Controllers.EquipoController",
+    "Method": "RegistrarEquipo",
+    "RelativePath": "api/Equipo/RegistrarEquipo",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "equipo",
+        "Type": "RegistroLlamadas.Api.Models.EquipoModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "RegistroLlamadas.Api.Controllers.LlamadaController",
     "Method": "ActualizarLlamada",
     "RelativePath": "api/Llamada/actualizarLlamada",
@@ -207,6 +281,80 @@
       {
         "Name": "llamada",
         "Type": "RegistroLlamadas.Api.Models.LlamadaModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RegistroLlamadas.Api.Controllers.RolController",
+    "Method": "ActualizarRol",
+    "RelativePath": "api/Rol/ActualizarRol",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "rol",
+        "Type": "RegistroLlamadas.Api.Models.RolModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RegistroLlamadas.Api.Controllers.RolController",
+    "Method": "EliminarRol",
+    "RelativePath": "api/Rol/EliminarRol/{idRol}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idRol",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RegistroLlamadas.Api.Controllers.RolController",
+    "Method": "ObtenerRoles",
+    "RelativePath": "api/Rol/ObtenerRoles",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RegistroLlamadas.Api.Controllers.RolController",
+    "Method": "ObtenerRolPorId",
+    "RelativePath": "api/Rol/ObtenerRolPorId/{idRol}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idRol",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RegistroLlamadas.Api.Controllers.RolController",
+    "Method": "RegistrarRol",
+    "RelativePath": "api/Rol/RegistrarRol",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "rol",
+        "Type": "RegistroLlamadas.Api.Models.RolModel",
         "IsRequired": true
       }
     ],

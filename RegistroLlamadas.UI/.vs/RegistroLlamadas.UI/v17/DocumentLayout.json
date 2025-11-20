@@ -3,60 +3,32 @@
   "WorkspaceRootPath": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.ui\\registrollamadas.ui\\wwwroot\\js\\llamadasview.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|solutionrelative:registrollamadas.ui\\wwwroot\\js\\llamadasview.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.ui\\registrollamadas.ui\\models\\catalogoitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|solutionrelative:registrollamadas.ui\\models\\catalogoitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.ui\\registrollamadas.ui\\wwwroot\\js\\iniciosesion.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|solutionrelative:registrollamadas.ui\\wwwroot\\js\\iniciosesion.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.ui\\registrollamadas.ui\\controllers\\equipocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|solutionrelative:registrollamadas.ui\\controllers\\equipocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.ui\\registrollamadas.ui\\wwwroot\\js\\dashboard.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|solutionrelative:registrollamadas.ui\\wwwroot\\js\\dashboard.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.ui\\registrollamadas.ui\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|solutionrelative:registrollamadas.ui\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.ui\\registrollamadas.ui\\wwwroot\\css\\llamadasview.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|solutionrelative:registrollamadas.ui\\wwwroot\\css\\llamadasview.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.ui\\registrollamadas.ui\\wwwroot\\css\\dashboard.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|solutionrelative:registrollamadas.ui\\wwwroot\\css\\dashboard.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.ui\\registrollamadas.ui\\views\\llamada\\llamadas.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|solutionrelative:registrollamadas.ui\\views\\llamada\\llamadas.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.ui\\registrollamadas.ui\\middleware\\tokenmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|solutionrelative:registrollamadas.ui\\middleware\\tokenmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.ui\\registrollamadas.ui\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|solutionrelative:registrollamadas.ui\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.ui\\registrollamadas.ui\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|solutionrelative:registrollamadas.ui\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.ui\\registrollamadas.ui\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|solutionrelative:registrollamadas.ui\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.ui\\registrollamadas.ui\\views\\dashboard\\dashboardview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|solutionrelative:registrollamadas.ui\\views\\dashboard\\dashboardview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.ui\\registrollamadas.ui\\controllers\\llamadacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|solutionrelative:registrollamadas.ui\\controllers\\llamadacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.ui\\registrollamadas.ui\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|solutionrelative:registrollamadas.ui\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.ui\\registrollamadas.ui\\models\\catalogoitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|solutionrelative:registrollamadas.ui\\models\\catalogoitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.ui\\registrollamadas.ui\\views\\dashboard\\dashboardview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|solutionrelative:registrollamadas.ui\\views\\dashboard\\dashboardview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.ui\\registrollamadas.ui\\views\\llamada\\llamadas.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|solutionrelative:registrollamadas.ui\\views\\llamada\\llamadas.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.ui\\registrollamadas.ui\\wwwroot\\css\\dashboard.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{0547FE8E-4648-4721-8FC5-4C73116D0CB0}|RegistroLlamadas.UI\\RegistroLlamadas.UI.csproj|solutionrelative:registrollamadas.ui\\wwwroot\\css\\dashboard.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     }
   ],
   "DocumentGroupContainers": [
@@ -75,123 +47,43 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "LlamadasView.js",
-              "DocumentMoniker": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\wwwroot\\js\\LlamadasView.js",
-              "RelativeDocumentMoniker": "RegistroLlamadas.UI\\wwwroot\\js\\LlamadasView.js",
-              "ToolTip": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\wwwroot\\js\\LlamadasView.js",
-              "RelativeToolTip": "RegistroLlamadas.UI\\wwwroot\\js\\LlamadasView.js",
-              "ViewState": "AgIAALEBAAAAAAAAAAAowAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-11-20T02:20:16.724Z",
+              "Title": "CatalogoItem.cs",
+              "DocumentMoniker": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\Models\\CatalogoItem.cs",
+              "RelativeDocumentMoniker": "RegistroLlamadas.UI\\Models\\CatalogoItem.cs",
+              "ToolTip": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\Models\\CatalogoItem.cs",
+              "RelativeToolTip": "RegistroLlamadas.UI\\Models\\CatalogoItem.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAwAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T15:13:05.637Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "InicioSesion.js",
-              "DocumentMoniker": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\wwwroot\\js\\InicioSesion.js",
-              "RelativeDocumentMoniker": "RegistroLlamadas.UI\\wwwroot\\js\\InicioSesion.js",
-              "ToolTip": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\wwwroot\\js\\InicioSesion.js",
-              "RelativeToolTip": "RegistroLlamadas.UI\\wwwroot\\js\\InicioSesion.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-11-20T02:20:13.621Z",
-              "EditorCaption": ""
+              "Title": "EquipoController.cs",
+              "DocumentMoniker": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\Controllers\\EquipoController.cs",
+              "RelativeDocumentMoniker": "RegistroLlamadas.UI\\Controllers\\EquipoController.cs",
+              "ToolTip": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\Controllers\\EquipoController.cs",
+              "RelativeToolTip": "RegistroLlamadas.UI\\Controllers\\EquipoController.cs",
+              "ViewState": "AgIAAGoAAAAAAAAAAAAnwCUAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T15:11:09.151Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Dashboard.js",
-              "DocumentMoniker": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\wwwroot\\js\\Dashboard.js",
-              "RelativeDocumentMoniker": "RegistroLlamadas.UI\\wwwroot\\js\\Dashboard.js",
-              "ToolTip": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\wwwroot\\js\\Dashboard.js",
-              "RelativeToolTip": "RegistroLlamadas.UI\\wwwroot\\js\\Dashboard.js",
-              "ViewState": "AgIAAAcBAAAAAAAAAAAwwF4AAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-11-20T02:19:27.631Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "LLamadasView.css",
-              "DocumentMoniker": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\wwwroot\\css\\LLamadasView.css",
-              "RelativeDocumentMoniker": "RegistroLlamadas.UI\\wwwroot\\css\\LLamadasView.css",
-              "ToolTip": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\wwwroot\\css\\LLamadasView.css",
-              "RelativeToolTip": "RegistroLlamadas.UI\\wwwroot\\css\\LLamadasView.css",
-              "ViewState": "AgIAAI0AAAAAAAAAAAAAAKEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-11-20T02:18:36.641Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\Controllers\\HomeController.cs",
-              "RelativeDocumentMoniker": "RegistroLlamadas.UI\\Controllers\\HomeController.cs",
-              "ToolTip": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\Controllers\\HomeController.cs",
-              "RelativeToolTip": "RegistroLlamadas.UI\\Controllers\\HomeController.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAB8AAAANAAAAAAAAAA==",
+              "Title": "LlamadaController.cs",
+              "DocumentMoniker": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\Controllers\\LlamadaController.cs",
+              "RelativeDocumentMoniker": "RegistroLlamadas.UI\\Controllers\\LlamadaController.cs",
+              "ToolTip": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\Controllers\\LlamadaController.cs",
+              "RelativeToolTip": "RegistroLlamadas.UI\\Controllers\\LlamadaController.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAACsAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T01:29:16.965Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T15:07:23.066Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "TokenMiddleware.cs",
-              "DocumentMoniker": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\Middleware\\TokenMiddleware.cs",
-              "RelativeDocumentMoniker": "RegistroLlamadas.UI\\Middleware\\TokenMiddleware.cs",
-              "ToolTip": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\Middleware\\TokenMiddleware.cs",
-              "RelativeToolTip": "RegistroLlamadas.UI\\Middleware\\TokenMiddleware.cs",
-              "ViewState": "AgIAACQAAAAAAAAAAAAowCAAAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T01:28:15.288Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\Program.cs",
-              "RelativeDocumentMoniker": "RegistroLlamadas.UI\\Program.cs",
-              "ToolTip": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\Program.cs",
-              "RelativeToolTip": "RegistroLlamadas.UI\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T01:25:05.781Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\appsettings.json",
-              "RelativeDocumentMoniker": "RegistroLlamadas.UI\\appsettings.json",
-              "ToolTip": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\appsettings.json",
-              "RelativeToolTip": "RegistroLlamadas.UI\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-11-20T01:24:59.449Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "site.css",
-              "DocumentMoniker": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\wwwroot\\css\\site.css",
-              "RelativeDocumentMoniker": "RegistroLlamadas.UI\\wwwroot\\css\\site.css",
-              "ToolTip": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\wwwroot\\css\\site.css",
-              "RelativeToolTip": "RegistroLlamadas.UI\\wwwroot\\css\\site.css",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-11-19T21:34:29.155Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 5,
               "Title": "Llamadas.cshtml",
               "DocumentMoniker": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\Views\\Llamada\\Llamadas.cshtml",
               "RelativeDocumentMoniker": "RegistroLlamadas.UI\\Views\\Llamada\\Llamadas.cshtml",
@@ -199,37 +91,35 @@
               "RelativeToolTip": "RegistroLlamadas.UI\\Views\\Llamada\\Llamadas.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-19T03:13:42.288Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-19T03:13:42.288Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "Dashboard.css",
               "DocumentMoniker": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\wwwroot\\css\\Dashboard.css",
               "RelativeDocumentMoniker": "RegistroLlamadas.UI\\wwwroot\\css\\Dashboard.css",
               "ToolTip": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\wwwroot\\css\\Dashboard.css",
               "RelativeToolTip": "RegistroLlamadas.UI\\wwwroot\\css\\Dashboard.css",
-              "ViewState": "AgIAAKMBAAAAAAAAAAAAAJIBAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAIgBAAAAAAAAAAAAAJIBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-11-19T02:05:26.155Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-19T02:05:26.155Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 4,
               "Title": "DashboardView.cshtml",
               "DocumentMoniker": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\Views\\Dashboard\\DashboardView.cshtml",
               "RelativeDocumentMoniker": "RegistroLlamadas.UI\\Views\\Dashboard\\DashboardView.cshtml",
               "ToolTip": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\Views\\Dashboard\\DashboardView.cshtml",
               "RelativeToolTip": "RegistroLlamadas.UI\\Views\\Dashboard\\DashboardView.cshtml",
-              "ViewState": "AgIAAD8AAAAAAAAAAAAAAF0AAABGAAAAAAAAAA==",
+              "ViewState": "AgIAADYAAAAAAAAAAAAAAF0AAABGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-11-19T00:34:47.339Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 3,
               "Title": "DashboardController.cs",
               "DocumentMoniker": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\Controllers\\DashboardController.cs",
               "RelativeDocumentMoniker": "RegistroLlamadas.UI\\Controllers\\DashboardController.cs",
@@ -238,18 +128,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-19T00:13:18.588Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "CatalogoItem.cs",
-              "DocumentMoniker": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\Models\\CatalogoItem.cs",
-              "RelativeDocumentMoniker": "RegistroLlamadas.UI\\Models\\CatalogoItem.cs",
-              "ToolTip": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.UI\\RegistroLlamadas.UI\\Models\\CatalogoItem.cs",
-              "RelativeToolTip": "RegistroLlamadas.UI\\Models\\CatalogoItem.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-14T22:10:39.136Z"
             }
           ]
         }
