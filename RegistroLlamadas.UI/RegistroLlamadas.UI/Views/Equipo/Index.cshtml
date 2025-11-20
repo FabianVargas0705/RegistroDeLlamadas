@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["Title"] = "Gestión de Equipos";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">
+                <i class="bi bi-laptop"></i> Gestión de Equipos
+            </h2>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="bi bi-search display-4 text-primary mb-3"></i>
+                    <h5 class="card-title">Consultar Equipos</h5>
+                    <p class="card-text text-muted">Ver todos los equipos registrados</p>
+                    <a href="@Url.Action("ConsultarEquipos", "Equipo")" class="btn btn-primary">
+                        <i class="bi bi-arrow-right"></i> Ir a Consultar
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="bi bi-plus-circle display-4 text-success mb-3"></i>
+                    <h5 class="card-title">Agregar Equipo</h5>
+                    <p class="card-text text-muted">Registrar un nuevo equipo</p>
+                    <a href="@Url.Action("AgregarEquipos", "Equipo")" class="btn btn-success">
+                        <i class="bi bi-arrow-right"></i> Ir a Agregar
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="bi bi-pencil-square display-4 text-warning mb-3"></i>
+                    <h5 class="card-title">Actualizar Equipo</h5>
+                    <p class="card-text text-muted">Modificar un equipo existente</p>
+                    <a href="@Url.Action("ConsultarEquipos", "Equipo")" class="btn btn-warning">
+                        <i class="bi bi-arrow-right"></i> Ir a Consultar
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="bi bi-trash display-4 text-danger mb-3"></i>
+                    <h5 class="card-title">Eliminar Equipo</h5>
+                    <p class="card-text text-muted">Eliminar un equipo del sistema</p>
+                    <a href="@Url.Action("ConsultarEquipos", "Equipo")" class="btn btn-danger">
+                        <i class="bi bi-arrow-right"></i> Ir a Consultar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
