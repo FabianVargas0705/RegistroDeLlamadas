@@ -1,7 +1,16 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.Api\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.api\\registrollamadas.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|solutionrelative:registrollamadas.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|d:\\prograavanzadaweb\\proyectoregistrollamadas\\registrodellamadas\\registrollamadas.api\\registrollamadas.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BFD1B22F-7F3D-4915-8C40-84C2591CE94B}|RegistroLlamadas.Api\\RegistroLlamadas.Api.csproj|solutionrelative:registrollamadas.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +18,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Program.cs",
+              "RelativeDocumentMoniker": "RegistroLlamadas.Api\\Program.cs",
+              "ToolTip": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Program.cs",
+              "RelativeToolTip": "RegistroLlamadas.Api\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T02:07:12.337Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "RegistroLlamadas.Api\\Controllers\\AuthController.cs",
+              "ToolTip": "D:\\PrograAvanzadaWeb\\ProyectoRegistroLlamadas\\RegistroDeLlamadas\\RegistroLlamadas.Api\\RegistroLlamadas.Api\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "RegistroLlamadas.Api\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAqwEEAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T01:31:10.464Z",
+              "EditorCaption": ""
             }
           ]
         }

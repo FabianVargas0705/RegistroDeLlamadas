@@ -1,35 +1,37 @@
+using RegistroLlamadas.UI.Middleware;
+
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
 builder.Services.AddSession();
 
-
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Error pages
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
-app.UseHsts();
+app.UseHttpsRedirection();
+
+app.UseStaticFiles();   // <-- NECESARIO para CSS/JS (si no está, usar MapStaticAssets al final)
 
 app.UseSession();
 
-app.UseHttpsRedirection();
+app.UseMiddleware<TokenMiddleware>();   // <--- Intercepta TODAS las peticiones
 
 app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapStaticAssets();
-
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Login}/{id?}")
-    .WithStaticAssets();
+    pattern: "{controller=Home}/{action=Login}/{id?}");
 
+// Esto va al FINAL
+app.MapStaticAssets();
 
 app.Run();

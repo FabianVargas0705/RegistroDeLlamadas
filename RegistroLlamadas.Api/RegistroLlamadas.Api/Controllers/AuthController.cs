@@ -63,7 +63,7 @@ namespace RegistroLlamadas.Api.Controllers
 
             var token = new JwtSecurityToken(
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(1),
+                expires: DateTime.UtcNow.AddMinutes(120),
                 signingCredentials: credentials
             );
 
