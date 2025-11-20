@@ -58,8 +58,10 @@ namespace RegistroLlamadas.Api.Controllers
         {
             try
             {
+                
                 using (var context = new SqlConnection(_configuration["ConnectionStrings:BDConnection"]))
                 {
+                    
                     var parametros = new DynamicParameters();
                     parametros.Add("@Fecha", llamada.Fecha);
                     parametros.Add("@HoraInicio", llamada.HoraInicio);
@@ -71,7 +73,7 @@ namespace RegistroLlamadas.Api.Controllers
                     parametros.Add("@EquipoId", llamada.EquipoId);
                     parametros.Add("@ClienteId", llamada.ClienteId);
                     parametros.Add("@CentroId", llamada.CentroId);
-                    parametros.Add("@EstadoId", llamada.EstadoId ?? 1);
+                    parametros.Add("@Estado", await obtenerEstado(llamada));
                     parametros.Add("@IdLlamadaGenerado", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
                     await context.ExecuteAsync(
@@ -101,6 +103,43 @@ namespace RegistroLlamadas.Api.Controllers
         
         }
 
+        private async Task<string> obtenerEstado(LlamadaModel llamada)
+        {
+            if (llamada.Estado == null)
+                llamada.Estado = new EstadoModel();
+
+
+            bool tieneHoraInicio = llamada.HoraInicio != TimeSpan.Zero;
+            bool tieneHoraFinal = llamada.HoraFinal.HasValue;
+
+            // 1. Si trae hora inicio y final → Finalizada
+            if (tieneHoraInicio && tieneHoraFinal)
+            {
+                llamada.Estado.Descripcion = "Finalizado";
+                return llamada.Estado.Descripcion;
+            }
+
+            // 2. Si NO trae hora final pero sí hora inicio
+            if (tieneHoraInicio && !tieneHoraFinal)
+            {
+                DateTime horaInicio = DateTime.Today.Add(llamada.HoraInicio);
+                double horasDiferencia = (DateTime.Now - horaInicio).TotalHours;
+
+                if (horasDiferencia < 1)
+                    llamada.Estado.Descripcion = "A tiempo";
+                else if (horasDiferencia >= 1 && horasDiferencia < 2)
+                    llamada.Estado.Descripcion = "En apoyo";
+                else
+                    llamada.Estado.Descripcion = "Atrasado";
+
+                return llamada.Estado.Descripcion;
+            }
+
+            // Si no cae en ningún caso, devolver algo por defecto
+            llamada.Estado.Descripcion = "Sin información";
+            return llamada.Estado.Descripcion;
+        }
+
         [HttpPost]
         [Route("actualizarLlamada")]
         public async Task<IActionResult> ActualizarLlamada([FromBody] LlamadaModel llamada)
@@ -121,7 +160,7 @@ namespace RegistroLlamadas.Api.Controllers
                     parametros.Add("@EquipoId", llamada.EquipoId);
                     parametros.Add("@ClienteId", llamada.ClienteId);
                     parametros.Add("@CentroId", llamada.CentroId);
-                    parametros.Add("@EstadoId", llamada.EstadoId);
+                    parametros.Add("@Estado", await obtenerEstado(llamada));
 
                     var resultado = await context.QueryFirstOrDefaultAsync<int>(
                         "sp_actualizar_llamada",

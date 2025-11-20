@@ -123,6 +123,7 @@ namespace RegistroLlamadas.UI.Controllers
                     if (!string.IsNullOrEmpty(token))
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
+
                     var respuesta = await client.PostAsJsonAsync(urlApi, llamada);
 
                     if (respuesta.IsSuccessStatusCode)
@@ -279,6 +280,7 @@ namespace RegistroLlamadas.UI.Controllers
             };
 
             ViewBag.Titulo = "Mis Llamadas Asignadas";
+            ViewBag.UsuarioIdActual = HttpContext.Session.GetInt32("ConsecutivoUsuario");
             return View("Llamadas", modelo); // Reutiliza la misma vista
         }
 

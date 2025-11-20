@@ -1,5 +1,9 @@
+wwwroot\css\Dashboard.css
+wwwroot\css\LLamadasView.css
 wwwroot\css\site.css
 wwwroot\favicon.ico
+wwwroot\js\Dashboard.js
+wwwroot\js\InicioSesion.js
 wwwroot\js\site.js
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map
@@ -61,10 +65,14 @@ wwwroot\lib\jquery\dist\jquery.slim.js
 wwwroot\lib\jquery\dist\jquery.slim.min.js
 wwwroot\lib\jquery\dist\jquery.slim.min.map
 wwwroot\lib\jquery\LICENSE.txt
-wwwroot\js\InicioSesion.js
-D:\PrograAvanzadaWeb\ProyectoRegistroLlamadas\RegistroDeLlamadas\RegistroLlamadas.UI\RegistroLlamadas.UI\wwwroot\js\site.js
-D:\PrograAvanzadaWeb\ProyectoRegistroLlamadas\RegistroDeLlamadas\RegistroLlamadas.UI\RegistroLlamadas.UI\wwwroot\favicon.ico
+wwwroot\js\LlamadasView.js
+D:\PrograAvanzadaWeb\ProyectoRegistroLlamadas\RegistroDeLlamadas\RegistroLlamadas.UI\RegistroLlamadas.UI\wwwroot\css\Dashboard.css
+D:\PrograAvanzadaWeb\ProyectoRegistroLlamadas\RegistroDeLlamadas\RegistroLlamadas.UI\RegistroLlamadas.UI\wwwroot\css\LLamadasView.css
 D:\PrograAvanzadaWeb\ProyectoRegistroLlamadas\RegistroDeLlamadas\RegistroLlamadas.UI\RegistroLlamadas.UI\wwwroot\css\site.css
+D:\PrograAvanzadaWeb\ProyectoRegistroLlamadas\RegistroDeLlamadas\RegistroLlamadas.UI\RegistroLlamadas.UI\wwwroot\favicon.ico
+D:\PrograAvanzadaWeb\ProyectoRegistroLlamadas\RegistroDeLlamadas\RegistroLlamadas.UI\RegistroLlamadas.UI\wwwroot\js\Dashboard.js
+D:\PrograAvanzadaWeb\ProyectoRegistroLlamadas\RegistroDeLlamadas\RegistroLlamadas.UI\RegistroLlamadas.UI\wwwroot\js\InicioSesion.js
+D:\PrograAvanzadaWeb\ProyectoRegistroLlamadas\RegistroDeLlamadas\RegistroLlamadas.UI\RegistroLlamadas.UI\wwwroot\js\site.js
 D:\PrograAvanzadaWeb\ProyectoRegistroLlamadas\RegistroDeLlamadas\RegistroLlamadas.UI\RegistroLlamadas.UI\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
 D:\PrograAvanzadaWeb\ProyectoRegistroLlamadas\RegistroDeLlamadas\RegistroLlamadas.UI\RegistroLlamadas.UI\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map
 D:\PrograAvanzadaWeb\ProyectoRegistroLlamadas\RegistroDeLlamadas\RegistroLlamadas.UI\RegistroLlamadas.UI\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css
@@ -124,4 +132,4 @@ D:\PrograAvanzadaWeb\ProyectoRegistroLlamadas\RegistroDeLlamadas\RegistroLlamada
 D:\PrograAvanzadaWeb\ProyectoRegistroLlamadas\RegistroDeLlamadas\RegistroLlamadas.UI\RegistroLlamadas.UI\wwwroot\lib\jquery\dist\jquery.slim.min.js
 D:\PrograAvanzadaWeb\ProyectoRegistroLlamadas\RegistroDeLlamadas\RegistroLlamadas.UI\RegistroLlamadas.UI\wwwroot\lib\jquery\dist\jquery.slim.min.map
 D:\PrograAvanzadaWeb\ProyectoRegistroLlamadas\RegistroDeLlamadas\RegistroLlamadas.UI\RegistroLlamadas.UI\wwwroot\lib\jquery\LICENSE.txt
-D:\PrograAvanzadaWeb\ProyectoRegistroLlamadas\RegistroDeLlamadas\RegistroLlamadas.UI\RegistroLlamadas.UI\wwwroot\js\InicioSesion.js
+D:\PrograAvanzadaWeb\ProyectoRegistroLlamadas\RegistroDeLlamadas\RegistroLlamadas.UI\RegistroLlamadas.UI\wwwroot\js\LlamadasView.js

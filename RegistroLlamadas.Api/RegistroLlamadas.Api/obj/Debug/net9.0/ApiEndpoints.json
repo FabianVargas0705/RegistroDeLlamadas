@@ -124,106 +124,57 @@
   },
   {
     "ContainingType": "RegistroLlamadas.Api.Controllers.LlamadaController",
-    "Method": "Post",
-    "RelativePath": "api/Llamada",
+    "Method": "ActualizarLlamada",
+    "RelativePath": "api/Llamada/actualizarLlamada",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "value",
-        "Type": "System.String",
+        "Name": "llamada",
+        "Type": "RegistroLlamadas.Api.Models.LlamadaModel",
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "RegistroLlamadas.Api.Controllers.LlamadaController",
-    "Method": "Get",
-    "RelativePath": "api/Llamada/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.String",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "RegistroLlamadas.Api.Controllers.LlamadaController",
-    "Method": "Put",
-    "RelativePath": "api/Llamada/{id}",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "value",
-        "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "RegistroLlamadas.Api.Controllers.LlamadaController",
-    "Method": "Delete",
-    "RelativePath": "api/Llamada/{id}",
+    "Method": "EliminarLlamada",
+    "RelativePath": "api/Llamada/eliminarLlamada/{idLlamada}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "id",
+        "Name": "idLlamada",
         "Type": "System.Int32",
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RegistroLlamadas.Api.Controllers.LlamadaController",
+    "Method": "FinalizarLlamada",
+    "RelativePath": "api/Llamada/finalizarLlamada",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
       {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 200
+        "Name": "modelo",
+        "Type": "RegistroLlamadas.Api.Models.FinalizarLlamadaModel",
+        "IsRequired": true
       }
-    ]
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "RegistroLlamadas.Api.Controllers.LlamadaController",
     "Method": "ObtenerLlamadas",
     "RelativePath": "api/Llamada/obtenerLlamada",
-    "HttpMethod": "GET",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -244,6 +195,22 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "RegistroLlamadas.Api.Controllers.LlamadaController",
+    "Method": "RegistrarLlamada",
+    "RelativePath": "api/Llamada/registrarLlamada",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "llamada",
+        "Type": "RegistroLlamadas.Api.Models.LlamadaModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "RegistroLlamadas.Api.Controllers.WeatherForecastController",

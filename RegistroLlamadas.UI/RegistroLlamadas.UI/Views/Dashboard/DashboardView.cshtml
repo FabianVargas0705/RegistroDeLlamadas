@@ -1,0 +1,143 @@
+﻿@model LlamadasViewModel
+
+@{
+    ViewData["Title"] = "Dashboard de Llamadas";
+}
+
+    <link href="~/css/dashboard.css" rel="stylesheet"/>
+
+
+<div class="dashboard-container">
+    <!-- Header -->
+    <div class="dashboard-header">
+        <div class="d-flex align-items-center">
+            <i class="bi bi-bar-chart-line-fill me-3" style="font-size: 2rem;"></i>
+            <h1 class="dashboard-title">REGISTRO DE LLAMADAS DIARIAS F-ST-12 V.03</h1>
+        </div>
+    </div>
+
+    <!-- Tarjetas de estadísticas -->
+    <div class="row g-3 mb-4">
+        <div class="col-lg col-md-4 col-sm-6">
+            <div class="stat-card total">
+                <div class="stat-title">Total Llamadas</div>
+                <h2 class="stat-value" id="totalLlamadas">0</h2>
+            </div>
+        </div>
+
+        <div class="col-lg col-md-4 col-sm-6">
+            <div class="stat-card finalizada">
+                <div class="stat-title">Finalizadas</div>
+                <h2 class="stat-value green" id="totalFinalizadas">0</h2>
+            </div>
+        </div>
+
+        <div class="col-lg col-md-4 col-sm-6">
+            <div class="stat-card visita">
+                <div class="stat-title">Visitas</div>
+                <h2 class="stat-value cyan" id="totalVisitas">0</h2>
+            </div>
+        </div>
+
+        <div class="col-lg col-md-4 col-sm-6">
+            <div class="stat-card atencion">
+                <div class="stat-title">En Atención</div>
+                <h2 class="stat-value red" id="totalAtencion">0</h2>
+            </div>
+        </div>
+
+        <div class="col-lg col-md-4 col-sm-6">
+            <div class="stat-card promedio">
+                <div class="stat-title">Tiempo Promedio</div>
+                <h2 class="stat-value orange" id="tiempoPromedio">0:00 hrs</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="row g-3 mb-4">
+        <div class="col-lg-10">
+            <div class="table-container">
+                <div class="table-responsive">
+                    <table id="tablaLlamadas" class="llamadas-table">
+                        <thead>
+                            <tr>
+                                <th>Responsable</th>
+                                <th>Lugar</th>
+                                <th>Equipo</th>
+                                <th>Fecha</th>
+                                <th>Hora Inicial</th>
+                                <th>Hora Final</th>
+                                <th>Tiempo transcurrido</th>
+                                <th>Condición</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           
+                            @if (Model.Llamadas != null)
+                            {
+                                @foreach (var item in Model.Llamadas)
+                                {
+                                    <tr data-llamada-id="@item.IdLlamada"
+                                        data-fecha="@item.Fecha.ToString("yyyy-MM-dd")"
+                                        data-hora-inicio="@item.HoraInicio.ToString(@"hh\:mm")"
+                                        data-hora-final="@(item.HoraFinal?.ToString(@"hh\:mm") ?? "")"
+                                        data-estado-id="@item.EstadoId"
+                                        data-estado-desc="@(item.Estado?.Descripcion ?? "")">
+                                        <td>@(item.Usuario?.Nombre ?? "-")</td>
+                                        <td>@(item.Centro?.Nombre ?? "-")</td>
+                                        <td>@(item.Equipo?.Nombre ?? "-")</td>
+                                        <td>@item.Fecha.ToString("yyyy-MM-dd")</td>
+                                        <td>@item.HoraInicio.ToString(@"hh\:mm\:ss")</td>
+                                        <td class="hora-final-cell">-</td>
+                                        <td class="tiempo-transcurrido">
+                                            <span class="badge-estado tiempo-badge">00:00:00</span>
+                                        </td>
+                                        <td class="condicion-cell">
+                                            <span class="badge-estado">Calculando...</span>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-2">
+            <div class="chart-container">
+                <h3 class="chart-title">Distribución por Estado</h3>
+                <div style="position: relative; height: 250px;">
+                    <canvas id="chartDistribucion"></canvas>
+                </div>
+                <div class="distribucion-container mt-4">
+                    <div class="distribucion-item">
+                        <span class="distribucion-label" style="color: #28a745;">Finalizada</span>
+                        <div class="distribucion-bar">
+                            <div class="distribucion-fill" style="background-color: #28a745; width: 0%;" id="barFinalizada">
+                                <span id="pctFinalizada">0%</span>
+                            </div>
+                        </div>
+                        <span class="distribucion-count" id="countFinalizada">0 llamadas</span>
+                    </div>
+                    <div class="distribucion-item">
+                        <span class="distribucion-label" style="color: #17a2b8;">Visita</span>
+                        <div class="distribucion-bar">
+                            <div class="distribucion-fill" style="background-color: #17a2b8; width: 0%;" id="barVisita">
+                                <span id="pctVisita">0%</span>
+                            </div>
+                        </div>
+                        <span class="distribucion-count" id="countVisita">0 llamadas</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="~/js/dashboard.js"></script>
+    
+}
