@@ -1,0 +1,63 @@
+﻿@model RegistroLlamadas.UI.Models.EquipoModel
+
+@{
+    ViewData["Title"] = "Eliminar Equipo";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">
+                        <i class="bi bi-exclamation-triangle"></i> Confirmar Eliminación
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning" role="alert">
+                        <strong>¡Advertencia!</strong> Esta acción no se puede deshacer.
+                        El equipo será eliminado permanentemente del sistema.
+                    </div>
+
+                    <h5 class="mb-3">¿Está seguro que desea eliminar el siguiente equipo?</h5>
+
+                    <dl class="row">
+                        <dt class="col-sm-3">ID:</dt>
+                        <dd class="col-sm-9">@Model.IdEquipo</dd>
+
+                        <dt class="col-sm-3">Nombre:</dt>
+                        <dd class="col-sm-9">@Model.Nombre</dd>
+
+                        <dt class="col-sm-3">Modelo:</dt>
+                        <dd class="col-sm-9">@Model.Modelo</dd>
+
+                        <dt class="col-sm-3">Marca:</dt>
+                        <dd class="col-sm-9">@Model.Marca</dd>
+
+                        <dt class="col-sm-3">Condición:</dt>
+                        <dd class="col-sm-9">@Model.Condicion</dd>
+
+                        <dt class="col-sm-3">Serie:</dt>
+                        <dd class="col-sm-9">@(Model.Serie ?? "-")</dd>
+
+                        <dt class="col-sm-3">Activo:</dt>
+                        <dd class="col-sm-9">@(Model.Activo ?? "-")</dd>
+                    </dl>
+
+                    <form asp-action="EliminarEquipos" method="post">
+                        <input type="hidden" asp-for="IdEquipo" />
+
+                        <div class="d-flex justify-content-between">
+                            <a href="@Url.Action("ConsultarEquipos", "Equipo")" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-danger">
+                                <i class="bi bi-trash"></i> Sí, Eliminar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
