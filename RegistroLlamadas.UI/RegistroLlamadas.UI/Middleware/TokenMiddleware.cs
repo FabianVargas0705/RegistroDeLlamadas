@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace RegistroLlamadas.UI.Middleware
 {
@@ -15,7 +16,7 @@ namespace RegistroLlamadas.UI.Middleware
 
         public async Task InvokeAsync(HttpContext context)
         {
-            var path = context.Request.Path.Value.ToLower();
+            var path = context.Request.Path.Value?.ToLower() ?? string.Empty;
 
             // Permitir root
             if (path == "/")
@@ -24,13 +25,9 @@ namespace RegistroLlamadas.UI.Middleware
                 return;
             }
 
-            if (path == "/home/login")
-            {
-                await _next(context);
-                return;
-            }
-
-            if (path == "/home/logout")
+            if (path == "/home/login" ||
+                path == "/home/logout" ||
+                path == "/home/recuperaracceso")
             {
                 await _next(context);
                 return;
@@ -59,9 +56,11 @@ namespace RegistroLlamadas.UI.Middleware
             // Validar expiración del token
             var handler = new JwtSecurityTokenHandler();
             var jwt = handler.ReadJwtToken(token);
-            var exp = jwt.ValidTo.ToLocalTime();
 
-            if (DateTime.Now > exp)
+            // ValidTo viene en UTC
+            var exp = jwt.ValidTo; // UTC
+
+            if (DateTime.UtcNow > exp)
             {
                 context.Session.Clear();
                 var msg = Uri.EscapeDataString("Sesión expirada");

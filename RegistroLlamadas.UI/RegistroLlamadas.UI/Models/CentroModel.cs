@@ -4,6 +4,7 @@
     {
         public int IdCentro { get; set; }
         public string Nombre { get; set; } = string.Empty;
-        public int? EstadoId { get; set; }
+        public int EstadoId { get; set; }
+        public string? EstadoDescripcion { get; set; }
     }
 }
