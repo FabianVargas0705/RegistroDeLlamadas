@@ -1,6 +1,6 @@
 USE [RegistroLlamadas]
 GO
-/****** Object:  Table [dbo].[asignaciones]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+/****** Object:  Table [dbo].[asignaciones]    Script Date: 20/11/2025 05:39:45 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -17,7 +17,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[bitacora]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+/****** Object:  Table [dbo].[bitacora]    Script Date: 20/11/2025 05:39:45 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -34,7 +34,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[centro]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+/****** Object:  Table [dbo].[centro]    Script Date: 20/11/2025 05:39:45 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -49,7 +49,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[cliente]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+/****** Object:  Table [dbo].[cliente]    Script Date: 20/11/2025 05:39:45 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -73,7 +73,7 @@ UNIQUE NONCLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[equipos]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+/****** Object:  Table [dbo].[equipos]    Script Date: 20/11/2025 05:39:45 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -94,7 +94,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[estado]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+/****** Object:  Table [dbo].[estado]    Script Date: 20/11/2025 05:39:45 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -109,7 +109,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[llamadas]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+/****** Object:  Table [dbo].[llamadas]    Script Date: 20/11/2025 05:39:45 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -134,7 +134,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[rol]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+/****** Object:  Table [dbo].[rol]    Script Date: 20/11/2025 05:39:45 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -149,7 +149,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[usuario]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+/****** Object:  Table [dbo].[usuario]    Script Date: 20/11/2025 05:39:45 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -213,7 +213,7 @@ GO
 ALTER TABLE [dbo].[usuario]  WITH CHECK ADD FOREIGN KEY([rol_id])
 REFERENCES [dbo].[rol] ([id_rol])
 GO
-/****** Object:  StoredProcedure [dbo].[sp_actualizar_llamada]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+/****** Object:  StoredProcedure [dbo].[sp_actualizar_llamada]    Script Date: 20/11/2025 05:39:45 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -230,11 +230,14 @@ CREATE PROCEDURE [dbo].[sp_actualizar_llamada]
     @EquipoId INT,
     @ClienteId INT,
     @CentroId INT,
-    @EstadoId INT
+    @Estado varchar(50)
 AS
 BEGIN
     SET NOCOUNT ON;
-    
+    Declare @EstadoId varchar(50)
+
+
+		 select  @EstadoId = id_estado from estado where descripcion = @Estado
     BEGIN TRY
         BEGIN TRANSACTION;
         
@@ -278,7 +281,129 @@ BEGIN
     END CATCH
 END;
 GO
-/****** Object:  StoredProcedure [dbo].[sp_eliminar_llamada]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+/****** Object:  StoredProcedure [dbo].[sp_ActualizarCentro]    Script Date: 20/11/2025 05:39:45 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- ACTUALIZAR CENTRO
+CREATE PROCEDURE [dbo].[sp_ActualizarCentro]
+    @IdCentro INT,
+    @Nombre VARCHAR(200),
+    @EstadoId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    UPDATE centro
+    SET nombre    = @Nombre,
+        estado_id = @EstadoId
+    WHERE id_centro = @IdCentro;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ActualizarEquipo]    Script Date: 20/11/2025 05:39:45 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_ActualizarEquipo]
+    @IdEquipo INT,
+    @Nombre VARCHAR(50),
+    @Modelo VARCHAR(50),
+    @Marca VARCHAR(50),
+    @Condicion VARCHAR(50),
+    @Serie VARCHAR(100) = NULL,
+    @Activo VARCHAR(20) = NULL,
+    @CentroId INT = NULL,
+    @EstadoId INT = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    BEGIN TRY
+        BEGIN TRANSACTION;
+        
+        UPDATE equipos
+        SET 
+            nombre = @Nombre,
+            modelo = @Modelo,
+            marca = @Marca,
+            condicion = @Condicion,
+            serie = @Serie,
+            activo = @Activo,
+            centro_id = @CentroId,
+            estado_id = @EstadoId
+        WHERE id_equipo = @IdEquipo;
+        
+        IF @@ROWCOUNT = 0
+            THROW 50001, 'No se encontró el equipo a actualizar', 1;
+        
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ActualizarEstado]    Script Date: 20/11/2025 05:39:45 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- ACTUALIZAR ESTADO
+CREATE PROCEDURE [dbo].[sp_ActualizarEstado]
+    @IdEstado INT,
+    @Descripcion VARCHAR(100),
+    @TipoEstado INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    UPDATE estado
+    SET descripcion = @Descripcion,
+        tipo_estado = @TipoEstado
+    WHERE id_estado = @IdEstado;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ActualizarRol]    Script Date: 20/11/2025 05:39:45 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_ActualizarRol]
+    @IdRol INT,
+    @Nombre VARCHAR(50),
+    @Descripcion VARCHAR(200) = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    BEGIN TRY
+        BEGIN TRANSACTION;
+        
+        UPDATE rol
+        SET 
+            nombre = @Nombre,
+            descripcion = @Descripcion
+        WHERE id_rol = @IdRol;
+        
+        IF @@ROWCOUNT = 0
+            THROW 50001, 'No se encontró el rol a actualizar', 1;
+        
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_eliminar_llamada]    Script Date: 20/11/2025 05:39:45 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -299,7 +424,7 @@ BEGIN
             RETURN;
         END
         
-        -- Eliminación lógica 
+        -- Eliminación lógica - cambiar estado a inactivo (asumiendo que 2 = Inactivo)
         UPDATE llamadas
         SET estado_id = 2
         WHERE id_llamada = @IdLlamada;
@@ -323,7 +448,108 @@ BEGIN
 END;
 
 GO
-/****** Object:  StoredProcedure [dbo].[sp_finalizar_llamada]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+/****** Object:  StoredProcedure [dbo].[sp_EliminarCentro]    Script Date: 20/11/2025 05:39:45 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- ELIMINAR CENTRO (FÍSICO; CUIDADO CON FK EN LLAMADAS/EQUIPOS)
+CREATE PROCEDURE [dbo].[sp_EliminarCentro]
+    @IdCentro INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DELETE FROM centro
+    WHERE id_centro = @IdCentro;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_EliminarEquipo]    Script Date: 20/11/2025 05:39:45 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[sp_EliminarEquipo]
+    @IdEquipo INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    BEGIN TRY
+        BEGIN TRANSACTION;
+        
+        -- Verificar si el equipo está siendo usado
+        IF EXISTS (SELECT 1 FROM llamadas WHERE equipo_id = @IdEquipo)
+            THROW 50002, 'No se puede eliminar el equipo porque está asociado a llamadas', 1;
+        
+        DELETE FROM equipos
+        WHERE id_equipo = @IdEquipo;
+        
+        IF @@ROWCOUNT = 0
+            THROW 50001, 'No se encontró el equipo a eliminar', 1;
+        
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_EliminarEstado]    Script Date: 20/11/2025 05:39:45 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- ELIMINAR ESTADO (OJO: PUEDE FALLAR POR FK SI YA ESTÁ EN USO)
+CREATE PROCEDURE [dbo].[sp_EliminarEstado]
+    @IdEstado INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DELETE FROM estado
+    WHERE id_estado = @IdEstado;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_EliminarRol]    Script Date: 20/11/2025 05:39:45 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_EliminarRol]
+    @IdRol INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    BEGIN TRY
+        BEGIN TRANSACTION;
+        
+        -- Verificar si el rol está siendo usado
+        IF EXISTS (SELECT 1 FROM usuario WHERE rol_id = @IdRol)
+            THROW 50002, 'No se puede eliminar el rol porque está asignado a usuarios', 1;
+        
+        DELETE FROM rol
+        WHERE id_rol = @IdRol;
+        
+        IF @@ROWCOUNT = 0
+            THROW 50001, 'No se encontró el rol a eliminar', 1;
+        
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_finalizar_llamada]    Script Date: 20/11/2025 05:39:45 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -376,7 +602,7 @@ BEGIN
 END;
 
 GO
-/****** Object:  StoredProcedure [dbo].[sp_obtener_llamadas]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+/****** Object:  StoredProcedure [dbo].[sp_obtener_llamadas]    Script Date: 20/11/2025 05:39:45 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -444,7 +670,7 @@ BEGIN
         AND CONVERT(date, l.fecha) = @Fecha and l.estado_id not in (2) AND (@UsuarioId IS NULL OR l.usuario_id = @UsuarioId);
 END;
 GO
-/****** Object:  StoredProcedure [dbo].[sp_ObtenerCatalogos]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+/****** Object:  StoredProcedure [dbo].[sp_ObtenerCatalogos]    Script Date: 20/11/2025 05:39:45 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -457,29 +683,32 @@ BEGIN
     -- Equipos
     SELECT 
         id_equipo AS ID, 
-        modelo AS Nombre
+        modelo AS Nombre,
+		0 as TipoEstado
     FROM equipos;
 
     -- Centros
     SELECT 
         id_centro AS ID, 
-        nombre AS Nombre
+        nombre AS Nombre,
+		0 as TipoEstado
     FROM centro
     WHERE estado_id = 1;
 
     -- Usuarios (técnicos)
     SELECT 
         id_usuario AS ID,
-        nombre + ' ' + primer_apellido + ' ' + segundo_apellido AS Nombre
+        nombre + ' ' + primer_apellido + ' ' + segundo_apellido AS Nombre,
+		0 as TipoEstado
     FROM usuario
     WHERE rol_id = 3;
 
     -- Estados
     SELECT 
         id_estado AS ID,
-        descripcion AS Nombre
+        descripcion AS Nombre,
+		tipo_estado as TipoEstado
     FROM estado
-    WHERE tipo_estado = 2;
 
     -- Clientes
     SELECT 
@@ -489,7 +718,189 @@ BEGIN
     FROM cliente;
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_registrar_llamada]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+/****** Object:  StoredProcedure [dbo].[sp_ObtenerCentroPorId]    Script Date: 20/11/2025 05:39:45 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- OBTENER CENTRO POR ID
+CREATE PROCEDURE [dbo].[sp_ObtenerCentroPorId]
+    @IdCentro INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        id_centro AS IdCentro,
+        nombre    AS Nombre,
+        estado_id AS EstadoId
+    FROM dbo.centro
+    WHERE id_centro = @IdCentro;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ObtenerCentros]    Script Date: 20/11/2025 05:39:45 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+-------------------------------------CENTROS
+
+-- LISTAR CENTROS
+CREATE PROCEDURE [dbo].[sp_ObtenerCentros]
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        id_centro AS IdCentro,
+        nombre    AS Nombre,
+        estado_id AS EstadoId
+    FROM dbo.centro
+    ORDER BY nombre;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ObtenerEquipoPorId]    Script Date: 20/11/2025 05:39:45 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_ObtenerEquipoPorId]
+    @IdEquipo INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    SELECT 
+        e.id_equipo AS IdEquipo,
+        e.nombre AS Nombre,
+        e.modelo AS Modelo,
+        e.marca AS Marca,
+        e.condicion AS Condicion,
+        e.serie AS Serie,
+        e.activo AS Activo,
+        e.centro_id AS CentroId,
+        e.estado_id AS EstadoId,
+        c.nombre AS CentroNombre,
+        est.descripcion AS EstadoDescripcion
+    FROM equipos e
+    LEFT JOIN centro c ON e.centro_id = c.id_centro
+    LEFT JOIN estado est ON e.estado_id = est.id_estado
+    WHERE e.id_equipo = @IdEquipo;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ObtenerEquipos]    Script Date: 20/11/2025 05:39:45 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_ObtenerEquipos]
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    SELECT 
+        e.id_equipo AS IdEquipo,
+        e.nombre AS Nombre,
+        e.modelo AS Modelo,
+        e.marca AS Marca,
+        e.condicion AS Condicion,
+        e.serie AS Serie,
+        e.activo AS Activo,
+        e.centro_id AS CentroId,
+        e.estado_id AS EstadoId,
+        c.nombre AS CentroNombre,
+        est.descripcion AS EstadoDescripcion
+    FROM equipos e
+    LEFT JOIN centro c ON e.centro_id = c.id_centro
+    LEFT JOIN estado est ON e.estado_id = est.id_estado
+    ORDER BY e.nombre;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ObtenerEstadoPorId]    Script Date: 20/11/2025 05:39:45 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- OBTENER ESTADO POR ID
+CREATE PROCEDURE [dbo].[sp_ObtenerEstadoPorId]
+    @IdEstado INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        id_estado   AS IdEstado,
+        descripcion AS Descripcion,
+        tipo_estado AS TipoEstado
+    FROM dbo.estado
+    WHERE id_estado = @IdEstado;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ObtenerEstados]    Script Date: 20/11/2025 05:39:45 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-----------------------------------------ESTADOS
+-- LISTAR ESTADOS
+CREATE PROCEDURE [dbo].[sp_ObtenerEstados]
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        id_estado   AS IdEstado,
+        descripcion AS Descripcion,
+        tipo_estado AS TipoEstado
+    FROM dbo.estado
+    ORDER BY descripcion;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ObtenerRoles]    Script Date: 20/11/2025 05:39:45 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_ObtenerRoles]
+    @IdLlamada INT = 0,
+    @Fecha DATE = NULL,
+	@UsuarioId INT = NULL 
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT
+        id_rol AS IdRol,
+        nombre AS Nombre,
+        descripcion AS Descripcion
+
+    FROM dbo.rol
+    ORDER BY nombre;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ObtenerRolPorId]    Script Date: 20/11/2025 05:39:45 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_ObtenerRolPorId]
+    @IdRol INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    SELECT 
+        id_rol AS IdRol,
+        nombre AS Nombre,
+        descripcion AS Descripcion
+    FROM rol
+    WHERE id_rol = @IdRol;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_registrar_llamada]    Script Date: 20/11/2025 05:39:45 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -497,7 +908,7 @@ GO
 CREATE PROCEDURE [dbo].[sp_registrar_llamada]
     @Fecha DATE,
     @HoraInicio TIME,
-    @HoraFinal TIME,
+    @HoraFinal TIME = NULL,
     @Promat VARCHAR(50),
     @Asunto VARCHAR(500),
     @CorreoEnviado BIT = 0,
@@ -505,7 +916,7 @@ CREATE PROCEDURE [dbo].[sp_registrar_llamada]
     @EquipoId INT,
     @ClienteId INT,
     @CentroId INT,
-    @EstadoId INT = 1,
+    @Estado Varchar(50),
     @IdLlamadaGenerado INT OUTPUT
 AS
 BEGIN
@@ -514,6 +925,10 @@ BEGIN
     BEGIN TRY
         BEGIN TRANSACTION;
         
+		Declare @estado2 varchar(50)
+
+
+		 select  @estado2 = id_estado from estado where descripcion = @Estado
         INSERT INTO llamadas (
             fecha,
             hora_inicio,
@@ -538,7 +953,7 @@ BEGIN
             @EquipoId,
             @ClienteId,
             @CentroId,
-            @EstadoId
+           @estado2
         );
         
         SET @IdLlamadaGenerado = SCOPE_IDENTITY();
@@ -555,9 +970,144 @@ BEGIN
         THROW;
     END CATCH
 END;
-
 GO
-/****** Object:  StoredProcedure [dbo].[ValidarSesion]    Script Date: 15/11/2025 12:37:29 p. m. ******/
+/****** Object:  StoredProcedure [dbo].[sp_RegistrarCentro]    Script Date: 20/11/2025 05:39:45 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- REGISTRAR CENTRO
+CREATE PROCEDURE [dbo].[sp_RegistrarCentro]
+    @Nombre VARCHAR(200),
+    @EstadoId INT,
+    @IdCentroGenerado INT OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        INSERT INTO centro (nombre, estado_id)
+        VALUES (@Nombre, @EstadoId);
+
+        SET @IdCentroGenerado = SCOPE_IDENTITY();
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_RegistrarEquipo]    Script Date: 20/11/2025 05:39:45 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_RegistrarEquipo]
+    @Nombre VARCHAR(50),
+    @Modelo VARCHAR(50),
+    @Marca VARCHAR(50),
+    @Condicion VARCHAR(50),
+    @Serie VARCHAR(100) = NULL,
+    @Activo VARCHAR(20) = NULL,
+    @CentroId INT = NULL,
+    @EstadoId INT = NULL,
+    @IdEquipoGenerado INT OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    BEGIN TRY
+        BEGIN TRANSACTION;
+        
+        INSERT INTO equipos (
+            nombre, modelo, marca, condicion, serie, 
+            activo, centro_id, estado_id
+        )
+        VALUES (
+            @Nombre, @Modelo, @Marca, @Condicion, @Serie,
+            @Activo, @CentroId, @EstadoId
+        );
+        
+        SET @IdEquipoGenerado = SCOPE_IDENTITY();
+        
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_RegistrarEstado]    Script Date: 20/11/2025 05:39:45 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- REGISTRAR ESTADO
+CREATE PROCEDURE [dbo].[sp_RegistrarEstado]
+    @Descripcion VARCHAR(100),
+    @TipoEstado INT,
+    @IdEstadoGenerado INT OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        INSERT INTO estado (descripcion, tipo_estado)
+        VALUES (@Descripcion, @TipoEstado);
+
+        SET @IdEstadoGenerado = SCOPE_IDENTITY();
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_RegistrarRol]    Script Date: 20/11/2025 05:39:45 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_RegistrarRol]
+    @Nombre VARCHAR(50),
+    @Descripcion VARCHAR(200) = NULL,
+    @IdRolGenerado INT OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    BEGIN TRY
+        BEGIN TRANSACTION;
+        
+        INSERT INTO rol (nombre, descripcion)
+        VALUES (@Nombre, @Descripcion);
+        
+        SET @IdRolGenerado = SCOPE_IDENTITY();
+        
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
+END
+GO
+/****** Object:  StoredProcedure [dbo].[ValidarSesion]    Script Date: 20/11/2025 05:39:45 p. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON

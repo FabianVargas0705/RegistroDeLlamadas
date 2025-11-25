@@ -1,7 +1,7 @@
-﻿@model RegistroLlamadas.UI.Models.RolModel
+﻿@model RegistroLlamadas.UI.Models.EstadoModel
 
 @{
-    ViewData["Title"] = "Agregar Rol";
+    ViewData["Title"] = "Agregar estado";
 }
 
 @if (TempData["ErrorMessage"] != null)
@@ -22,25 +22,25 @@
                     </h4>
                 </div>
                 <div class="card-body">
-                    <form asp-action="AgregarRoles" method="post">
+                    <form asp-action="AgregarEstados" method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                         <div class="mb-3">
-                            <label asp-for="Nombre" class="form-label">
+                            <label asp-for="Descripcion" class="form-label">
                                 Nombre <span class="text-danger">*</span>
                             </label>
-                            <input asp-for="Nombre" class="form-control" maxlength="50" required />
-                            <span asp-validation-for="Nombre" class="text-danger"></span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label asp-for="Descripcion" class="form-label">Descripción</label>
-                            <textarea asp-for="Descripcion" class="form-control" rows="3" maxlength="200"></textarea>
+                            <input asp-for="Descripcion" class="form-control" maxlength="50" required />
                             <span asp-validation-for="Descripcion" class="text-danger"></span>
                         </div>
 
+                        <div class="mb-3">
+                            <label asp-for="TipoEstado" class="form-label">TipoEstado</label>
+                            <input asp-for="TipoEstado" type="number" class="form-control" />
+                            <span asp-validation-for="TipoEstado" class="text-danger"></span>
+                        </div>
+
                         <div class="d-flex justify-content-between">
-                            <a href="@Url.Action("Index", "Rol")" class="btn btn-secondary">
+                            <a href="@Url.Action("Index", "Estado")" class="btn btn-secondary">
                                 <i class="bi bi-arrow-left"></i> Volver
                             </a>
                             <button type="submit" class="btn btn-success">
