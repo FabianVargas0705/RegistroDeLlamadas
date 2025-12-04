@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Encuesta de Satisfacción</title>
+    <style>
+        body {
+            background-color: #f4f4f7;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            background: #ffffff;
+            margin: 30px auto;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #eeeeee;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            color: #004aad;
+            margin-bottom: 15px;
+        }
+
+        .content {
+            font-size: 15px;
+            color: #333333;
+            line-height: 1.6;
+        }
+
+            .content p {
+                margin: 8px 0;
+            }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .button-container {
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        .button {
+            background-color: #004aad;
+            color: #ffffff !important;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 6px;
+            display: inline-block;
+            font-size: 15px;
+        }
+
+        .qr-container {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+            .qr-container img {
+                width: 180px;
+                height: 180px;
+            }
+
+        .footer {
+            text-align: center;
+            color: #777777;
+            font-size: 12px;
+            margin-top: 25px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="title">Encuesta de Satisfacción</div>
+
+        <div class="content">
+            <p>Estimado(a) <span class="bold">{{NombreCliente}}</span>,</p>
+
+            <p>Gracias por permitirnos brindarle atención en <span class="bold">Capris Médica</span>.</p>
+
+            <p>Detalles de su caso:</p>
+
+            <p><span class="bold">Número de caso:</span> {{NumeroCaso}}</p>
+            <p><span class="bold">Atendido por:</span> {{AtendidoPor}}</p>
+            <p><span class="bold">Asunto de la llamada:</span> {{AsuntoLlamada}}</p>
+
+            <p>
+                Le agradeceríamos dedicar menos de 1 minuto para completar una breve encuesta
+                sobre la atención recibida. Su opinión es muy importante para mejorar continuamente.
+            </p>
+
+            <div class="button-container">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfdGXY4S5lcdDar1tSJRAODceUbhEmfKKwfgCAXLV7Y6qgkRA/viewform?pli=1"
+                   class="button">Completar encuesta</a>
+            </div>
+
+            <p style="text-align:center;">O escanee el siguiente código QR:</p>
+
+            <div class="qr-container">
+                <img src="data:image/png;base64,{{QRBASE64}}" width="180" height="180" />
+            </div>
+
+            <p style="text-align:center; margin-top:15px;">
+                ¡Gracias por ayudarnos a mejorar!
+            </p>
+        </div>
+
+        <div class="footer">
+            © Capris Médica – Innovando en Diagnóstico e Investigación
+        </div>
+
+    </div>
+</body>
+</html>

@@ -27,6 +27,7 @@ namespace RegistroLlamadas.UI.Controllers
                 return View();
             }
             var llamadas = await ObtenerLlamadasAPI(0, fecha);
+            var visitas = await ObtenerVisitasAPI(fecha);
             if (llamadas == null)
             {
                 ViewBag.Error = "No se pudieron cargar las llamadas.";
@@ -36,6 +37,7 @@ namespace RegistroLlamadas.UI.Controllers
             var modelo = new LlamadasViewModel
             {
                 Llamadas = llamadas,
+                Visitas = visitas,
                 Equipos = catalogos.Equipos,
                 Centros = catalogos.Centros,
                 Usuarios = catalogos.Usuarios,
@@ -105,6 +107,41 @@ namespace RegistroLlamadas.UI.Controllers
                 return null;
             }
         }
+
+
+        private async Task<List<VisitaModel>> ObtenerVisitasAPI(DateTime? fecha = null)
+        {
+            using (var client = _http.CreateClient())
+            {
+                var request = new RequestObtenerVisita
+                {
+                    Fecha = fecha ?? DateTime.Now
+                };
+
+                var urlApi = _configuration["Valores:UrlAPI"] + "Visita/ObtenerVisitas";
+
+                var token = HttpContext.Session.GetString("Token");
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization =
+                        new AuthenticationHeaderValue("Bearer", token);
+
+                var respuesta = await client.PostAsJsonAsync(urlApi, request);
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    var options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+
+                    var visitas = await respuesta.Content.ReadFromJsonAsync<List<VisitaModel>>(options);
+                    return visitas ?? new List<VisitaModel>();
+                }
+
+                return new List<VisitaModel>();
+            }
+        }
+
         // GET: DashboardController/Details/5
         public ActionResult Details(int id)
         {

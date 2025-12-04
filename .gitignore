@@ -427,3 +427,4 @@ npm-debug.log*
 # macOS
 .DS_Store
 
+RegistroLlamadas.Api/RegistroLlamadas.Api/appsettings.json

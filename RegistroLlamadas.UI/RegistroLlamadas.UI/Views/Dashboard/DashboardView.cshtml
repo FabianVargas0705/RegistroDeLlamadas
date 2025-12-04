@@ -73,33 +73,143 @@
                             </tr>
                         </thead>
                         <tbody>
-                           
-                            @if (Model.Llamadas != null)
+                            @foreach (var item in Model.Llamadas)
                             {
-                                @foreach (var item in Model.Llamadas)
-                                {
-                                    <tr data-llamada-id="@item.IdLlamada"
-                                        data-fecha="@item.Fecha.ToString("yyyy-MM-dd")"
-                                        data-hora-inicio="@item.HoraInicio.ToString(@"hh\:mm")"
-                                        data-hora-final="@(item.HoraFinal?.ToString(@"hh\:mm") ?? "")"
-                                        data-estado-id="@item.EstadoId"
-                                        data-estado-desc="@(item.Estado?.Descripcion ?? "")">
-                                        <td>@(item.Usuario?.Nombre ?? "-")</td>
-                                        <td>@(item.Centro?.Nombre ?? "-")</td>
-                                        <td>@(item.Equipo?.Nombre ?? "-")</td>
-                                        <td>@item.Fecha.ToString("yyyy-MM-dd")</td>
-                                        <td>@item.HoraInicio.ToString(@"hh\:mm\:ss")</td>
-                                        <td class="hora-final-cell">-</td>
-                                        <td class="tiempo-transcurrido">
-                                            <span class="badge-estado tiempo-badge">00:00:00</span>
-                                        </td>
-                                        <td class="condicion-cell">
-                                            <span class="badge-estado">Calculando...</span>
-                                        </td>
-                                    </tr>
-                                }
+                                var visita = Model.Visitas?
+                                .Where(v => v.IdLlamada == item.IdLlamada)
+                                .OrderByDescending(v => v.FechaVisita)
+                                .FirstOrDefault();
+
+                                // Valores para el cálculo del JS
+                                string fechaCalc = visita != null
+                                ? visita.FechaVisita.ToString("yyyy-MM-dd")
+                                : item.Fecha.ToString("yyyy-MM-dd");
+
+                                string horaInicioCalc = visita != null
+                                ? visita.HoraInicio.ToString(@"hh\:mm")
+                                : item.HoraInicio.ToString(@"hh\:mm");
+
+                                string horaFinalCalc = visita?.HoraFinal?.ToString(@"hh\:mm")
+                                ?? item.HoraFinal?.ToString(@"hh\:mm")
+                                ?? "";
+
+                                string estadoDescCalc = visita?.EstadoNombre ?? item.Estado?.Descripcion ?? "";
+
+                                <tr data-llamada-id="@item.IdLlamada"
+                                    data-fecha="@fechaCalc"
+                                    data-hora-inicio="@horaInicioCalc"
+                                    data-hora-final="@horaFinalCalc"
+                                    data-estado-id="@(visita?.EstadoId ?? item.EstadoId)"
+                                    data-estado-desc="@estadoDescCalc">
+
+                                    <!-- RESPONSABLE -->
+                                    <td>
+                                        @(item.Usuario?.Nombre ?? "-")
+                                        @if (visita != null)
+                                        {
+                                            <div class="mt-1 small text-info">
+                                                <i class="bi bi-person-walking"></i> Visita: @visita.UsuarioNombre
+                                            </div>
+                                        }
+                                    </td>
+
+                                    <!-- LUGAR -->
+                                    <td>
+                                        @(item.Centro?.Nombre ?? "-")
+                                        @if (visita != null)
+                                        {
+                                            <div class="mt-1 small text-primary">
+                                                <i class="bi bi-geo-alt"></i> @visita.CentroNombre
+                                            </div>
+                                        }
+                                    </td>
+
+                                    <!-- EQUIPO -->
+                                    <td>@(item.Equipo?.Nombre ?? "-")</td>
+
+                                    <!-- FECHA -->
+                                    <td>
+                                        @item.Fecha.ToString("yyyy-MM-dd")
+                                        @if (visita != null)
+                                        {
+                                            <div class="small text-info mt-1">
+                                                <i class="bi bi-calendar-event"></i>
+                                                Visita: @visita.FechaVisita.ToString("dd/MM")
+                                            </div>
+                                        }
+                                    </td>
+
+                                    <!-- HORA INICIO -->
+                                    <td>
+                                        @item.HoraInicio.ToString(@"hh\:mm\:ss")
+                                        @if (visita != null)
+                                        {
+                                            <div class="small text-info mt-1">
+                                                <i class="bi bi-clock"></i>
+                                                Visita inicio: @visita.HoraInicio.ToString(@"hh\:mm")
+                                            </div>
+                                        }
+                                    </td>
+
+                                    <!-- HORA FINAL -->
+                                    <td class="hora-final-cell">
+                                        @if (item.HoraFinal.HasValue)
+                                        {
+                                            <span class="badge bg-success text-success bg-opacity-10">
+                                                @item.HoraFinal.Value.ToString(@"hh\:mm")
+                                            </span>
+                                        }
+                                        else if (visita?.HoraFinal != null)
+                                        {
+                                            <span class="badge bg-info text-info bg-opacity-10">
+                                                @visita.HoraFinal.Value.ToString(@"hh\:mm")
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">-</span>
+                                        }
+
+                                        @if (visita != null)
+                                        {
+                                            <div class="small text-info mt-1">
+                                                <i class="bi bi-clock-history"></i>
+                                                Visita final: @(visita.HoraFinal?.ToString(@"hh\:mm") ?? "-")
+                                            </div>
+                                        }
+                                    </td>
+
+                                    <!-- TIEMPO TRANSCURRIDO (LLAMADA o VISITA según calc) -->
+                                    <td class="tiempo-transcurrido">
+                                        <span class="badge-estado tiempo-badge">00:00:00</span>
+
+                                        @if (visita != null)
+                                        {
+                                            <div class="small text-info mt-1">
+                                                <i class="bi bi-hourglass"></i> Tiempo visita
+                                            </div>
+                                        }
+                                    </td>
+
+                                    <!-- CONDICIÓN -->
+                                    <td class="condicion-cell">
+                                        <span class="badge-estado">Calculando...</span>
+
+                                        @if (visita != null)
+                                        {
+                                            <div class="small mt-1 text-info">
+                                                <i class="bi bi-flag-fill"></i>
+                                                Estado visita: @visita.EstadoNombre
+                                            </div>
+                                        }
+                                    </td>
+
+                                </tr>
                             }
                         </tbody>
+
+
+
                     </table>
                 </div>
             </div>
