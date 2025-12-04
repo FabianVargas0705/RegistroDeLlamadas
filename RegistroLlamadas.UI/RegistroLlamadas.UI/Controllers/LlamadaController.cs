@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RegistroLlamadas.UI.Models;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Text.Json;
 using static System.Net.WebRequestMethods;
 
@@ -19,6 +20,7 @@ namespace RegistroLlamadas.UI.Controllers
             _http = http;
         }
 
+        #region obtener llamadas
         public async Task<ActionResult> Llamadas(DateTime? fecha = null)
         {
             var catalogos = ObtenerCatalogos();
@@ -45,10 +47,14 @@ namespace RegistroLlamadas.UI.Controllers
                 Clientes = catalogos.Clientes
             };
             ViewBag.UsuarioIdActual = HttpContext.Session.GetInt32("ConsecutivoUsuario");
-
+            ViewBag.RolActual = HttpContext.Session.GetInt32("IdPerfil");
             return View(modelo); 
         }
 
+        #endregion
+
+
+        #region obtener catalogo
         private CatalogosDTO ObtenerCatalogos()
         {
             using (var client = _http.CreateClient())
@@ -76,8 +82,10 @@ namespace RegistroLlamadas.UI.Controllers
                 return null;
             }
         }
+        #endregion
 
 
+        #region obtenerllamadasApi
         private async Task<List<LlamadaModel>> ObtenerLlamadasAPI(int idLlamada = 0, DateTime? fecha = null)
         {
             using (var client = _http.CreateClient())
@@ -109,7 +117,11 @@ namespace RegistroLlamadas.UI.Controllers
                 return null;
             }
         }
+        #endregion
 
+
+
+        #region registrar Llamada
         [HttpPost]
         public async Task<IActionResult> RegistrarLlamada([FromBody] LlamadaModel llamada)
         {
@@ -146,7 +158,10 @@ namespace RegistroLlamadas.UI.Controllers
             }
         }
 
+        #endregion
 
+
+        #region Actualizar llamada
         [HttpPost]
         public async Task<IActionResult> ActualizarLlamada([FromBody] LlamadaModel llamada)
         {
@@ -182,6 +197,12 @@ namespace RegistroLlamadas.UI.Controllers
             }
         }
 
+        #endregion
+
+
+
+
+        #region Obtener llamada por ID
         [HttpGet]
         public async Task<IActionResult> ObtenerLlamadaPorId(int idLlamada)
         {
@@ -209,6 +230,12 @@ namespace RegistroLlamadas.UI.Controllers
             }
         }
 
+        #endregion
+
+
+
+
+        #region eliminar llamada
         [HttpDelete]
         public async Task<IActionResult> EliminarLlamada(int idLlamada)
         {
@@ -243,6 +270,13 @@ namespace RegistroLlamadas.UI.Controllers
                 return BadRequest(new { success = false, mensaje = "Error al eliminar la llamada: " + ex.Message });
             }
         }
+
+        #endregion
+
+
+
+
+        #region obtener misLlamadas
 
         public async Task<ActionResult> MisLlamadas(DateTime? fecha = null)
         {
@@ -281,9 +315,15 @@ namespace RegistroLlamadas.UI.Controllers
 
             ViewBag.Titulo = "Mis Llamadas Asignadas";
             ViewBag.UsuarioIdActual = HttpContext.Session.GetInt32("ConsecutivoUsuario");
+            ViewBag.RolActual = HttpContext.Session.GetInt32("IdPerfil");
             return View("Llamadas", modelo); // Reutiliza la misma vista
         }
 
+        #endregion
+
+
+
+        #region obtener mis llamadas api
         private async Task<List<LlamadaModel>> ObtenerMisLlamadasAPI(int usuarioId, DateTime? fecha = null)
         {
             using (var client = _http.CreateClient())
@@ -292,7 +332,7 @@ namespace RegistroLlamadas.UI.Controllers
                 {
                     IdLlamada = 0,
                     Fecha = fecha ?? DateTime.Now,
-                    UsuarioId = usuarioId // Agregar este campo al RequestObtenerLlamada
+                    UsuarioId = usuarioId
                 };
 
                 var urlApi = _configuration["Valores:UrlAPI"] + "Llamada/obtenerLlamada";
@@ -317,40 +357,11 @@ namespace RegistroLlamadas.UI.Controllers
             }
         }
 
-        public async Task<ActionResult> LlamadasPendientes(DateTime? fecha = null)
-        {
-            var catalogos =  ObtenerCatalogos();
-            if (catalogos == null)
-            {
-                ViewBag.Error = "No se pudieron cargar los catálogos.";
-                return View();
-            }
+        #endregion
 
-            var llamadas = await ObtenerLlamadasAPI(0, fecha);
 
-            if (llamadas != null)
-            {
-                llamadas = llamadas.Where(l => l.EstadoId == 3).ToList();
-            }
-            else
-            {
-                llamadas = new List<LlamadaModel>();
-            }
 
-            var modelo = new LlamadasViewModel
-            {
-                Llamadas = llamadas,
-                Equipos = catalogos.Equipos,
-                Centros = catalogos.Centros,
-                Usuarios = catalogos.Usuarios,
-                Estados = catalogos.Estados,
-                Clientes = catalogos.Clientes
-            };
-
-            ViewBag.Titulo = "Llamadas Pendientes";
-            return View("Llamadas", modelo);
-        }
-
+        #region finalizar llamada
         [HttpPost]
         public async Task<IActionResult> FinalizarLlamada([FromBody] FinalizarLlamadaModel modelo)
         {
@@ -385,5 +396,122 @@ namespace RegistroLlamadas.UI.Controllers
                 return BadRequest(new { success = false, mensaje = "Error al finalizar la llamada: " + ex.Message });
             }
         }
+        #endregion
+
+
+
+
+        #region registrar la visita
+
+        [HttpPost]
+        public async Task<IActionResult> RegistrarVisita([FromBody] RegistrarVisitaRequest modelo)
+        {
+            try
+            {
+                if (modelo.IdLlamada <= 0)
+                    return BadRequest(new { success = false, mensaje = "IdLlamada no válido" });
+
+                using (var client = _http.CreateClient())
+                {
+                    var urlApi = _configuration["Valores:UrlAPI"] + "Llamada/Visita/Registrar";
+
+                    // Token
+                    var token = HttpContext.Session.GetString("Token");
+                    if (!string.IsNullOrEmpty(token))
+                    {
+                        client.DefaultRequestHeaders.Authorization =
+                            new AuthenticationHeaderValue("Bearer", token);
+                    }
+
+                    // OBJETO que se enviará al API real
+                    var enviarApi = new
+                    {
+                        IdLlamada = modelo.IdLlamada,
+                        UsuarioId = modelo.UsuarioId,  // Puede ser null → API decide qué hacer
+                        FechaVisita = DateTime.Now.Date,
+                        HoraInicio = DateTime.Now.ToString("HH:mm"),
+                        Comentario = "Visita asignada desde el panel"
+                    };
+
+                    var respuesta = await client.PostAsJsonAsync(urlApi, enviarApi);
+
+                    if (respuesta.IsSuccessStatusCode)
+                    {
+                        var resultado = await respuesta.Content.ReadFromJsonAsync<dynamic>();
+                        return Ok(new { success = true, data = resultado });
+                    }
+
+                    var errorApi = await respuesta.Content.ReadAsStringAsync();
+                    return BadRequest(new { success = false, mensaje = errorApi });
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, mensaje = "Error al registrar la visita: " + ex.Message });
+            }
+        }
+
+        #endregion
+
+
+        [HttpPost]
+        public async Task<IActionResult> ObtenerDetalles([FromBody] RequestIdLlamada modelo)
+        {
+            using (var client = _http.CreateClient())
+            {
+                var urlApi = _configuration["Valores:UrlAPI"] + "Llamada/detalles";
+
+                var token = HttpContext.Session.GetString("Token");
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                var respuesta = await client.PostAsJsonAsync(urlApi, modelo);
+
+                if (!respuesta.IsSuccessStatusCode)
+                    return BadRequest(new { success = false, mensaje = "Error al obtener detalles" });
+
+                var data = await respuesta.Content.ReadFromJsonAsync<dynamic>();
+                return Ok(data);
+            }
+        }
+
+        #region reasignar visita
+        [HttpPost]
+        public async Task<IActionResult> Reasignar([FromBody] ReasignarLlamadaRequest model)
+        {
+            try
+            {
+                using (var client = _http.CreateClient())
+                {
+                    var urlApi = _configuration["Valores:UrlAPI"] + "Llamada/Reasignar";
+
+                    var token = HttpContext.Session.GetString("Token");
+                    if (!string.IsNullOrEmpty(token))
+                        client.DefaultRequestHeaders.Authorization =
+                            new AuthenticationHeaderValue("Bearer", token);
+
+                    // Enviar la solicitud al API
+                    var respuesta = await client.PostAsJsonAsync(urlApi, model);
+
+                    if (respuesta.IsSuccessStatusCode)
+                    {
+                        var resultado = await respuesta.Content.ReadFromJsonAsync<dynamic>();
+                        return Ok(new { success = true, data = resultado });
+                    }
+
+                    var errorContent = await respuesta.Content.ReadAsStringAsync();
+                    return BadRequest(new { success = false, mensaje = errorContent });
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, mensaje = "Error al reasignar la llamada: " + ex.Message });
+            }
+        }
+
+        #endregion
+
+
+
     }
 }

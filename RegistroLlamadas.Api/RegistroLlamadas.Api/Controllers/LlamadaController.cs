@@ -1,8 +1,13 @@
 ﻿using Dapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using RegistroLlamadas.Api.Models;
+using RegistroLlamadas.Api.Servicios.Correo;
+using RegistroLlamadas.Api.Servicios.Historial;
 using System.Data;
+using System.Reflection;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,10 +18,14 @@ namespace RegistroLlamadas.Api.Controllers
     public class LlamadaController : ControllerBase
     {
         private readonly IConfiguration _configuration;
+        private readonly EnvioCorreo _enviarCorreo;
+        private readonly HistorialLlamada _historialLlamada;
 
-        public LlamadaController(IConfiguration configuration)
+        public LlamadaController(IConfiguration configuration, EnvioCorreo envioCorreo, HistorialLlamada historialLlamada)
         {
             _configuration = configuration;
+            _enviarCorreo = envioCorreo;
+            _historialLlamada = historialLlamada;
         }
         // GET: api/<LlamadaController>
         [HttpPost]
@@ -52,13 +61,21 @@ namespace RegistroLlamadas.Api.Controllers
             }
         }
 
+        private void RegistrarHistorialLlamada(int idLlamada, string accion, string descripcion, int? usuarioAfectado, int? registradoPor)
+        {
+            _historialLlamada.RegistrarHistorial(idLlamada, accion, descripcion, usuarioAfectado, registradoPor);
+        }
+        [Authorize]
         [HttpPost]
         [Route("registrarLlamada")]
         public async Task<IActionResult> RegistrarLlamada([FromBody] LlamadaModel llamada)
         {
             try
             {
-                
+                var nombreUser = User.FindFirst("nombre").Value;
+
+                var registradoPor = int.Parse(User.FindFirst("id").Value);
+
                 using (var context = new SqlConnection(_configuration["ConnectionStrings:BDConnection"]))
                 {
                     
@@ -83,6 +100,14 @@ namespace RegistroLlamadas.Api.Controllers
                     );
 
                     var idGenerado = parametros.Get<int>("@IdLlamadaGenerado");
+
+                    RegistrarHistorialLlamada(
+                                    idLlamada: idGenerado,
+                                    accion: "Creación",
+                                    descripcion: $"Llamada registrada por el usuario {nombreUser}. Asunto: {llamada.Asunto}",
+                                    usuarioAfectado: llamada.UsuarioId,   
+                                    registradoPor: registradoPor
+                                );
 
                     return Ok(new
                     {
@@ -146,6 +171,10 @@ namespace RegistroLlamadas.Api.Controllers
         {
             try
             {
+                var nombreUser = User.FindFirst("nombre").Value;
+
+                var registradoPor = int.Parse(User.FindFirst("id").Value);
+
                 using (var context = new SqlConnection(_configuration["ConnectionStrings:BDConnection"]))
                 {
                     var parametros = new DynamicParameters();
@@ -168,6 +197,13 @@ namespace RegistroLlamadas.Api.Controllers
                         commandType: CommandType.StoredProcedure
                     );
 
+                    RegistrarHistorialLlamada(
+                             idLlamada: llamada.IdLlamada,
+                             accion: "Actualizacion",
+                             descripcion: $"Llamada editada por el usuario {nombreUser}.",
+                             usuarioAfectado: llamada.UsuarioId,
+                             registradoPor: registradoPor
+                         );
                     return Ok(new
                     {
                         success = true,
@@ -192,6 +228,9 @@ namespace RegistroLlamadas.Api.Controllers
         {
             try
             {
+                var nombreUser = User.FindFirst("nombre").Value;
+
+                var registradoPor = int.Parse(User.FindFirst("id").Value);
                 using (var context = new SqlConnection(_configuration["ConnectionStrings:BDConnection"]))
                 {
                     var parametros = new DynamicParameters();
@@ -203,6 +242,14 @@ namespace RegistroLlamadas.Api.Controllers
                         commandType: CommandType.StoredProcedure
                     );
 
+
+                    RegistrarHistorialLlamada(
+                             idLlamada: idLlamada,
+                             accion: "Eliminacion",
+                             descripcion: $"Llamada eliminada por el usuario {nombreUser}.",
+                             usuarioAfectado: registradoPor,
+                             registradoPor: registradoPor
+                         );
                     return Ok(new
                     {
                         success = true,
@@ -220,12 +267,17 @@ namespace RegistroLlamadas.Api.Controllers
             }
         }
 
+
+        [Authorize]
         [HttpPost]
         [Route("finalizarLlamada")]
         public async Task<IActionResult> FinalizarLlamada([FromBody] FinalizarLlamadaModel modelo)
         {
             try
             {
+                
+                var registradoPor = int.Parse(User.FindFirst("id").Value);
+                var nombreUser = User.FindFirst("nombre").Value;
                 using (var context = new SqlConnection(_configuration["ConnectionStrings:BDConnection"]))
                 {
                     var parametros = new DynamicParameters();
@@ -239,6 +291,18 @@ namespace RegistroLlamadas.Api.Controllers
                         parametros,
                         commandType: CommandType.StoredProcedure
                     );
+                    if(modelo.CorreoEnviado)
+                    {
+                        EnviarCorreoNotificacion("Encuesta de satisfacción", modelo.IdLlamada);
+                    }
+
+                    _historialLlamada.RegistrarHistorial(
+                    modelo.IdLlamada,
+                    "LLamada Finalizada",
+                    $"El usuario {nombreUser} finalizo la llamada. Comentario: {modelo.DescripcionSolucion}",
+                    registradoPor,
+                    registradoPor
+                );
 
                     return Ok(new
                     {
@@ -255,6 +319,199 @@ namespace RegistroLlamadas.Api.Controllers
                     mensaje = "Error al finalizar la llamada: " + ex.Message
                 });
             }
+        }
+        [Authorize]
+        [HttpPost]
+        [Route("Visita/Registrar")]
+        public async Task<IActionResult> RegistrarVisita([FromBody] RegistrarVisitaModel model)
+        {
+            try
+            {
+                var nombreUser = User.FindFirst("nombre").Value;
+
+                var registradoPor = int.Parse(User.FindFirst("id").Value);
+                using var context = new SqlConnection(_configuration["ConnectionStrings:BDConnection"]);
+
+                var parametros = new DynamicParameters();
+                parametros.Add("@IdLlamada", model.IdLlamada);
+                parametros.Add("@UsuarioId", model.UsuarioId);
+                parametros.Add("@FechaVisita", model.FechaVisita);
+                parametros.Add("@HoraInicio", model.HoraInicio);
+                parametros.Add("@Comentario", model.Comentario);
+
+                await context.ExecuteAsync(
+                    "sp_registrar_visita",
+                    parametros,
+                    commandType: CommandType.StoredProcedure
+                );
+
+                        _historialLlamada.RegistrarHistorial(
+                   model.IdLlamada,
+                   "Visita registrada",
+                   $"El usuario {nombreUser} registró una visita. Comentario: {model.Comentario}",
+                   model.UsuarioId,
+                   registradoPor
+               );
+
+                return Ok(new
+                {
+                    success = true,
+                    mensaje = "Visita registrada correctamente"
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    mensaje = "Error al registrar visita: " + ex.Message
+                });
+            }
+        }
+
+        [HttpPost]
+        [Route("reasignar")]
+        public async Task<IActionResult> Reasignar([FromBody] ReasignarLlamadaModel model)
+        {
+            try
+            {
+                using var context = new SqlConnection(_configuration["ConnectionStrings:BDConnection"]);
+
+                var parametros = new DynamicParameters();
+                parametros.Add("@IdLlamada", model.IdLlamada);
+                parametros.Add("@NuevoUsuarioId", model.NuevoUsuarioId);
+                parametros.Add("@RealizadoPor", model.RealizadoPor);
+                parametros.Add("@Comentario", model.Comentario);
+
+                await context.ExecuteAsync(
+                    "sp_reasignar_llamada",
+                    parametros,
+                    commandType: CommandType.StoredProcedure
+                );
+
+                string nombreUsuario = await obtenerNombreUsuario(model.NuevoUsuarioId);
+                _historialLlamada.RegistrarHistorial(
+                    model.IdLlamada,
+                    "Reasignación",
+                    $"Asignado al usuario {nombreUsuario}. Comentario: {model.Comentario}",
+                    model.NuevoUsuarioId,
+                    model.RealizadoPor       
+                );
+
+                return Ok(new
+                {
+                    success = true,
+                    mensaje = "Llamada reasignada correctamente"
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    mensaje = "Error al reasignar: " + ex.Message
+                });
+            }
+        }
+
+        private async Task<string> obtenerNombreUsuario(int id) {
+
+            using var connection = new SqlConnection(_configuration["ConnectionStrings:BDConnection"]);
+
+            return await connection.QueryFirstOrDefaultAsync<string>(
+                "sp_usuario_obtener_nombre",
+                new { IdUsuario = id },
+                commandType: CommandType.StoredProcedure
+            ) ?? "Usuario desconocido";
+        }
+
+
+        private EncuetaModel ObtenerCorreoClientePorIdLlamada(int idLlamada)
+        {
+            using (var context = new SqlConnection(_configuration["ConnectionStrings:BDConnection"]))
+            {
+                var parametros = new
+                {
+                    IdLlamada = idLlamada
+                };
+
+                var resultado = context.QueryFirstOrDefault<EncuetaModel>(
+                    "sp_obtener_datos_correo",
+                    parametros,
+                    commandType: CommandType.StoredProcedure
+                );
+
+                return resultado;
+            }
+        }
+
+        [HttpPost]
+        [Route("detalles")]
+        public async Task<IActionResult> ObtenerDetallesLlamada([FromBody] RequestIdLlamada request)
+        {
+            try
+            {
+                using (var context = new SqlConnection(_configuration["ConnectionStrings:BDConnection"]))
+                {
+                    var parametros = new { IdLlamada = request.IdLlamada };
+
+                    using (var multi = await context.QueryMultipleAsync(
+                        "sp_llamada_detalles",
+                        parametros,
+                        commandType: CommandType.StoredProcedure))
+                    {
+                        var llamada = await multi.ReadFirstOrDefaultAsync<LlamadaModel>();
+                        var historial = (await multi.ReadAsync<LlamadaHistorialModel>()).ToList();
+                        var visitas = (await multi.ReadAsync<VisitaModel>()).ToList();
+
+                        return Ok(new
+                        {
+                            success = true,
+                            llamada,
+                            historial,
+                            visitas
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, mensaje = ex.Message });
+            }
+        }
+
+
+        private void EnviarCorreoNotificacion(string asunto, int idLlamada)
+        {
+            // Obtener todos los datos necesarios
+            EncuetaModel datos = ObtenerCorreoClientePorIdLlamada(idLlamada);
+
+            if (datos == null || string.IsNullOrWhiteSpace(datos.Correo))
+                return;
+
+            // Leer plantilla de archivo HTML
+            string cuerpo = LeerPlantillaHtml("Plantillas/PlantillaEncuentaRedes.html");
+            string qrBase64 = LeerPlantillaHtml("Plantillas/qrRedes.txt");
+            cuerpo = cuerpo.Replace("{{QRBASE64}}", qrBase64);
+
+            // Reemplazar variables en la plantilla
+            cuerpo = cuerpo.Replace("{{NombreCliente}}", datos.NombreCliente)
+                           .Replace("{{AtendidoPor}}", datos.NombreUsuario)
+                           .Replace("{{AsuntoLlamada}}", datos.Asunto)
+                           .Replace("{{NumeroCaso}}", idLlamada.ToString());
+
+            // Enviar correo
+            _enviarCorreo.EnviarCorreo(
+                asunto,       
+                cuerpo,       
+                datos.Correo   
+            );
+        }
+
+        private string LeerPlantillaHtml(string ruta)
+        {
+            var fullPath = Path.Combine(Directory.GetCurrentDirectory(), ruta);
+            return System.IO.File.ReadAllText(fullPath);
         }
     }
 }

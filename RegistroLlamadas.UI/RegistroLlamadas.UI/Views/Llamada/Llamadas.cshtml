@@ -71,10 +71,12 @@
     <!-- Filtros -->
     <div class="filters-section">
         <div class="row g-3 align-items-end">
+
             <div class="col-md-3">
                 <label class="form-label small text-muted">Buscar</label>
                 <input type="text" id="searchGlobal" class="form-control" placeholder="Buscar en todas las columnas...">
             </div>
+
             <div class="col-md-2">
                 <label class="form-label small text-muted">Estado</label>
                 <select id="filtroEstado" class="form-select">
@@ -83,21 +85,33 @@
                     <option value="Pendiente">Pendiente</option>
                 </select>
             </div>
+
             <div class="col-md-2">
                 <label class="form-label small text-muted">Fecha Desde</label>
                 <input type="date" id="filtroFechaDesde" class="form-control">
             </div>
+
             <div class="col-md-2">
                 <label class="form-label small text-muted">Fecha Hasta</label>
                 <input type="date" id="filtroFechaHasta" class="form-control">
             </div>
+
+            <!-- BOTÓN DE BUSCAR -->
+            <div class="col-md-2">
+                <button class="btn btn-primary w-100" id="btnBuscar">
+                    <i class="bi bi-search"></i> Buscar
+                </button>
+            </div>
+
             <div class="col-md-3">
                 <button class="btn btn-secondary w-100" id="btnLimpiarFiltros">
                     <i class="bi bi-x-circle"></i> Limpiar Filtros
                 </button>
             </div>
+
         </div>
     </div>
+
 
     <!-- Tabla -->
     <div class="table-card">
@@ -192,8 +206,12 @@
                             </td>
                             <td>
                                 <div class="d-flex gap-1 justify-content-center">
-                                    @if (item.UsuarioId == ViewBag.UsuarioIdActual && item.EstadoId != 3)
-                                    {
+                                    @if (
+                                                                    (item.EstadoId != 3 && item.EstadoId != 12)
+                                                                    &&
+                                                                    (item.UsuarioId == ViewBag.UsuarioIdActual || ViewBag.RolActual == 1003)
+                                                                    )
+                                                                    {
                                         <button type="button"
                                                 class="btn btn-success btn-sm btn-action btn-finalizar"
                                                 data-id="@item.IdLlamada"
@@ -201,7 +219,23 @@
                                                 title="Finalizar">
                                             <i class="bi bi-check-circle"></i>
                                         </button>
+
+                                        <button class="btn btn-secondary btn-sm btn-action btn-visita"
+                                                data-id="@item.IdLlamada"
+                                                data-usuario="@item.UsuarioId"
+                                                title="Registrar Visita">
+                                            <i class="bi bi-geo-alt"></i>
+                                        </button>
+
+                                        <!-- Botón PASAR A OTRO USUARIO -->
+                                        <button class="btn btn-dark btn-sm btn-action btn-reasignar"
+                                                data-id="@item.IdLlamada"
+                                                title="Reasignar Llamada">
+                                            <i class="bi bi-people"></i>
+                                        </button>
                                     }
+                                    <!-- Botón VISITA -->
+                                   
                                     <button class="btn btn-info btn-sm btn-action btn-ver" 
                                             data-id="@item.IdLlamada"
                                             data-bs-toggle="tooltip"
@@ -227,6 +261,7 @@
                 </tbody>
             </table>
         </div>
+        <input type="hidden" id="usuarioActual" value="@ViewBag.UsuarioIdActual" />
     </div>
 </div>
 
@@ -365,6 +400,113 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Registrar Visita -->
+<div class="modal fade" id="modalVisita" tabindex="-1">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header bg-secondary text-white">
+                <h5 class="modal-title"><i class="bi bi-geo-alt"></i> Registrar Visita</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+
+            <form id="formVisita">
+                <div class="modal-body">
+
+                    <input type="hidden" id="visitaIdLlamada" />
+
+                    <div class="mb-3">
+                        <label class="form-label">¿Realiza la visita el mismo responsable?</label>
+                        <select id="mismaPersona" class="form-select">
+                            <option value="si">Sí, la misma persona</option>
+                            <option value="no">No, seleccionar otro</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3 d-none" id="contenedorUsuariosVisita">
+                        <label class="form-label">Seleccione el usuario:</label>
+                        <select id="usuarioVisita" class="form-select">
+                            <option value="">Seleccione un usuario</option>
+                            @foreach (var usuario in Model.Usuarios)
+                            {
+                                <option value="@usuario.ID">@usuario.Nombre</option>
+                            }
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-primary" type="submit">Guardar Visita</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<!-- Modal Reasignar Llamada -->
+<div class="modal fade" id="modalReasignar" tabindex="-1">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title"><i class="bi bi-people"></i> Reasignar Llamada</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+
+            <form id="formReasignar">
+                <div class="modal-body">
+
+                    <input type="hidden" id="reasignarIdLlamada" />
+
+                    <label class="form-label">Seleccione el nuevo responsable</label>
+                    <select id="nuevoResponsable" class="form-select" required>
+                        <option value="">Seleccione un usuario</option>
+                        @foreach (var usuario in Model.Usuarios)
+                        {
+                            <option value="@usuario.ID">@usuario.Nombre</option>
+                        }
+                    </select>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-dark" type="submit">Reasignar</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<!-- Modal Detalles Llamada -->
+<div class="modal fade" id="modalDetallesLlamada" tabindex="-1">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title">
+                    <i class="bi bi-eye-fill"></i> Detalles de la Llamada
+                </h5>
+                <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body" id="contenedorDetallesLlamada">
+                <div class="text-center text-muted py-4">
+                    <div class="spinner-border text-info"></div>
+                    <p>Cargando detalles...</p>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cerrar
+                </button>
             </div>
         </div>
     </div>

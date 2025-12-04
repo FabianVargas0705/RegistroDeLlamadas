@@ -1,4 +1,8 @@
 using Microsoft.IdentityModel.Tokens;
+using RegistroLlamadas.Api.Middleware;
+using RegistroLlamadas.Api.Servicios.Correo;
+using RegistroLlamadas.Api.Servicios.Historial;
+using RegistroLlamadas.Api.Servicios.ServBitacora;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +12,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-
+builder.Services.AddScoped<IBitacoraService, BitacoraService>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<EnvioCorreo>();
+builder.Services.AddScoped<HistorialLlamada>();
 string key = builder.Configuration["Valores:KeyJWT"]!;
 
 builder.Services.AddAuthentication("Bearer")
@@ -37,6 +44,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseMiddleware<RequestResponseLoggingMiddleware>();
+
 
 app.MapControllers();
 

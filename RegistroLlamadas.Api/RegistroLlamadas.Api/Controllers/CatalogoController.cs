@@ -31,7 +31,7 @@ namespace RegistroLlamadas.Api.Controllers
                 {
                     Equipos = multi.Read<CatalogoItemModels>().ToList(),
                     Centros = multi.Read<CatalogoItemModels>().ToList(),
-                    Usuarios = multi.Read<CatalogoItemModels>().ToList(),
+                    Usuarios = multi.Read<CataogoUsuarioModel>().ToList(),
                     Estados = multi.Read<CatalogoItemModels>().ToList(),
                     Clientes = multi.Read<ClienteItemModels>().ToList()
                 };

@@ -6,6 +6,7 @@ using RegistroLlamadas.Api.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,12 +18,14 @@ namespace RegistroLlamadas.Api.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly IHostEnvironment _environment;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AuthController(IConfiguration configuration, IHostEnvironment environment)
+        public AuthController(IConfiguration configuration, IHostEnvironment environment, IHttpContextAccessor httpContextAccessor)
         {
             _configuration = configuration;
             _environment = environment;
-        }
+            _httpContextAccessor = httpContextAccessor;
+        }   
 
         [HttpPost]
         [Route("ValidarSesion")]
@@ -30,12 +33,17 @@ namespace RegistroLlamadas.Api.Controllers
         {
             using (var context = new SqlConnection(_configuration["ConnectionStrings:BDConnection"]))
             {
+
+                var spName = "ValidarSesion";
+
                 var parametros = new DynamicParameters();
                 parametros.Add("@CorreoElectronico", usuario.CorreoElectronico);
                 parametros.Add("@Contrasenna", usuario.Contrasenna);
 
                 var resultado = context.QueryFirstOrDefault<DatosUsuarioResponseModel>("ValidarSesion", parametros);
 
+                _httpContextAccessor.HttpContext.Items["SPName"] = spName;
+                _httpContextAccessor.HttpContext.Items["SPParams"] = parametros;
                 if (resultado != null)
                 {
                     //JWT

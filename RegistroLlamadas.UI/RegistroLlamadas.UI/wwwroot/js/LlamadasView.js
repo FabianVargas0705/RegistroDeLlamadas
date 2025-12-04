@@ -13,27 +13,83 @@
         const total = $('#tablaLlamadas tbody tr').length;
         let finalizadas = 0;
         let pendientes = 0;
-        let tiempoTotal = 0;
+
+        let totalDuracionMs = 0;
+        let cantidadConTiempo = 0;
 
         $('#tablaLlamadas tbody tr').each(function () {
-            const estadoTexto = $(this).find('.status-badge').text().trim();
-            if (estadoTexto.toLowerCase().includes('finalizado') || estadoTexto.toLowerCase().includes('finalizada')) {
+
+            // Leer estado
+            const estadoTexto = $(this).find('.status-badge').text().trim().toLowerCase();
+
+            // Leer hora inicio desde columna 6
+            let horaInicio = $(this).find('td').eq(6).text().trim();
+            horaInicio = limpiarHora(horaInicio);
+
+            // Leer hora final desde columna 7
+            let horaFinal = $(this).find('td').eq(7).text().trim();
+            horaFinal = limpiarHora(horaFinal);
+
+            // Finalizadas
+            if (estadoTexto.includes('finalizado') || estadoTexto.includes('finalizada')) {
                 finalizadas++;
+
+                // Calcular solo si tiene hora final
+                if (horaInicio && horaFinal && horaFinal !== '-') {
+                    const duracionMs = calcularDiferenciaMs(horaInicio, horaFinal);
+                    if (!isNaN(duracionMs) && duracionMs > 0) {
+                        totalDuracionMs += duracionMs;
+                        cantidadConTiempo++;
+                    }
+                }
+
             } else {
                 pendientes++;
             }
         });
 
+        // Calcular promedio
+        let tiempoPromedioMs = cantidadConTiempo > 0
+            ? totalDuracionMs / cantidadConTiempo
+            : 0;
+
+        const promedioFormateado = formatearDuracion(tiempoPromedioMs);
+
+        // Mostrar resultados
         $('#totalLlamadas').text(total);
         $('#totalFinalizadas').text(finalizadas);
         $('#totalPendientes').text(pendientes);
-        $('#tiempoPromedio').text('2.5h');
+        $('#tiempoPromedio').text(promedioFormateado);
     }
-
     calcularEstadisticas();
 
+    function calcularDiferenciaMs(horaInicio, horaFinal) {
+        const [h1, m1] = horaInicio.split(':').map(Number);
+        const [h2, m2] = horaFinal.split(':').map(Number);
 
+        const inicio = new Date(0, 0, 0, h1, m1);
+        const final = new Date(0, 0, 0, h2, m2);
 
+        return final - inicio; 
+    }
+    function formatearDuracion(ms) {
+        if (!ms || ms <= 0) return "0 min";
+
+        const totalMin = Math.floor(ms / 60000);
+        const horas = Math.floor(totalMin / 60);
+        const minutos = totalMin % 60;
+
+        if (horas === 0) {
+           
+            return `${minutos} min`;
+        } else if (minutos === 0) {
+           
+            return `${horas} hr${horas > 1 ? 's' : ''}`;
+        } else {
+            
+            return `${horas} hr${horas > 1 ? 's' : ''} ${minutos} min`;
+        }
+    }
     function initSelect2() {
         // Destruir instancias previas
         $('.select2').each(function () {
@@ -190,7 +246,170 @@
             }
         });
     });
+    // --- BOTÓN VISITA ---
+    $(document).on("click", ".btn-visita", function () {
+        let id = $(this).data("id");
+        let usuario = $(this).data("usuario");
 
+        $("#visitaIdLlamada").val(id);
+        $("#usuarioVisita").val(usuario);
+
+        $("#modalVisita").modal("show");
+    });
+
+    // Mostrar select si NO es la misma persona
+    $("#mismaPersona").on("change", function () {
+        if ($(this).val() === "no") {
+            $("#contenedorUsuariosVisita").removeClass("d-none");
+        } else {
+            $("#contenedorUsuariosVisita").addClass("d-none");
+        }
+    });
+
+    // Guardar visita
+    $("#formVisita").on("submit", function (e) {
+        e.preventDefault();
+
+        let idLlamada = $("#visitaIdLlamada").val();
+        let usuarioOriginal = $("#usuarioVisita").val();
+        let esMismaPersona = $("#mismaPersona").val() === "si";
+        let usuarioSeleccionado = esMismaPersona ? usuarioOriginal : $("#usuarioVisita").val();
+
+        // Validación si NO es misma persona
+        if (!esMismaPersona && (!usuarioSeleccionado || usuarioSeleccionado === "")) {
+            Swal.fire({
+                icon: "warning",
+                title: "Seleccione un usuario",
+                text: "Debe elegir quién realizará la visita.",
+                confirmButtonText: "Entendido"
+            });
+            return;
+        }
+
+        let payload = {
+            IdLlamada: idLlamada,
+            UsuarioId: parseInt(usuarioSeleccionado)
+        };
+
+        $.ajax({
+            url: "/Llamada/RegistrarVisita",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(payload),
+
+            success: function (response) {
+                if (response.success) {
+
+                    Swal.fire({
+                        icon: "success",
+                        title: "¡Visita registrada!",
+                        text: "La visita ha sido asignada correctamente.",
+                        timer: 1800,
+                        timerProgressBar: true,
+                        showConfirmButton: false
+                    }).then(() => {
+                        $("#modalVisita").modal("hide");
+                        location.reload();
+                    });
+
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: response.mensaje || "No se pudo registrar la visita."
+                    });
+                }
+            },
+
+            error: function (xhr) {
+                let mensajeError = "Error al registrar la visita.";
+
+                if (xhr.responseJSON?.mensaje) {
+                    mensajeError = xhr.responseJSON.mensaje;
+                }
+
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: mensajeError
+                });
+            }
+        });
+    });
+
+
+    // --- BOTÓN REASIGNAR ---
+    $(document).on("click", ".btn-reasignar", function () {
+        let id = $(this).data("id");
+
+        $("#reasignarIdLlamada").val(id);
+        $("#modalReasignar").modal("show");
+    });
+
+    // --- GUARDAR REASIGNACIÓN ---
+    $("#formReasignar").on("submit", function (e) {
+        e.preventDefault();
+
+        let payload = {
+            IdLlamada: $("#reasignarIdLlamada").val(),
+            NuevoUsuarioId: $("#nuevoResponsable").val(),
+            RealizadoPor: $("#usuarioActual").val(),
+            Comentario: "Reasignado desde el panel"
+        };
+
+        $.ajax({
+            url: "/Llamada/Reasignar",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(payload),
+
+            success: function (response) {
+                if (response.success) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "¡Reasignado!",
+                        text: "La llamada fue reasignada correctamente.",
+                        confirmButtonText: "Aceptar",
+                        timer: 1800,
+                        timerProgressBar: true
+                    }).then(() => {
+                        $("#modalReasignar").modal("hide");
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: response.mensaje || "No se pudo reasignar la llamada.",
+                    });
+                }
+            },
+
+            error: function (xhr, status, error) {
+
+                let mensajeError = "Error en la reasignación";
+
+                // Intentar obtener el mensaje del backend
+                if (xhr.responseJSON && xhr.responseJSON.mensaje) {
+                    mensajeError = xhr.responseJSON.mensaje;
+                } else if (xhr.responseText) {
+                    try {
+                        const response = JSON.parse(xhr.responseText);
+                        mensajeError = response.mensaje || mensajeError;
+                    } catch (e) {
+                        mensajeError += ": " + error;
+                    }
+                }
+
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: mensajeError,
+                    confirmButtonText: "Cerrar",
+                });
+            }
+        });
+    });
     // Botón editar
     $(document).on('click', '.btn-editar', function () {
         const idLlamada = $(this).data('id');
@@ -369,6 +588,93 @@
         });
     });
 
+    $(document).on("click", ".btn-ver", function () {
+        let id = $(this).data("id");
+
+        $("#contenedorDetallesLlamada").html(`
+        <div class="text-center text-muted py-4">
+            <div class="spinner-border text-info"></div>
+            <p>Cargando detalles...</p>
+        </div>
+    `);
+
+        $("#modalDetallesLlamada").modal("show");
+
+        $.ajax({
+            url: "/Llamada/ObtenerDetalles",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ IdLlamada: id }),
+            success: function (resp) {
+                if (!resp.success) {
+                    $("#contenedorDetallesLlamada").html(`<div class="alert alert-danger">${resp.mensaje}</div>`);
+                    return;
+                }
+
+                const llamada = resp.llamada;
+                const historial = resp.historial;
+                const visitas = resp.visitas;
+
+                let html = `
+                <h5 class="mb-3">Información General</h5>
+                <table class="table table-bordered">
+                    <tr><th>Responsable</th><td>${llamada.usuarioNombre ?? '-'}</td></tr>
+                    <tr><th>Cliente</th><td>${llamada.clienteNombre ?? '-'}</td></tr>
+                    <tr><th>Centro</th><td>${llamada.centroNombre ?? '-'}</td></tr>
+                    <tr><th>Asunto</th><td>${llamada.asunto ?? '-'}</td></tr>
+                    <tr><th>Fecha</th><td>${llamada.fecha}</td></tr>
+                    <tr><th>Hora Inicio</th><td>${llamada.horaInicio}</td></tr>
+                    <tr><th>Hora Final</th><td>${llamada.horaFinal ?? '-'}</td></tr>
+                </table>
+
+                <hr>
+
+                <h5 class="mt-4">Historial de la llamada</h5>
+                <ul class="list-group mb-4">
+            `;
+
+                if (historial.length === 0) {
+                    html += `<li class="list-group-item text-muted">Sin historial registrado.</li>`;
+                } else {
+                    historial.forEach(h => {
+                        html += `
+                        <li class="list-group-item">
+                            <strong>${h.accion}</strong><br>
+                            ${h.descripcion}<br>
+                            <small class="text-muted">
+                                Registrado por: ${h.registradoPorNombre} |
+                                Afectado: ${h.usuarioAfectadoNombre} |
+                                ${h.fechaRegistro}
+                            </small>
+                        </li>
+                    `;
+                    });
+                }
+
+                html += `</ul><hr><h5 class="mt-4">Visitas Relacionadas</h5>`;
+
+                if (visitas.length === 0) {
+                    html += `<p class="text-muted">No hay visitas relacionadas.</p>`;
+                } else {
+                    visitas.forEach(v => {
+                        html += `
+                        <div class="border rounded p-3 mb-3">
+                            <strong>Visitado por:</strong> ${v.usuarioVisita}<br>
+                            <strong>Fecha:</strong> ${v.fechaVisita}<br>
+                            <strong>Inicio:</strong> ${v.horaInicio}<br>
+                            <strong>Final:</strong> ${v.horaFinal ?? '-'}<br>
+                            <strong>Comentario:</strong> ${v.comentario ?? '-'}
+                        </div>`;
+                    });
+                }
+
+                $("#contenedorDetallesLlamada").html(html);
+            },
+            error: function () {
+                $("#contenedorDetallesLlamada").html(`<div class="alert alert-danger">Error al cargar detalles</div>`);
+            }
+        });
+    });
     function finalizarLlamada(idLlamada, descripcion, horaFinal, correoEnviado) {
         Swal.fire({
             title: 'Finalizando...',
@@ -430,6 +736,10 @@
                 });
             }
         });
+    }
+
+    function limpiarHora(texto) {
+        return texto.replace(/[^0-9:]/g, '').trim() || null;
     }
 
     // Select All

@@ -70,15 +70,16 @@
             fila.find('.condicion-cell').html('<span class="badge-estado badge-finalizada">Finalizada</span>');
             fila.find('.hora-final-cell').text(horaFinal || '-');
             fila.find('.tiempo-badge').addClass('badge-finalizada');
-        } else if (estadoDesc.includes('visita')) {
+        } else if (estadoId === 12) {
             // Visita
             estadisticas.visitas++;
             estadisticas.tiempoTotal += tiempoMs;
             fila.addClass('row-visita');
             fila.find('.condicion-cell').html('<span class="badge-estado badge-visita">Visita</span>');
+            fila.find('.hora-final-cell').text(horaFinal || '-');
             fila.find('.tiempo-badge').addClass('badge-visita');
         } else {
-            // En atención - evaluar tiempo
+            // En atención 
             estadisticas.enAtencion++;
             estadisticas.tiempoTotal += tiempoMs;
 
@@ -146,16 +147,22 @@
     new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: ['Finalizadas', 'Visitas'],
+            labels: ['Finalizadas', 'Visitas', 'En Atención'],
             datasets: [{
-                data: [estadisticas.finalizadas, estadisticas.visitas],
+                data: [
+                    estadisticas.finalizadas,
+                    estadisticas.visitas,
+                    estadisticas.enAtencion
+                ],
                 backgroundColor: [
-                    'rgba(40, 167, 69, 0.8)',
-                    'rgba(23, 162, 184, 0.8)'
+                    'rgba(40, 167, 69, 0.8)', 
+                    'rgba(23, 162, 184, 0.8)',  
+                    'rgba(255, 193, 7, 0.8)'   
                 ],
                 borderColor: [
                     '#28a745',
-                    '#17a2b8'
+                    '#17a2b8',
+                    '#ffc107'
                 ],
                 borderWidth: 2
             }]
@@ -234,6 +241,7 @@
                             estadisticas.tiempoTotal += tiempoMs;
                             fila.addClass('row-visita');
                             fila.find('.condicion-cell').html('<span class="badge-estado badge-visita">Visita</span>');
+                            fila.find('.hora-final-cell').text(horaFinal || '-');
                             fila.find('.tiempo-badge').addClass('badge-visita');
                         } else {
                             estadisticas.enAtencion++;
@@ -298,6 +306,6 @@
     }
 
     // Actualizar cada 30 segundos
-    setInterval(actualizarDatos, 30000);
+    setInterval(actualizarDatos, 5000);
 
 });

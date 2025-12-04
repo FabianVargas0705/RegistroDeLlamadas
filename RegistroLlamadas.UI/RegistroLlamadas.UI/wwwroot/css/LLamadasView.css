@@ -178,3 +178,45 @@
         grid-template-columns: 1fr;
     }
 }
+
+[data-bs-theme="dark"] .select2-container .select2-selection--single {
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    color: #e6e6e6 !important;
+}
+
+[data-bs-theme="dark"] .select2-selection__rendered {
+    color: #e6e6e6 !important;
+}
+
+[data-bs-theme="dark"] .select2-selection__placeholder {
+    color: #9aa0a6 !important;
+}
+
+[data-bs-theme="dark"] .select2-selection__arrow b {
+    border-color: #e6e6e6 transparent transparent transparent !important;
+}
+
+/* Dropdown (lista) */
+[data-bs-theme="dark"] .select2-dropdown {
+    background-color: #1c2128 !important;
+    border: 1px solid var(--border-color) !important;
+    color: #e6e6e6 !important;
+}
+
+[data-bs-theme="dark"] .select2-results__option {
+    background-color: transparent !important;
+    color: #e6e6e6 !important;
+}
+
+[data-bs-theme="dark"] .select2-results__option--highlighted {
+    background-color: #30363d !important;
+    color: white !important;
+}
+
+/* Campo search dentro del dropdown */
+[data-bs-theme="dark"] .select2-search__field {
+    background-color: #161b22 !important;
+    color: #e6e6e6 !important;
+    border: 1px solid var(--border-color) !important;
+}
