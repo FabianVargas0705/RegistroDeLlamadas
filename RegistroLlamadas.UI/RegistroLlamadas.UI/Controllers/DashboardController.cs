@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RegistroLlamadas.UI.Models;
+using RegistroLlamadas.UI.Servicios.PermisosServ;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using static System.Net.WebRequestMethods;
@@ -12,10 +13,13 @@ namespace RegistroLlamadas.UI.Controllers
         // GET: DashboardController
         private readonly IHttpClientFactory _http;
         private readonly IConfiguration _configuration;
-        public DashboardController(IHttpClientFactory http, IConfiguration configuration)
+        private readonly IPermisosUIService _permisosUI;
+
+        public DashboardController(IHttpClientFactory http, IConfiguration configuration, IPermisosUIService permisosUIService)
         {
             _http = http;
             _configuration = configuration;
+            _permisosUI = permisosUIService;
         }
         public async Task<ActionResult> DashboardView(DateTime? fecha = null)
         {
@@ -45,6 +49,7 @@ namespace RegistroLlamadas.UI.Controllers
                 Clientes = catalogos.Clientes
             };
             ViewBag.UsuarioIdActual = HttpContext.Session.GetInt32("ConsecutivoUsuario");
+            await _permisosUI.CargarPermisosAsync();
 
             return View(modelo);
         }

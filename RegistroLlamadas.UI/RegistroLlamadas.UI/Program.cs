@@ -1,4 +1,5 @@
 using RegistroLlamadas.UI.Middleware;
+using RegistroLlamadas.UI.Servicios.PermisosServ;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +7,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<PermisosService>();
+builder.Services.AddScoped<IPermisosUIService, PermisosUIService>();
+
 
 var app = builder.Build();
 

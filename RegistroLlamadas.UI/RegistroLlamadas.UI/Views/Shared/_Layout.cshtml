@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@inject RegistroLlamadas.UI.Servicios.PermisosServ.IPermisosUIService PermisosUI
+
+
+<!DOCTYPE html>
 <html lang="es" data-bs-theme="light">
 <head>
     <meta charset="utf-8" />
@@ -21,7 +24,7 @@
                 <i class="bi bi-list fs-4"></i>
             </button>
 
-            <a class="navbar-brand fw-bold" href="/">
+            <a class="navbar-brand fw-bold" href="/Home">
                 <i class="bi bi-telephone-fill text-primary"></i> Mi Sistema
             </a>
 
@@ -60,116 +63,128 @@
             <nav class="nav flex-column gap-1">
 
                 <!-- Inicio -->
+                @if (PermisosUI.PuedeVer("/Dashboard/DashboardView"))
+                {
                 <a href="/Dashboard/DashboardView" class="nav-link rounded d-flex align-items-center gap-2">
                     <i class="bi bi-house-door-fill"></i>
                     <span class="sidebar-text">Inicio</span>
                 </a>
+                }
+                @if (PermisosUI.PuedeVerGrupo(new[] { "/Llamada/Llamadas", "/Llamada/MisLlamadas"}))
+                {
+                    <!-- Llamadas con submenú -->
+                    <div class="nav-item">
+                        <a href="#" class="nav-link rounded d-flex align-items-center gap-2 active"
+                        data-bs-toggle="collapse" data-bs-target="#llamadasSubmenu" aria-expanded="true">
+                            <i class="bi bi-telephone-fill"></i>
+                            <span class="sidebar-text">Llamadas</span>
+                            <i class="bi bi-chevron-down ms-auto sidebar-text"></i>
+                        </a>
 
-                <!-- Llamadas con submenú -->
-                <div class="nav-item">
-                    <a href="#" class="nav-link rounded d-flex align-items-center gap-2 active"
-                       data-bs-toggle="collapse" data-bs-target="#llamadasSubmenu" aria-expanded="true">
-                        <i class="bi bi-telephone-fill"></i>
-                        <span class="sidebar-text">Llamadas</span>
-                        <i class="bi bi-chevron-down ms-auto sidebar-text"></i>
-                    </a>
+                        <div class="collapse show" id="llamadasSubmenu">
+                            <nav class="nav flex-column ms-3 mt-1 gap-1">
+                                <a href="/Llamada/Llamadas" class="nav-link rounded d-flex align-items-center gap-2">
+                                    <i class="bi bi-list-ul"></i>
+                                    <span class="sidebar-text">Todas las Llamadas</span>
+                                </a>
 
-                    <div class="collapse show" id="llamadasSubmenu">
-                        <nav class="nav flex-column ms-3 mt-1 gap-1">
-                            <a href="/Llamada/Llamadas" class="nav-link rounded d-flex align-items-center gap-2">
-                                <i class="bi bi-list-ul"></i>
-                                <span class="sidebar-text">Todas las Llamadas</span>
-                            </a>
+                                <a href="/Llamada/MisLlamadas" class="nav-link rounded d-flex align-items-center gap-2">
+                                    <i class="bi bi-person-check-fill"></i>
+                                    <span class="sidebar-text">Mis Llamadas</span>
+                                </a>
+                            </nav>
 
-                            <a href="/Llamada/MisLlamadas" class="nav-link rounded d-flex align-items-center gap-2">
-                                <i class="bi bi-person-check-fill"></i>
-                                <span class="sidebar-text">Mis Llamadas</span>
-                            </a>
-                        </nav>
-
-                        <li><hr class="dropdown-divider"></li>
+                            <li><hr class="dropdown-divider"></li>
+                        </div>
                     </div>
-                </div>
+                }
 
-                <div class="nav-item">
-                    <a href="#" class="nav-link rounded d-flex align-items-center gap-2"
-                       data-bs-toggle="collapse" data-bs-target="#visitasSubmenu" aria-expanded="false">
-                        <i class="bi bi-geo-alt-fill"></i>
-                        <span class="sidebar-text">Visitas</span>
-                        <i class="bi bi-chevron-down ms-auto sidebar-text"></i>
-                    </a>
+                @if (PermisosUI.PuedeVerGrupo(new[] { "/Visita/TodasLasVisitas", "/Visita/MisVisitas" }))
+                {
+                    <div class="nav-item">
+                        <a href="#" class="nav-link rounded d-flex align-items-center gap-2"
+                        data-bs-toggle="collapse" data-bs-target="#visitasSubmenu" aria-expanded="false">
+                            <i class="bi bi-geo-alt-fill"></i>
+                            <span class="sidebar-text">Visitas</span>
+                            <i class="bi bi-chevron-down ms-auto sidebar-text"></i>
+                        </a>
 
-                    <div class="collapse" id="visitasSubmenu">
-                        <nav class="nav flex-column ms-3 mt-1 gap-1">
+                        <div class="collapse" id="visitasSubmenu">
+                            <nav class="nav flex-column ms-3 mt-1 gap-1">
 
-                            <a href="/Visita/TodasLasVisitas" class="nav-link rounded d-flex align-items-center gap-2">
-                                <i class="bi bi-list-ul"></i>
-                                <span class="sidebar-text">Todas las Visitas</span>
-                            </a>
+                                @if (PermisosUI.PuedeVer("/Visita/TodasLasVisitas"))
+                                {
+                                    <a href="/Visita/TodasLasVisitas" class="nav-link rounded d-flex align-items-center gap-2">
+                                        <i class="bi bi-list-ul"></i>
+                                        <span class="sidebar-text">Todas las Visitas</span>
+                                    </a>
+                                }
+                                @if (PermisosUI.PuedeVer("/Visita/MisVisitas"))
+                                {
+                                    <a href="/Visita/MisVisitas" class="nav-link rounded d-flex align-items-center gap-2">
+                                        <i class="bi bi-person-walking"></i>
+                                        <span class="sidebar-text">Mis Visitas</span>
+                                    </a>
+                                }
+                            </nav>
 
-                            <a href="/Visita/MisVisitas" class="nav-link rounded d-flex align-items-center gap-2">
-                                <i class="bi bi-person-walking"></i>
-                                <span class="sidebar-text">Mis Visitas</span>
-                            </a>
-
-                        </nav>
-
-                        <li><hr class="dropdown-divider"></li>
+                            <li><hr class="dropdown-divider"></li>
+                        </div>
                     </div>
-                </div>
 
-
-                <!-- ====================================================== -->
+                }
+            
                 <!--               SUBMENÚ DE CONFIGURACIÓN                -->
-                <!-- ====================================================== -->
+                @if (PermisosUI.PuedeVerGrupo(new[] { "/Rol/ConsultarRoles", "/Equipo/ConsultarEquipos", "/Centro/ConsultarCentros", "/Estado/ConsultarEstados" }))
+                {
+                    <div class="nav-item">
+                        <a href="#" class="nav-link rounded d-flex align-items-center gap-2"
+                        data-bs-toggle="collapse" data-bs-target="#configuracionSubmenu" aria-expanded="false">
+                            <i class="bi bi-gear-fill"></i>
+                            <span class="sidebar-text">Configuración</span>
+                            <i class="bi bi-chevron-down ms-auto sidebar-text"></i>
+                        </a>
 
-                <div class="nav-item">
-                    <a href="#" class="nav-link rounded d-flex align-items-center gap-2"
-                       data-bs-toggle="collapse" data-bs-target="#configuracionSubmenu" aria-expanded="false">
-                        <i class="bi bi-gear-fill"></i>
-                        <span class="sidebar-text">Configuración</span>
-                        <i class="bi bi-chevron-down ms-auto sidebar-text"></i>
-                    </a>
+                        <div class="collapse" id="configuracionSubmenu">
+                            <nav class="nav flex-column ms-3 mt-1 gap-1">
 
-                    <div class="collapse" id="configuracionSubmenu">
-                        <nav class="nav flex-column ms-3 mt-1 gap-1">
-
-                            @* <a href="/Usuario/Index" class="nav-link rounded d-flex align-items-center gap-2">
+                                @* <a href="/Usuario/Index" class="nav-link rounded d-flex align-items-center gap-2">
                                 <i class="bi bi-people-fill"></i>
                                 <span class="sidebar-text">Usuarios</span>
                             </a>
  *@
-                            <a href="/Rol/ConsultarRoles" class="nav-link rounded d-flex align-items-center gap-2">
-                                <i class="bi bi-person-badge-fill"></i>
-                                <span class="sidebar-text">Roles</span>
-                            </a>
+                                <a href="/Rol/ConsultarRoles" class="nav-link rounded d-flex align-items-center gap-2">
+                                    <i class="bi bi-person-badge-fill"></i>
+                                    <span class="sidebar-text">Roles</span>
+                                </a>
 
-                            <a href="/Equipo/ConsultarEquipos" class="nav-link rounded d-flex align-items-center gap-2">
-                                <i class="bi bi-pc-display"></i>
-                                <span class="sidebar-text">Equipos</span>
-                            </a>
+                                <a href="/Equipo/ConsultarEquipos" class="nav-link rounded d-flex align-items-center gap-2">
+                                    <i class="bi bi-pc-display"></i>
+                                    <span class="sidebar-text">Equipos</span>
+                                </a>
 
-                            <a href="/Centro/ConsultarCentros" class="nav-link rounded d-flex align-items-center gap-2">
-                                <i class="bi bi-building-fill"></i>
-                                <span class="sidebar-text">Centros</span>
-                            </a>
+                                <a href="/Centro/ConsultarCentros" class="nav-link rounded d-flex align-items-center gap-2">
+                                    <i class="bi bi-building-fill"></i>
+                                    <span class="sidebar-text">Centros</span>
+                                </a>
 
-                            <a href="/Estado/ConsultarEstados" class="nav-link rounded d-flex align-items-center gap-2">
-                                <i class="bi bi-flag-fill"></i>
-                                <span class="sidebar-text">Estados</span>
-                            </a>
+                                <a href="/Estado/ConsultarEstados" class="nav-link rounded d-flex align-items-center gap-2">
+                                    <i class="bi bi-flag-fill"></i>
+                                    <span class="sidebar-text">Estados</span>
+                                </a>
 
-                            
-                            <li><hr class="dropdown-divider"></li>
 
-                            <a href="/Configuracion/Otros" class="nav-link rounded d-flex align-items-center gap-2">
-                                <i class="bi bi-sliders"></i>
-                                <span class="sidebar-text">Más configuraciones</span>
-                            </a>
+                                <li><hr class="dropdown-divider"></li>
 
-                        </nav>
+                       @*          <a href="/Configuracion/Otros" class="nav-link rounded d-flex align-items-center gap-2">
+                                    <i class="bi bi-sliders"></i>
+                                    <span class="sidebar-text">Más configuraciones</span>
+                                </a> *@
+
+                            </nav>
+                        </div>
                     </div>
-                </div>
+                }
 
             </nav>
         </div>
@@ -195,3 +210,4 @@
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+
