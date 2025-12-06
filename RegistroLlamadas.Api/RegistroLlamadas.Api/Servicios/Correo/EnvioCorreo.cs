@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using Dapper;
+using Microsoft.Data.SqlClient;
+using System.Net;
 using System.Net.Mail;
 
 namespace RegistroLlamadas.Api.Servicios.Correo
@@ -14,30 +16,18 @@ namespace RegistroLlamadas.Api.Servicios.Correo
 
         public void EnviarCorreo(string subject, string body, string destinatario)
         {
-            var correoSMTP = _configuration["Valores:CorreoSMTP"]!;
-            var contrasennaSMTP = _configuration["Valores:ContrasennaSMTP"]!;
+            using var connection = new SqlConnection(_configuration["ConnectionStrings:BDConnection"]);
 
-            if (string.IsNullOrEmpty(contrasennaSMTP))
-                return;
+            var query = @"
+        INSERT INTO ColaCorreos (Destinatario, Asunto, Cuerpo)
+        VALUES (@Destinatario, @Asunto, @Cuerpo)";
 
-            var mensaje = new MailMessage
+            connection.Execute(query, new
             {
-                From = new MailAddress(correoSMTP, "Capris Médica – Soporte Técnico"),
-                Subject = subject,
-                Body = body,
-                IsBodyHtml = true
-            };
-
-            mensaje.To.Add(destinatario);
-
-            using var smtp = new SmtpClient("smtp.office365.com")
-            {
-                Port = 587,
-                Credentials = new NetworkCredential(correoSMTP, contrasennaSMTP),
-                EnableSsl = true
-            };
-
-            smtp.Send(mensaje);
+                Destinatario = destinatario,
+                Asunto = subject,
+                Cuerpo = body
+            });
         }
     }
 }

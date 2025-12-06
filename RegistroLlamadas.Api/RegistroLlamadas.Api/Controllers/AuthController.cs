@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
 using RegistroLlamadas.Api.Models;
+using RegistroLlamadas.Api.Models.AdministacionPermisosPagina;
+using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -52,6 +54,30 @@ namespace RegistroLlamadas.Api.Controllers
                 }
 
                 return NotFound();
+            }
+        }
+        [HttpGet("permisos/{roleId}")]
+        public async Task<IActionResult> ObtenerPermisos(int roleId)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_configuration["ConnectionStrings:BDConnection"]))
+                {
+                    var parametros = new DynamicParameters();
+                    parametros.Add("@RoleId", roleId);
+
+                    var resultado = await connection.QueryAsync<PaginaModels>(
+                        "sp_obtener_permisos_por_rol",
+                        parametros,
+                        commandType: CommandType.StoredProcedure
+                    );
+
+                    return Ok(resultado);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, mensaje = ex.Message });
             }
         }
 

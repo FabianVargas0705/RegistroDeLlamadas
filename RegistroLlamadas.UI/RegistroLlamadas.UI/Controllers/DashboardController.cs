@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RegistroLlamadas.UI.Models;
+using RegistroLlamadas.UI.Servicios.PermisosServ;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using static System.Net.WebRequestMethods;
@@ -12,6 +13,7 @@ namespace RegistroLlamadas.UI.Controllers
         // GET: DashboardController
         private readonly IHttpClientFactory _http;
         private readonly IConfiguration _configuration;
+
         public DashboardController(IHttpClientFactory http, IConfiguration configuration)
         {
             _http = http;

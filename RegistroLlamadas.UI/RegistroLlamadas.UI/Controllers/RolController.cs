@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RegistroLlamadas.UI.Models;
+using RegistroLlamadas.UI.Models.ServiciosM;
 using System.Net.Http.Headers;
 using System.Text.Json;
 
@@ -289,6 +290,77 @@ namespace RegistroLlamadas.UI.Controllers
                 return BadRequest(new { success = false, mensaje = "Error: " + ex.Message });
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ObtenerPermisos(int idRol)
+        {
+            try
+            {
+                using (var client = _http.CreateClient())
+                {
+                    var baseUrl = _configuration["Valores:UrlAPI"];
+
+                    var token = HttpContext.Session.GetString("Token");
+                    if (!string.IsNullOrEmpty(token))
+                        client.DefaultRequestHeaders.Authorization =
+                            new AuthenticationHeaderValue("Bearer", token);
+
+                    // Obtener TODAS las páginas
+                    var paginasResp = await client.GetAsync(baseUrl + "Catalogo/GetPaginas");
+                    var permisosResp = await client.GetAsync(baseUrl + $"Permisos/obtener/{idRol}");
+
+                    if (!paginasResp.IsSuccessStatusCode || !permisosResp.IsSuccessStatusCode)
+                        return BadRequest(new { success = false, mensaje = "Error obteniendo permisos" });
+
+                    var opciones = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                    var paginas = await paginasResp.Content.ReadFromJsonAsync<List<PaginaModels>>(opciones);
+                    var permisos = await permisosResp.Content.ReadFromJsonAsync<List<PaginaModels>>(opciones);
+
+                    return Ok(new
+                    {
+                        paginas,
+                        permisos = permisos.Select(x => x.PaginaId).ToList()
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, mensaje = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GuardarPermisos([FromBody] GuardarPermisosRequest req)
+        {
+            try
+            {
+                using (var client = _http.CreateClient())
+                {
+                    var urlApi = _configuration["Valores:UrlAPI"] + "Permisos/guardar";
+
+                    var token = HttpContext.Session.GetString("Token");
+                    if (!string.IsNullOrEmpty(token))
+                        client.DefaultRequestHeaders.Authorization =
+                            new AuthenticationHeaderValue("Bearer", token);
+
+                    var respuesta = await client.PostAsJsonAsync(urlApi, req);
+
+                    if (respuesta.IsSuccessStatusCode)
+                    {
+                        return Ok(new { success = true, mensaje = "Permisos actualizados" });
+                    }
+
+                    return BadRequest(new { success = false, mensaje = respuesta.Content.ReadAsStringAsync().Result });
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, mensaje = ex.Message });
+            }
+        }
+
+
 
         [HttpPost]
         public async Task<IActionResult> RegistrarRol([FromBody] RolModel rol)

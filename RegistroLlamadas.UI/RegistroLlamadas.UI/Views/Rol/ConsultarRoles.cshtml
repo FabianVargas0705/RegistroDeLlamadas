@@ -61,11 +61,49 @@
                                class="btn btn-sm btn-outline-danger">
                                 <i class="bi bi-trash"></i> Eliminar
                             </a>
+
+                            <button class="btn btn-sm btn-outline-info btn-permisos"
+                                    data-id="@item.IdRol"
+                                    data-nombre="@item.Nombre">
+                                <i class="bi bi-shield-check"></i> Permisos
+                            </button>
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
+    </div>
+</div>
+
+
+
+<!-- Modal Administrar Permisos -->
+<div class="modal fade" id="modalPermisos" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">
+                    <i class="bi bi-shield-check"></i>
+                    Administrar Permisos - <span id="rolNombre"></span>
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <input type="hidden" id="rolId" />
+
+                <div class="row" id="listaPaginas">
+                    <!-- Se cargan dinámicamente -->
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button class="btn btn-primary" id="btnGuardarPermisos">Guardar Cambios</button>
+            </div>
+
+        </div>
     </div>
 </div>
 
@@ -80,6 +118,66 @@
                 responsive: true,
                 order: [[0, 'asc']]
             });
+
+
+                $(".btn-permisos").click(async function () {
+
+            let roleId = $(this).data("id");
+            let nombre = $(this).data("nombre");
+
+            $("#rolNombre").text(nombre);
+            $("#rolId").val(roleId);
+
+            // Llamar al API para obtener páginas y permisos del rol
+            let url = "/Rol/ObtenerPermisos";
+            let response = await $.get(url, { idRol: roleId });
+
+            let paginas = response.paginas;
+            let permisos = response.permisos;
+              paginas.sort((a, b) => a.nombre.localeCompare(b.nombre));
+            let html = "";
+
+            paginas.forEach(p => {
+                let checked = permisos.includes(p.paginaId) ? "checked" : "";
+                html += `
+                    <div class="col-md-6 mb-2">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input permisoCheck"
+                                   value="${p.paginaId}" ${checked} />
+                            ${p.nombre}
+                        </label>
+                    </div>`;
+            });
+
+            $("#listaPaginas").html(html);
+
+            new bootstrap.Modal(document.getElementById('modalPermisos')).show();
+        });
+
+        // Guardar permisos
+        $("#btnGuardarPermisos").click(async function () {
+
+            let roleId = $("#rolId").val();
+
+            let seleccionados = $(".permisoCheck:checked")
+                .map(function () { return $(this).val(); })
+                .get();
+
+            let data = {
+                roleId: roleId,
+                paginasSeleccionadas: seleccionados
+            };
+
+            let resp = await $.ajax({
+                url: "/Rol/GuardarPermisos",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(data)
+            });
+
+            Swal.fire("Éxito", "Permisos actualizados correctamente", "success");
+            $("#modalPermisos").modal("hide");
+        });
         });
     </script>
 }

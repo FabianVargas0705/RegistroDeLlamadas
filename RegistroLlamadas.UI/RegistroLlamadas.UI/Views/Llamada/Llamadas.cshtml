@@ -1,4 +1,5 @@
-﻿@model LlamadasViewModel
+﻿@inject RegistroLlamadas.UI.Servicios.PermisosServ.IPermisosUIService PermisosUI
+@model LlamadasViewModel
 
 @{
     ViewData["Title"] = "Gestión de Llamadas";
@@ -206,12 +207,10 @@
                             </td>
                             <td>
                                 <div class="d-flex gap-1 justify-content-center">
-                                    @if (
-                                                                    (item.EstadoId != 3 && item.EstadoId != 12)
-                                                                    &&
-                                                                    (item.UsuarioId == ViewBag.UsuarioIdActual || ViewBag.RolActual == 1003)
-                                                                    )
-                                                                    {
+                                    @if ( (item.EstadoId != 3 && item.EstadoId != 12) &&(item.UsuarioId == ViewBag.UsuarioIdActual || ViewBag.RolActual == 1003))
+                                    {
+                            @if (PermisosUI.PuedeVer("/LLamada/Finalizar"))
+                                    {
                                         <button type="button"
                                                 class="btn btn-success btn-sm btn-action btn-finalizar"
                                                 data-id="@item.IdLlamada"
@@ -219,14 +218,18 @@
                                                 title="Finalizar">
                                             <i class="bi bi-check-circle"></i>
                                         </button>
-
+                                        }
+                                @if (PermisosUI.PuedeVer("/LLamada/RegistrarVisita"))
+                                {
                                         <button class="btn btn-secondary btn-sm btn-action btn-visita"
                                                 data-id="@item.IdLlamada"
                                                 data-usuario="@item.UsuarioId"
                                                 title="Registrar Visita">
                                             <i class="bi bi-geo-alt"></i>
                                         </button>
-
+                                }
+                                @if (PermisosUI.PuedeVer("/LLamada/CambiarUsuario"))
+                                {
                                         <!-- Botón PASAR A OTRO USUARIO -->
                                         <button class="btn btn-dark btn-sm btn-action btn-reasignar"
                                                 data-id="@item.IdLlamada"
@@ -234,26 +237,40 @@
                                             <i class="bi bi-people"></i>
                                         </button>
                                     }
+                                    }
                                     <!-- Botón VISITA -->
-                                   
+                        @if (PermisosUI.PuedeVer("/LLamada/Detalles"))
+                        {
                                     <button class="btn btn-info btn-sm btn-action btn-ver" 
                                             data-id="@item.IdLlamada"
                                             data-bs-toggle="tooltip"
                                             title="Ver detalles">
                                         <i class="bi bi-eye"></i>
                                     </button>
+                        }
+                                    <button class="btn btn-outline-primary btn-sm btn-action btn-comentario"
+                                            data-id="@item.IdLlamada"
+                                            title="Agregar comentario">
+                                        <i class="bi bi-chat-text"></i>
+                                    </button>
+    @if (PermisosUI.PuedeVer("/LLamada/Editar"))
+    {
                                     <button class="btn btn-warning btn-sm btn-action btn-editar" 
                                             data-id="@item.IdLlamada"
                                             data-bs-toggle="tooltip"
                                             title="Editar">
                                         <i class="bi bi-pencil"></i>
                                     </button>
+    }
+    @if (PermisosUI.PuedeVer("/LLamada/Eliminar"))
+    {
                                     <button class="btn btn-danger btn-sm btn-action btn-eliminar" 
                                             data-id="@item.IdLlamada"
                                             data-bs-toggle="tooltip"
                                             title="Eliminar">
                                         <i class="bi bi-trash"></i>
                                     </button>
+    }
                                 </div>
                             </td>
                         </tr>
@@ -567,6 +584,60 @@
                     </button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Agregar Comentario -->
+<div class="modal fade" id="modalComentario" tabindex="-1">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">
+                    <i class="bi bi-chat-text"></i> Agregar Comentario
+                </h5>
+                <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+
+            <form id="formComentario">
+                <div class="modal-body">
+
+                    <input type="hidden" id="comentarioIdLlamada" />
+
+                    <label class="form-label">Comentario</label>
+                    <textarea class="form-control" id="textoComentario" rows="4" maxlength="300"
+                              placeholder="Escriba un comentario..."></textarea>
+
+                    <div class="form-text text-end">
+                        <span id="contadorComentario">0</span> / 300 caracteres
+                    </div>
+
+                    <label class="form-label mt-3">Comentarios rápidos</label>
+                    <div class="d-flex flex-wrap gap-2">
+                        <button type="button" class="btn btn-sm btn-outline-secondary quick-comment">
+                            No responden
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary quick-comment">
+                            En pruebas
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary quick-comment">
+                            Cliente solicita esperar
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary quick-comment">
+                            Seguimiento pendiente
+                        </button>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-primary" type="submit">Guardar Comentario</button>
+                </div>
+            </form>
+
         </div>
     </div>
 </div>

@@ -21,7 +21,11 @@ namespace RegistroLlamadas.UI.Controllers
         }
 
         #region obtener llamadas
-        public async Task<ActionResult> Llamadas(DateTime? fecha = null)
+        public async Task<ActionResult> Llamadas(DateTime? fecha = null,
+    string buscar = null,
+    string estado = null,
+    DateTime? fechaDesde = null,
+    DateTime? fechaHasta = null)
         {
             var catalogos = ObtenerCatalogos();
 
@@ -30,7 +34,7 @@ namespace RegistroLlamadas.UI.Controllers
                 ViewBag.Error = "No se pudieron cargar los catálogos.";
                 return View();
             }
-            var llamadas = await ObtenerLlamadasAPI(0, fecha);
+            var llamadas = await ObtenerLlamadasAPI(0, fecha, buscar,estado,fechaDesde,fechaHasta);
             if (llamadas == null)
             {
                 ViewBag.Error = "No se pudieron cargar las llamadas.";
@@ -85,15 +89,29 @@ namespace RegistroLlamadas.UI.Controllers
         #endregion
 
 
+
+
         #region obtenerllamadasApi
-        private async Task<List<LlamadaModel>> ObtenerLlamadasAPI(int idLlamada = 0, DateTime? fecha = null)
+        private async Task<List<LlamadaModel>> ObtenerLlamadasAPI(int idLlamada = 0,
+    DateTime? fecha = null,
+    string buscar = null,
+    string estado = null,
+    DateTime? fechaDesde = null,
+    DateTime? fechaHasta = null,
+    int? usuarioId = null)
         {
             using (var client = _http.CreateClient())
             {
                 var request = new RequestObtenerLlamada
                 {
                     IdLlamada = idLlamada,
-                    Fecha = fecha ?? DateTime.Now
+                    Fecha = fecha,
+                    UsuarioId = usuarioId,
+
+                    Buscar = string.IsNullOrWhiteSpace(buscar) ? null : buscar,
+                    Estado = string.IsNullOrWhiteSpace(estado) ? null : estado,
+                    FechaDesde = fechaDesde,
+                    FechaHasta = fechaHasta
                 };
 
                 var urlApi = _configuration["Valores:UrlAPI"] + "Llamada/obtenerLlamada";
@@ -511,7 +529,23 @@ namespace RegistroLlamadas.UI.Controllers
 
         #endregion
 
+        [HttpPost]
+        public async Task<IActionResult> AgregarComentario([FromBody] ComentarioModel model)
+        {
+            using var client = _http.CreateClient();
+            var urlApi = _configuration["Valores:UrlAPI"] + "Llamada/AgregarComentario";
 
+            var token = HttpContext.Session.GetString("Token");
+            if (!string.IsNullOrEmpty(token))
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var resp = await client.PostAsJsonAsync(urlApi, model);
+
+            if (resp.IsSuccessStatusCode)
+                return Ok();
+
+            return BadRequest();
+        }
 
     }
 }

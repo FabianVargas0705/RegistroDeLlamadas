@@ -17,6 +17,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<EnvioCorreo>();
 builder.Services.AddScoped<HistorialLlamada>();
 string key = builder.Configuration["Valores:KeyJWT"]!;
+builder.Services.AddHostedService<ProcesadorColaCorreos>();
 
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>

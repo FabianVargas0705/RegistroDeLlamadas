@@ -116,12 +116,7 @@
                                     <!-- LUGAR -->
                                     <td>
                                         @(item.Centro?.Nombre ?? "-")
-                                        @if (visita != null)
-                                        {
-                                            <div class="mt-1 small text-primary">
-                                                <i class="bi bi-geo-alt"></i> @visita.CentroNombre
-                                            </div>
-                                        }
+
                                     </td>
 
                                     <!-- EQUIPO -->
@@ -150,26 +145,23 @@
                                             </div>
                                         }
                                     </td>
-
                                     <!-- HORA FINAL -->
-                                    <td class="hora-final-cell">
-                                        @if (item.HoraFinal.HasValue)
+                                    <td>
+
+                                        <!-- Hora final de la llamada -->
+                                        @if (item.HoraFinal.HasValue && item.HoraFinal.Value > TimeSpan.Zero)
                                         {
                                             <span class="badge bg-success text-success bg-opacity-10">
+                                                <i class="bi bi-telephone"></i>
                                                 @item.HoraFinal.Value.ToString(@"hh\:mm")
-                                            </span>
-                                        }
-                                        else if (visita?.HoraFinal != null)
-                                        {
-                                            <span class="badge bg-info text-info bg-opacity-10">
-                                                @visita.HoraFinal.Value.ToString(@"hh\:mm")
                                             </span>
                                         }
                                         else
                                         {
-                                            <span class="text-muted">-</span>
+                                            <span class="text-muted small">Sin finalizar</span>
                                         }
 
+                                        <!-- Hora final de la visita -->
                                         @if (visita != null)
                                         {
                                             <div class="small text-info mt-1">
@@ -177,6 +169,7 @@
                                                 Visita final: @(visita.HoraFinal?.ToString(@"hh\:mm") ?? "-")
                                             </div>
                                         }
+
                                     </td>
 
                                     <!-- TIEMPO TRANSCURRIDO (LLAMADA o VISITA según calc) -->
@@ -239,6 +232,15 @@
                             </div>
                         </div>
                         <span class="distribucion-count" id="countVisita">0 llamadas</span>
+                    </div>
+                    <div class="distribucion-item">
+                        <span class="distribucion-label" style="color: #dc3545;">Atrasadas</span>
+                        <div class="distribucion-bar">
+                            <div class="distribucion-fill" style="background-color: #dc3545; width: 0%;" id="barAtrasadas">
+                                <span id="pctAtrasadas">0%</span>
+                            </div>
+                        </div>
+                        <span class="distribucion-count" id="countAtrasadas">0 llamadas</span>
                     </div>
                 </div>
             </div>

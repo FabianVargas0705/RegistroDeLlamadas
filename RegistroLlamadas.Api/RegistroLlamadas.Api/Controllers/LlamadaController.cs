@@ -28,20 +28,25 @@ namespace RegistroLlamadas.Api.Controllers
             _historialLlamada = historialLlamada;
         }
         // GET: api/<LlamadaController>
+        #region Obtener llamadas
         [HttpPost]
         [Route("obtenerLlamada")]
         public async Task<IEnumerable<LlamadaModel>> ObtenerLlamadas([FromBody] RequestObtenerLlamada llamada)
         {
             using (var context = new SqlConnection(_configuration["ConnectionStrings:BDConnection"]))
             {
-                var parametros = new
-                {
-                    IdLlamada = llamada.IdLlamada,
-                    Fecha = llamada.Fecha,
-                    UsuarioId = llamada.UsuarioId
-                };
+                var parametros = new DynamicParameters();
 
-                var resultado = context.QueryAsync<LlamadaModel, UsuarioModel, ClienteModel, EquipoModel, CentroModel, EstadoModel, LlamadaModel>(
+                parametros.Add("@IdLlamada", llamada.IdLlamada ?? 0);
+                parametros.Add("@Fecha", llamada.Fecha, DbType.Date);
+                parametros.Add("@UsuarioId", llamada.UsuarioId, DbType.Int32);
+                parametros.Add("@FechaDesde", llamada.FechaDesde, DbType.Date);
+                parametros.Add("@FechaHasta", llamada.FechaHasta, DbType.Date);
+                parametros.Add("@Estado", llamada.Estado, DbType.String);
+                parametros.Add("@Buscar", llamada.Buscar, DbType.String);
+
+                var resultado = await context.QueryAsync<
+                    LlamadaModel, UsuarioModel, ClienteModel, EquipoModel, CentroModel, EstadoModel, LlamadaModel>(
                     "sp_obtener_llamadas",
                     (llamadaModel, usuario, cliente, equipo, centro, estado) =>
                     {
@@ -57,14 +62,43 @@ namespace RegistroLlamadas.Api.Controllers
                     commandType: CommandType.StoredProcedure
                 );
 
-                return await resultado;
+                return resultado;
             }
         }
 
+
+        #endregion
+
+        #region registrar historial llamada
         private void RegistrarHistorialLlamada(int idLlamada, string accion, string descripcion, int? usuarioAfectado, int? registradoPor)
         {
             _historialLlamada.RegistrarHistorial(idLlamada, accion, descripcion, usuarioAfectado, registradoPor);
         }
+
+        #endregion
+
+
+        #region Agregar comentario
+        [Authorize]
+        [HttpPost("AgregarComentario")]
+        public async Task<IActionResult> AgregarComentario(ComentarioModel model)
+        {
+            var nombreUser = User.FindFirst("nombre").Value;
+            var registradoPor = int.Parse(User.FindFirst("id").Value);
+            RegistrarHistorialLlamada(
+                idLlamada: model.IdLlamada,
+                accion: "Comentario Agregado",
+                descripcion: $"Comentario agregado por {nombreUser}: {model.Comentario}",
+                usuarioAfectado: null,
+                registradoPor: registradoPor
+            );
+            return Ok();
+        }
+
+        #endregion
+
+
+        #region Registrar Llamada
         [Authorize]
         [HttpPost]
         [Route("registrarLlamada")]
@@ -108,7 +142,7 @@ namespace RegistroLlamadas.Api.Controllers
                                     usuarioAfectado: llamada.UsuarioId,   
                                     registradoPor: registradoPor
                                 );
-
+                    EnviarCorreoReasignacion(idGenerado, nombreUser);
                     return Ok(new
                     {
                         success = true,
@@ -128,6 +162,46 @@ namespace RegistroLlamadas.Api.Controllers
         
         }
 
+        #endregion
+
+        private CorreoAsignacionModel ObtenerDatosCorreoReasignacion(int idLlamada)
+        {
+            using var context = new SqlConnection(_configuration["ConnectionStrings:BDConnection"]);
+
+            return context.QueryFirstOrDefault<CorreoAsignacionModel>(
+                "sp_obtener_datos_asignacion",
+                new { IdLlamada = idLlamada },
+                commandType: CommandType.StoredProcedure
+            );
+        }
+
+        private void EnviarCorreoReasignacion(int idLlamada, string reasignadoPor)
+        {
+            var datos = ObtenerDatosCorreoReasignacion(idLlamada);
+
+            if (datos == null || string.IsNullOrWhiteSpace(datos.CorreoUsuario))
+                return;
+
+            string cuerpo = $@"
+        <h2>Se le ha asignado una nueva llamada</h2>
+        <p><strong>Número de caso:</strong> {datos.IdLlamada}</p>
+        <p><strong>Asunto:</strong> {datos.Asunto}</p>
+        <p><strong>Asignado por:</strong> {reasignadoPor}</p>
+        <p>Por favor ingrese al sistema para dar seguimiento.</p>
+        <br>
+        <small>Capris Médica – Sistema de soporte</small>
+    ";
+
+            _enviarCorreo.EnviarCorreo(
+                "Nueva llamada asignada",
+                cuerpo,
+                datos.CorreoUsuario
+            );
+        }
+
+
+
+        #region obtener estado llamada
         private async Task<string> obtenerEstado(LlamadaModel llamada)
         {
             if (llamada.Estado == null)
@@ -164,6 +238,10 @@ namespace RegistroLlamadas.Api.Controllers
             llamada.Estado.Descripcion = "Sin información";
             return llamada.Estado.Descripcion;
         }
+
+        #endregion
+
+
 
         [HttpPost]
         [Route("actualizarLlamada")]
@@ -397,6 +475,8 @@ namespace RegistroLlamadas.Api.Controllers
                     model.NuevoUsuarioId,
                     model.RealizadoPor       
                 );
+                EnviarCorreoReasignacion(model.IdLlamada, nombreUsuario);
+
 
                 return Ok(new
                 {
@@ -483,7 +563,6 @@ namespace RegistroLlamadas.Api.Controllers
 
         private void EnviarCorreoNotificacion(string asunto, int idLlamada)
         {
-            // Obtener todos los datos necesarios
             EncuetaModel datos = ObtenerCorreoClientePorIdLlamada(idLlamada);
 
             if (datos == null || string.IsNullOrWhiteSpace(datos.Correo))

@@ -3,7 +3,7 @@
     public class Bitacora
     {
         public int IdBitacora { get; set; }
-        public int UsuarioId { get; set; }
+        public int? UsuarioId { get; set; }
         public string Accion { get; set; }
         public DateTime Fecha { get; set; }
         public string TablaAfectada { get; set; }

@@ -6,9 +6,149 @@
         },
         pageLength: 10,
         responsive: true,
-        order: [[4, 'desc']]
+        fixedHeader: true,
+
+        order: [[4, 'desc']],
+
+        dom: '<"row mb-3"<"col-md-6"B><"col-md-6"f>>rt<"row mt-3"<"col-md-6"l><"col-md-6"p>>',
+
+        buttons: [
+            {
+                extend: 'collection',
+                text: '<i class="bi bi-download"></i> Exportar',
+                className: 'btn btn-primary btn-sm rounded-pill shadow-sm px-3',
+                autoClose: true,
+
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        text: '<i class="bi bi-file-earmark-excel"></i> Excel',
+                        className: 'btn btn-success btn-sm my-1 rounded-pill w-100',
+                    },
+                    {
+                        extend: 'csvHtml5',
+                        text: '<i class="bi bi-filetype-csv"></i> CSV',
+                        className: 'btn btn-secondary btn-sm my-1 rounded-pill w-100',
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: '<i class="bi bi-filetype-pdf"></i> PDF',
+                        className: 'btn btn-danger btn-sm rounded-pill shadow-sm px-3',
+                        orientation: 'landscape',
+                        pageSize: 'A4',
+                        customize: function (doc) {
+                            // Márgenes
+                            doc.pageMargins = [40, 60, 40, 40];
+
+                            // Cabecera
+                            doc.header = function () {
+                                return {
+                                    columns: [
+                                        {
+
+                                            text: 'Capris Médica',
+                                            fontSize: 18,
+                                            bold: true,
+                                            margin: [40, 20]
+                                        },
+                                        {
+                                            text: 'Reporte de Llamadas',
+                                            alignment: 'center',
+                                            fontSize: 16,
+                                            bold: true
+                                        },
+                                        {
+                                            text: new Date().toLocaleString(),
+                                            alignment: 'right',
+                                            margin: [0, 20, 40, 0],
+                                            fontSize: 10
+                                        }
+                                    ]
+                                };
+                            };
+
+                            // Pie de página
+                            doc.footer = function (currentPage, pageCount) {
+                                return {
+                                    columns: [
+                                        {
+                                            text: 'Capris Médica © 2025',
+                                            alignment: 'left',
+                                            margin: [40, 0]
+                                        },
+                                        {
+                                            text: 'Página ' + currentPage + ' de ' + pageCount,
+                                            alignment: 'right',
+                                            margin: [0, 0, 40, 0]
+                                        }
+                                    ]
+                                };
+                            };
+
+                            // Estilos de tabla
+                            doc.styles.tableHeader = {
+                                fillColor: '#0d6efd',
+                                color: 'white',
+                                bold: true,
+                                alignment: 'center'
+                            };
+
+                            doc.styles.tableBodyEven = { alignment: 'center', fontSize: 9 };
+                            doc.styles.tableBodyOdd = { alignment: 'center', fontSize: 9 };
+
+                            // Reduce padding
+                            if (doc.content && doc.content[1]) {
+                                doc.content[1].layout = {
+                                    paddingTop: () => 4,
+                                    paddingBottom: () => 4
+                                };
+                            }
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        text: '<i class="bi bi-printer"></i> Imprimir',
+                        className: 'btn btn-dark btn-sm my-1 rounded-pill w-100',
+                    },
+                    {
+                        extend: 'copyHtml5',
+                        text: '<i class="bi bi-clipboard"></i> Copiar',
+                        className: 'btn btn-outline-primary btn-sm my-1 rounded-pill w-100',
+                    }
+                ]
+            }
+        ]
     });
 
+    $('#tablaLlamadas thead th').each(function () {
+        let title = $(this).text();
+        if (title != "Acciones" && title != "") {
+            $(this).html(title + '<br><input class="form-control form-control-sm" type="text" placeholder="Buscar"/>');
+        }
+    });
+
+    tabla.columns().every(function () {
+        var that = this;
+        $('input', this.header()).on('keyup change', function () {
+            if (that.search() !== this.value) {
+                that.search(this.value).draw();
+            }
+        });
+    });
+
+    $("#btnBuscar").click(function () {
+
+        let filtros = {
+            buscar: $("#searchGlobal").val(),
+            estado: $("#filtroEstado").val(),
+            fechaDesde: $("#filtroFechaDesde").val(),
+            fechaHasta: $("#filtroFechaHasta").val()
+        };
+
+        let query = $.param(filtros);
+
+        window.location.href = "/Llamada/Llamadas?" + query;
+    });
     function calcularEstadisticas() {
         const total = $('#tablaLlamadas tbody tr').length;
         let finalizadas = 0;
@@ -31,14 +171,13 @@
             horaFinal = limpiarHora(horaFinal);
 
             // Finalizadas
-            if (estadoTexto.includes('finalizado') || estadoTexto.includes('finalizada')) {
+            if (estadoTexto.includes('finalizado') || estadoTexto.includes('finalizada') || estadoTexto.includes('visita')) {
                 finalizadas++;
-
                 // Calcular solo si tiene hora final
                 if (horaInicio && horaFinal && horaFinal !== '-') {
                     const duracionMs = calcularDiferenciaMs(horaInicio, horaFinal);
                     if (!isNaN(duracionMs) && duracionMs > 0) {
-                        totalDuracionMs += duracionMs;
+                        totalDuracionMs += duracionMs;totalFinalizadas
                         cantidadConTiempo++;
                     }
                 }
@@ -167,7 +306,7 @@
             EstadoId: $('#estadoId').val()
         };
 
-        // Validación básica con SweetAlert2
+        // Validación
         if (!llamadaData.Fecha || !llamadaData.HoraInicio || !llamadaData.CentroId) {
             Swal.fire({
                 icon: 'warning',
@@ -784,4 +923,48 @@
         $('#contadorCaracteres').text('0');
         $('#formFinalizarLlamada button[type="submit"]').removeData('id-llamada');
     });
+
+    // Abrir modal de comentario
+    $(document).on("click", ".btn-comentario", function () {
+        const id = $(this).data("id");
+        $("#comentarioIdLlamada").val(id);
+        $("#textoComentario").val("");
+        $("#contadorComentario").text("0");
+        $("#modalComentario").modal("show");
+    });
+    $("#textoComentario").on("input", function () {
+        $("#contadorComentario").text($(this).val().length);
+    });
+
+    $(".quick-comment").on("click", function () {
+        $("#textoComentario").val($(this).text());
+        $("#contadorComentario").text($(this).text().length);
+    });
+
+    $("#formComentario").submit(async function (e) {
+        e.preventDefault();
+
+        const idLlamada = $("#comentarioIdLlamada").val();
+        const comentario = $("#textoComentario").val();
+
+        const payload = {
+            IdLlamada: idLlamada,
+            Comentario: comentario
+        };
+
+        const resp = await fetch("/Llamada/AgregarComentario", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        });
+
+        if (resp.ok) {
+            Swal.fire("Comentario agregado", "", "success");
+            $("#modalComentario").modal("hide");
+        } else {
+            Swal.fire("Error", "No se pudo registrar el comentario", "error");
+        }
+    });
+
+
 });
