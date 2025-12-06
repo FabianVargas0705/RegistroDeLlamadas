@@ -6,5 +6,11 @@
         public DateTime? Fecha { get; set; }
 
         public int? UsuarioId { get; set; }
+
+        public string Buscar { get; set; }
+        public string Estado { get; set; }
+        public DateTime? FechaDesde { get; set; }
+        public DateTime? FechaHasta { get; set; }
     }
+
 }

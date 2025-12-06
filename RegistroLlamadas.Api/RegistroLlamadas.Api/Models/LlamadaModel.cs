@@ -17,6 +17,11 @@
         public int? CentroId { get; set; }
         public int? EstadoId { get; set; }
 
+        public string? UsuarioNombre { get; set; }
+        public string? ClienteNombre { get; set; }
+
+        public string? CentroNombre { get; set; }
+
         // Navigation Properties
         public EquipoModel? Equipo { get; set; }
         public UsuarioModel? Usuario { get; set; }

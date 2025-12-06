@@ -9,7 +9,10 @@ builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<PermisosService>();
 builder.Services.AddScoped<IPermisosUIService, PermisosUIService>();
-
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add<CargarPermisosFilter>();
+});
 
 var app = builder.Build();
 

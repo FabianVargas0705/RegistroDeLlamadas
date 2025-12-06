@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using RegistroLlamadas.Api.Models;
+using RegistroLlamadas.Api.Models.AdministacionPermisosPagina;
 using System.Data;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -38,6 +39,20 @@ namespace RegistroLlamadas.Api.Controllers
 
                 return Ok(result);
             }
+        }
+
+
+        [HttpGet("GetPaginas")]
+        public async Task<IActionResult> GetPaginas()
+        {
+            using var connection = new SqlConnection(_configuration["ConnectionStrings:BDConnection"]);
+
+            var paginas = await connection.QueryAsync<PaginaModels>(
+                "sp_obtener_paginas_activas",
+                commandType: CommandType.StoredProcedure
+            );
+
+            return Ok(paginas);
         }
 
         // GET api/<CatalogoController>/5

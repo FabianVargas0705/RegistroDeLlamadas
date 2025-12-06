@@ -13,13 +13,11 @@ namespace RegistroLlamadas.UI.Controllers
         // GET: DashboardController
         private readonly IHttpClientFactory _http;
         private readonly IConfiguration _configuration;
-        private readonly IPermisosUIService _permisosUI;
 
-        public DashboardController(IHttpClientFactory http, IConfiguration configuration, IPermisosUIService permisosUIService)
+        public DashboardController(IHttpClientFactory http, IConfiguration configuration)
         {
             _http = http;
             _configuration = configuration;
-            _permisosUI = permisosUIService;
         }
         public async Task<ActionResult> DashboardView(DateTime? fecha = null)
         {
@@ -49,7 +47,6 @@ namespace RegistroLlamadas.UI.Controllers
                 Clientes = catalogos.Clientes
             };
             ViewBag.UsuarioIdActual = HttpContext.Session.GetInt32("ConsecutivoUsuario");
-            await _permisosUI.CargarPermisosAsync();
 
             return View(modelo);
         }

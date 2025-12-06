@@ -64,7 +64,7 @@ namespace RegistroLlamadas.Api.Controllers
                 using (var connection = new SqlConnection(_configuration["ConnectionStrings:BDConnection"]))
                 {
                     var parametros = new DynamicParameters();
-                    parametros.Add("@RolId", roleId);
+                    parametros.Add("@RoleId", roleId);
 
                     var resultado = await connection.QueryAsync<PaginaModels>(
                         "sp_obtener_permisos_por_rol",

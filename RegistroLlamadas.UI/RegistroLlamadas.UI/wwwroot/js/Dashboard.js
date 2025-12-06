@@ -5,7 +5,8 @@
         visitas: 0,
         enAtencion: 0,
         tiempoTotal: 0,
-        tiempoTotalFinalizado: 0
+        tiempoTotalFinalizado: 0,
+        atrasadas:0
     };
 
     // Función para calcular tiempo transcurrido
@@ -78,13 +79,20 @@
             fila.find('.condicion-cell').html('<span class="badge-estado badge-visita">Visita</span>');
             fila.find('.hora-final-cell').text(horaFinal || '-');
             fila.find('.tiempo-badge').addClass('badge-visita');
-        } else {
+        }
+        else if (estadoId === 4) {
+            estadisticas.atrasadas++;
+            fila.addClass('row-critica');
+            fila.find('.condicion-cell').html('<span class="badge-estado badge-critica">ATRASADO</span>');
+            fila.find('.tiempo-badge').addClass('badge-critica');
+        }
+         else {
             // En atención 
             estadisticas.enAtencion++;
             estadisticas.tiempoTotal += tiempoMs;
 
             if (tiempoHoras >= 2) {
-                // Crítica - parpadea
+
                 fila.addClass('row-critica');
                 fila.find('.condicion-cell').html('<span class="badge-estado badge-critica">ATRASADO</span>');
                 fila.find('.tiempo-badge').addClass('badge-critica');
@@ -107,6 +115,7 @@
     $('#totalFinalizadas').text(estadisticas.finalizadas);
     $('#totalVisitas').text(estadisticas.visitas);
     $('#totalAtencion').text(estadisticas.enAtencion);
+    $('#countAtrasadas').text(estadisticas.atrasadas);
 
     // Calcular tiempo promedio
     const tiempoPromedioMs = estadisticas.finalizadas > 0
@@ -117,7 +126,7 @@
     // Actualizar barras de distribución
     const pctFinalizada = estadisticas.total > 0 ? (estadisticas.finalizadas / estadisticas.total * 100).toFixed(1) : 0;
     const pctVisita = estadisticas.total > 0 ? (estadisticas.visitas / estadisticas.total * 100).toFixed(1) : 0;
-
+    const pctAtrada = estadisticas.total > 0 ? (estadisticas.atrasadas / estadisticas.total * 100).toFixed(1) : 0;
     setTimeout(() => {
         $('#barFinalizada').css('width', pctFinalizada + '%');
         $('#pctFinalizada').text(pctFinalizada + '%');
@@ -125,7 +134,10 @@
 
         $('#barVisita').css('width', pctVisita + '%');
         $('#pctVisita').text(pctVisita + '%');
+        $('#barAtrasadas').css('width', pctAtrada + '%');
+        $('#pctAtrasadas').text(pctAtrada + '%');
         $('#countVisita').text(estadisticas.visitas + ' llamadas');
+        $('#countAtrasadas').text(estadisticas.atrasadas + ' llamadas');
     }, 300);
 
     // Inicializar DataTable
@@ -144,25 +156,29 @@
 
     // Crear gráfico de dona
     const ctx = document.getElementById('chartDistribucion').getContext('2d');
+
     new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: ['Finalizadas', 'Visitas', 'En Atención'],
+            labels: ['Finalizadas', 'Visitas', 'En Atención', 'Atrasadas'],
             datasets: [{
                 data: [
                     estadisticas.finalizadas,
                     estadisticas.visitas,
-                    estadisticas.enAtencion
+                    estadisticas.enAtencion,
+                    estadisticas.atrasadas
                 ],
                 backgroundColor: [
-                    'rgba(40, 167, 69, 0.8)', 
-                    'rgba(23, 162, 184, 0.8)',  
-                    'rgba(255, 193, 7, 0.8)'   
+                    'rgba(40, 167, 69, 0.8)',   // Verde Finalizadas
+                    'rgba(23, 162, 184, 0.8)',  // Celeste Visitas
+                    'rgba(255, 193, 7, 0.8)',    // Amarillo En Atención
+                    'rgba(220, 53, 69, 0.8)'     //  Rojo Atrasadas
                 ],
                 borderColor: [
                     '#28a745',
                     '#17a2b8',
-                    '#ffc107'
+                    '#ffc107',
+                    '#dc3545'  
                 ],
                 borderWidth: 2
             }]
@@ -183,6 +199,7 @@
             }
         }
     });
+
 
     // Función para actualizar datos sin recargar la página
     function actualizarDatos() {
@@ -243,6 +260,11 @@
                             fila.find('.condicion-cell').html('<span class="badge-estado badge-visita">Visita</span>');
                             fila.find('.hora-final-cell').text(horaFinal || '-');
                             fila.find('.tiempo-badge').addClass('badge-visita');
+                        }  else if (estadoId === 4) {
+                            estadisticas.atrasadas++;
+                            fila.addClass('row-critica');
+                            fila.find('.condicion-cell').html('<span class="badge-estado badge-critica">ATRASADO</span>');
+                            fila.find('.tiempo-badge').addClass('badge-critica');
                         } else {
                             estadisticas.enAtencion++;
                             estadisticas.tiempoTotal += tiempoMs;
