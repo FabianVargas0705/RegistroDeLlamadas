@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using RegistroLlamadas.UI.Models;
 using System.Diagnostics;
+using Utiles;
 using static System.Net.WebRequestMethods;
 
 namespace RegistroLlamadas.UI.Controllers
@@ -35,6 +36,8 @@ namespace RegistroLlamadas.UI.Controllers
         [HttpPost]
         public IActionResult Login(UsuarioModel usuario)
         {
+            var helper = new Helper();
+            usuario.Contrasenna = helper.Encrypt(usuario.Contrasenna);
             using (var context = _http.CreateClient())
             {
                 var urlApi = _configuration["Valores:UrlAPI"] + "Auth/ValidarSesion";
