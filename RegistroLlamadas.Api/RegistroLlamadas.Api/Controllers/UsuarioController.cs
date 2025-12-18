@@ -1,4 +1,5 @@
-﻿using Dapper;
+
+using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using RegistroLlamadas.Api.Models;
@@ -9,9 +10,11 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
+
 namespace RegistroLlamadas.Api.Controllers
 {
     [Route("api/[controller]")]
+
     [ApiController]
     public class UsuarioController : ControllerBase
     {
@@ -383,3 +386,4 @@ namespace RegistroLlamadas.Api.Controllers
 
         #endregion
     }
+
