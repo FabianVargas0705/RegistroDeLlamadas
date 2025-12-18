@@ -1,4 +1,4 @@
-﻿using Dapper;
+using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using RegistroLlamadas.Api.Models;
@@ -215,7 +215,6 @@ namespace RegistroLlamadas.Api.Controllers
             }
         }
         #endregion
-
 
     }
 }
