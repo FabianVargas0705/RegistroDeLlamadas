@@ -3,6 +3,7 @@ using RegistroLlamadas.Api.Middleware;
 using RegistroLlamadas.Api.Servicios.Correo;
 using RegistroLlamadas.Api.Servicios.Historial;
 using RegistroLlamadas.Api.Servicios.ServBitacora;
+using RegistroLlamadas.Api.Servicios.WhatsApp;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,8 @@ builder.Services.AddScoped<EnvioCorreo>();
 builder.Services.AddScoped<HistorialLlamada>();
 string key = builder.Configuration["Valores:KeyJWT"]!;
 builder.Services.AddHostedService<ProcesadorColaCorreos>();
+builder.Services.AddSingleton<WhatsAppService>();
+
 
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>

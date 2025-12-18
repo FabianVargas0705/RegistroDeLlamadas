@@ -361,16 +361,11 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label for="equipoId" class="form-label">Equipo</label>
-                            <select id="equipoId" class="form-select select2">
-                                <option value="">Seleccione un equipo</option>
-                                @if (Model.Equipos != null)
-                                {
-                                    @foreach (var equipo in Model.Equipos)
-                                    {
-                                        <option value="@equipo.ID">@equipo.Nombre</option>
-                                    }
-                                }
+                            <label for="equipoId" class="form-label">
+                                Equipo <span class="text-danger">*</span>
+                            </label>
+                            <select id="equipoId" class="form-select select2" required disabled>
+                                <option value="">Seleccione un centro primero</option>
                             </select>
                         </div>
 

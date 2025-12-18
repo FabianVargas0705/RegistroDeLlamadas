@@ -19,8 +19,8 @@ namespace RegistroLlamadas.Api.Servicios.Correo
             using var connection = new SqlConnection(_configuration["ConnectionStrings:BDConnection"]);
 
             var query = @"
-        INSERT INTO ColaCorreos (Destinatario, Asunto, Cuerpo)
-        VALUES (@Destinatario, @Asunto, @Cuerpo)";
+                INSERT INTO ColaCorreos (Destinatario, Asunto, Cuerpo)
+                VALUES (@Destinatario, @Asunto, @Cuerpo)";
 
             connection.Execute(query, new
             {

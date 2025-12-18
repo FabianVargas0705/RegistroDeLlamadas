@@ -142,7 +142,11 @@ namespace RegistroLlamadas.Api.Controllers
                                     usuarioAfectado: llamada.UsuarioId,   
                                     registradoPor: registradoPor
                                 );
-                    EnviarCorreoReasignacion(idGenerado, nombreUser);
+                    if(llamada.UsuarioId != registradoPor)
+                    {
+                        EnviarCorreoReasignacion(idGenerado, nombreUser);
+
+                    }
                     return Ok(new
                     {
                         success = true,

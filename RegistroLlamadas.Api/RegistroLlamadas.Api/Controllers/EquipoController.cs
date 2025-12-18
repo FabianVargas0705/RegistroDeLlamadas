@@ -45,6 +45,35 @@ namespace RegistroLlamadas.Api.Controllers
         }
 
         [HttpGet]
+        [Route("ObtenerEquiposPorCentro/{idCentro}")]
+        public async Task<IActionResult> ObtenerEquiposPorCentro(int idCentro)
+        {
+            try
+            {
+                using (var context = new SqlConnection(_configuration["ConnectionStrings:BDConnection"]))
+                {
+                    var parametros = new DynamicParameters();
+                    parametros.Add("@IdCentro", idCentro);
+                    var equipos = await context.QueryAsync<EquipoModel>(
+                        "sp_ObtenerEquiposPorCentro",
+                        parametros,
+                        commandType: CommandType.StoredProcedure
+                    );
+
+                    return Ok(equipos);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    mensaje = "Error al obtener los equipos del centro: " + ex.Message
+                });
+            }
+        }
+
+        [HttpGet]
         [Route("ObtenerEquipoPorId/{idEquipo}")]
         public async Task<IActionResult> ObtenerEquipoPorId(int idEquipo)
         {

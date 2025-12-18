@@ -145,38 +145,42 @@ namespace RegistroLlamadas.UI.Controllers
         {
             try
             {
-                using (var client = _http.CreateClient())
+                using var client = _http.CreateClient();
+
+                var urlApi = _configuration["Valores:UrlAPI"] + "Llamada/registrarLlamada";
+
+                var token = HttpContext.Session.GetString("Token");
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization =
+                        new AuthenticationHeaderValue("Bearer", token);
+
+                var respuesta = await client.PostAsJsonAsync(urlApi, llamada);
+                var content = await respuesta.Content.ReadAsStringAsync();
+
+        
+                if (respuesta.IsSuccessStatusCode)
                 {
-                    var urlApi = _configuration["Valores:UrlAPI"] + "Llamada/registrarLlamada";
-
-                    var token = HttpContext.Session.GetString("Token");
-                    if (!string.IsNullOrEmpty(token))
-                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-
-                    var respuesta = await client.PostAsJsonAsync(urlApi, llamada);
-
-                    if (respuesta.IsSuccessStatusCode)
-                    {
-                        var options = new JsonSerializerOptions
-                        {
-                            PropertyNameCaseInsensitive = true
-                        };
-                        var resultado = await respuesta.Content.ReadFromJsonAsync<dynamic>(options);
-                        return Ok(resultado);
-                    }
-
-                    var errorContent = await respuesta.Content.ReadAsStringAsync();
-                    return BadRequest(new { success = false, mensaje = errorContent });
+                    return Content(content, "application/json");
                 }
+
+                // ❌ ERROR → devolver EXACTAMENTE lo que manda el API
+                return StatusCode(
+                    (int)respuesta.StatusCode,
+                    JsonSerializer.Deserialize<object>(content)
+                );
             }
             catch (Exception ex)
             {
-                return BadRequest(new { success = false, mensaje = "Error al registrar la llamada: " + ex.Message });
+                return StatusCode(500, new
+                {
+                    success = false,
+                    code = "ERROR_UI",
+                    mensaje = "Error al registrar la llamada: " + ex.Message
+                });
             }
         }
-
         #endregion
+
 
 
         #region Actualizar llamada
@@ -296,7 +300,11 @@ namespace RegistroLlamadas.UI.Controllers
 
         #region obtener misLlamadas
 
-        public async Task<ActionResult> MisLlamadas(DateTime? fecha = null)
+        public async Task<ActionResult> MisLlamadas(DateTime? fecha = null,
+    string buscar = null,
+    string estado = null,
+    DateTime? fechaDesde = null,
+    DateTime? fechaHasta = null)
         {
             var catalogos =  ObtenerCatalogos();
             if (catalogos == null)
@@ -313,7 +321,7 @@ namespace RegistroLlamadas.UI.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            var llamadas = await ObtenerMisLlamadasAPI(usuarioId.Value, fecha);
+            var llamadas = await ObtenerLlamadasAPI(0, fecha, buscar, estado, fechaDesde, fechaHasta, usuarioId.Value);
 
             if (llamadas == null)
             {
