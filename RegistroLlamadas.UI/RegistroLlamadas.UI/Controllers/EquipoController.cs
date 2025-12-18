@@ -34,7 +34,10 @@ namespace RegistroLlamadas.UI.Controllers
         {
             var catalogos = ObtenerCatalogos();
             ViewBag.Centros = catalogos?.Centros ?? new List<CatalogoItem>();
-            ViewBag.Estados = catalogos?.Estados ?? new List<CatalogoItem>();
+            ViewBag.Estados = catalogos?.Estados
+                    .Where(e => e.TipoEstado == 1)
+                    .ToList()
+                    ?? new List<CatalogoItem>(); ViewBag.Roles = catalogos?.Roles ?? new List<RolItem>();
             return View(new EquipoModel());
         }
 

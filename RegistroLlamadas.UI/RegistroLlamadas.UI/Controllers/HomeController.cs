@@ -1,7 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using RegistroLlamadas.UI.Models;
 using System.Diagnostics;
+using System.Net.Http.Headers;
 using Utiles;
 using static System.Net.WebRequestMethods;
 
@@ -54,11 +55,18 @@ namespace RegistroLlamadas.UI.Controllers
                         HttpContext.Session.SetString("NombrePerfil", datosApi.NombrePerfil);
                         HttpContext.Session.SetInt32("IdPerfil", datosApi.ConsecutivoPerfil);
                         HttpContext.Session.SetString("Token", datosApi.Token);
+                     
+                        if (datosApi.Contemporal)
+                        {
+                            return RedirectToAction("CambiarContrasena", "Home");
+                        }
+
+                        // ✅ Login normal
                         return RedirectToAction("DashboardView", "Dashboard");
                     }
                 }
 
-                ViewBag.Mensaje = "No se ha validado la informaci�n";
+                ViewBag.Mensaje = "No se ha validado la información";
                 return View();
             }
         }
@@ -68,6 +76,53 @@ namespace RegistroLlamadas.UI.Controllers
         {
             HttpContext.Session.Clear();
             return RedirectToAction("Login", "Home");
+        }
+
+        [HttpGet]
+        public IActionResult CambiarContrasena()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CambiarContrasena(string NuevaContrasena,string ConfirmarContrasena)
+        {
+            if (NuevaContrasena != ConfirmarContrasena)
+            {
+                ViewBag.Mensaje = "Las contraseñas no coinciden";
+                return View();
+            }
+
+            int idUsuario = HttpContext.Session.GetInt32("ConsecutivoUsuario") ?? 0;
+
+            var helper = new Helper();
+            string passwordEncrypt = helper.Encrypt(NuevaContrasena);
+
+            using (var client = _http.CreateClient())
+            {
+                var urlApi = _configuration["Valores:UrlAPI"] + "Usuario/actualizarContrasena";
+
+                var token = HttpContext.Session.GetString("Token");
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization =
+                        new AuthenticationHeaderValue("Bearer", token);
+
+                var dto = new
+                {
+                    IdUsuario = idUsuario,
+                    NuevaContrasena = passwordEncrypt
+                };
+
+                var respuesta = await client.PutAsJsonAsync(urlApi, dto);
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("DashboardView", "Dashboard");
+                }
+
+                ViewBag.Mensaje = "Error al actualizar la contraseña";
+                return View();
+            }
         }
 
         public IActionResult Privacy()

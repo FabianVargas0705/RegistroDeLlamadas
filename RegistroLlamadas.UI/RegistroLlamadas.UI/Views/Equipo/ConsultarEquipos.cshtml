@@ -43,9 +43,10 @@
                     <th>Nombre</th>
                     <th>Modelo</th>
                     <th>Marca</th>
+                    <th>Centro</th>
                     <th>Condición</th>
                     <th>Serie</th>
-                    <th>Activo</th>
+                    <th>Estado</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -57,9 +58,10 @@
                         <td>@item.Nombre</td>
                         <td>@item.Modelo</td>
                         <td>@item.Marca</td>
+                        <td>@item.CentroNombre</td>
                         <td>@item.Condicion</td>
                         <td>@(item.Serie ?? "-")</td>
-                        <td>@(item.Activo ?? "-")</td>
+                        <td>@(item.EstadoDescripcion ?? "-")</td>
                         <td>
                             <a href="@Url.Action("ActualizarEquipos", "Equipo", new { id = item.IdEquipo })"
                                class="btn btn-sm btn-outline-warning">

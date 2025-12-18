@@ -1,4 +1,6 @@
-﻿namespace RegistroLlamadas.UI.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace RegistroLlamadas.UI.Models
 {
     public class UsuarioModel
     {
@@ -11,6 +13,7 @@
         public int ConsecutivoPerfil { get; set; }
         public string NombrePerfil { get; set; } = string.Empty;
         public string ContrasennaConfirmar { get; set; } = string.Empty;
+        public bool Contemporal { get; set; }
         public string Token { get; set; } = string.Empty;
     }
 }

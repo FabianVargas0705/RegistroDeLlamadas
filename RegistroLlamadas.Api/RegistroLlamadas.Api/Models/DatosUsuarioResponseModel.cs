@@ -26,6 +26,9 @@ namespace RegistroLlamadas.Api.Models
         [Column("rol_id")]
         public int ConsecutivoPerfil { get; set; }
 
+        [Column("Contemporal")]
+        public bool Contemporal { get; set; }
+
         [NotMapped]
         public string NombrePerfil { get; set; } = string.Empty;
 

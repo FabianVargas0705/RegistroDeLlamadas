@@ -136,6 +136,42 @@
         });
     });
 
+    $('#centroId').on('change', function () {
+
+        const centroId = $(this).val();
+        const equipoSelect = $('#equipoId');
+
+        equipoSelect.empty();
+
+        if (!centroId) {
+            equipoSelect.prop('disabled', true);
+            equipoSelect.append('<option value="">Seleccione un centro primero</option>');
+            return;
+        }
+
+        equipoSelect.prop('disabled', true);
+        equipoSelect.append('<option value="">Cargando equipos...</option>');
+
+        $.get(`/Equipo/ObtenerEquiposPorCentro?idCentro=${centroId}`, function (data) {
+
+            equipoSelect.empty();
+            equipoSelect.append('<option value="">Seleccione un equipo</option>');
+
+            data.forEach(e => {
+                equipoSelect.append(
+                    `<option value="${e.idEquipo}">${e.nombre}</option>`
+                );
+            });
+
+            equipoSelect.prop('disabled', false);
+        })
+            .fail(function () {
+                equipoSelect.empty();
+                equipoSelect.append('<option value="">Error al cargar equipos</option>');
+            });
+    });
+
+
     $("#btnBuscar").click(function () {
 
         let filtros = {
@@ -147,7 +183,13 @@
 
         let query = $.param(filtros);
 
-        window.location.href = "/Llamada/Llamadas?" + query;
+        let urlActual = window.location.pathname.toLowerCase();
+
+        let destino = urlActual.includes("misllamadas")
+            ? "/Llamada/MisLlamadas"
+            : "/Llamada/Llamadas";
+
+        window.location.href = destino + "?" + query;
     });
     function calcularEstadisticas() {
         const total = $('#tablaLlamadas tbody tr').length;
@@ -289,49 +331,69 @@
     $('#formNuevaLlamada').on('submit', function (e) {
         e.preventDefault();
 
+        const equipoSelect = $('#equipoId');        // ✅ definido
+        const equipoVal = equipoSelect.val();
+
+        // ✅ Forzar a Select2 a “confirmar” el valor (por si está en modal)
+        if (equipoSelect.hasClass('select2-hidden-accessible')) {
+            equipoSelect.trigger('change.select2');
+        }
+
         const idLlamada = $(this).find('button[type="submit"]').data('id-llamada') || 0;
 
-        var llamadaData = {
-            IdLlamada: idLlamada,
+        const llamadaData = {
+            IdLlamada: parseInt(idLlamada) || 0,
             Fecha: $('#fecha').val(),
             HoraInicio: $('#horaInicio').val(),
             HoraFinal: $('#horaFinal').val() || null,
             Promat: $('#promat').val(),
             Asunto: $('#asunto').val(),
-            CorreoEnviado: $('#correoEnviado').val() === 'true',
-            UsuarioId: $('#usuarioId').val(),
-            EquipoId: $('#equipoId').val() || null,
-            ClienteId: $('#clienteId').val(),
-            CentroId: $('#centroId').val(),
-            EstadoId: $('#estadoId').val()
+
+            // ✅ si es checkbox usa is(':checked') — si es select con true/false déjalo como lo tenías
+            CorreoEnviado: $('#correoEnviado').is(':checked'),
+
+            UsuarioId: $('#usuarioId').val() ? parseInt($('#usuarioId').val()) : null,
+            ClienteId: $('#clienteId').val() ? parseInt($('#clienteId').val()) : null,
+            CentroId: $('#centroId').val() ? parseInt($('#centroId').val()) : null,
+            EstadoId: $('#estadoId').val() ? parseInt($('#estadoId').val()) : 1,
+
+            // ✅ clave: null si no selecciona
+            EquipoId: (equipoVal && equipoVal !== "") ? parseInt(equipoVal) : null
         };
 
-        // Validación
-        if (!llamadaData.Fecha || !llamadaData.HoraInicio || !llamadaData.CentroId) {
+        console.log('Payload:', llamadaData);
+
+        // ✅ Validación de obligatorios (incluye EquipoId)
+        if (!llamadaData.Fecha || !llamadaData.HoraInicio || !llamadaData.CentroId || !llamadaData.ClienteId || !llamadaData.EquipoId) {
             Swal.fire({
                 icon: 'warning',
                 title: 'Campos incompletos',
-                text: 'Por favor complete todos los campos obligatorios marcados con *',
+                text: 'Debe seleccionar Centro, Cliente y Equipo, además de Fecha y Hora de inicio.',
                 confirmButtonText: 'Entendido'
             });
+
+            // ✅ feedback visual en el select2
+            if (!llamadaData.EquipoId) {
+                equipoSelect.addClass('is-invalid');
+                if (equipoSelect.hasClass('select2-hidden-accessible')) {
+                    equipoSelect.next('.select2-container').find('.select2-selection').addClass('border border-danger');
+                }
+            }
+
             return;
         }
 
-        // Determinar si es crear o actualizar
         const url = idLlamada > 0 ? '/Llamada/ActualizarLlamada' : '/Llamada/RegistrarLlamada';
         const mensaje = idLlamada > 0 ? 'actualizada' : 'registrada';
         const accion = idLlamada > 0 ? 'Actualizando' : 'Guardando';
 
-        // Mostrar loading
         Swal.fire({
             title: accion + '...',
             text: 'Por favor espere',
             allowOutsideClick: false,
             allowEscapeKey: false,
             showConfirmButton: false,
-            didOpen: () => {
-                Swal.showLoading();
-            }
+            didOpen: () => Swal.showLoading()
         });
 
         $.ajax({
@@ -364,14 +426,13 @@
             error: function (xhr, status, error) {
                 let mensajeError = 'Error al guardar la llamada';
 
-                // Intentar obtener mensaje del servidor
                 if (xhr.responseJSON && xhr.responseJSON.mensaje) {
                     mensajeError = xhr.responseJSON.mensaje;
                 } else if (xhr.responseText) {
                     try {
-                        const response = JSON.parse(xhr.responseText);
-                        mensajeError = response.mensaje || mensajeError;
-                    } catch (e) {
+                        const resp = JSON.parse(xhr.responseText);
+                        mensajeError = resp.mensaje || mensajeError;
+                    } catch {
                         mensajeError += ': ' + error;
                     }
                 }

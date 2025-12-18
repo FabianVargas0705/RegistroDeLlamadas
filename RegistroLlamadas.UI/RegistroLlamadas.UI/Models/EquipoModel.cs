@@ -11,5 +11,7 @@
         public string? Activo { get; set; }
         public int? CentroId { get; set; }
         public int? EstadoId { get; set; }
+        public string? CentroNombre { get; set; }
+        public string? EstadoDescripcion { get; set; }
     }
 }

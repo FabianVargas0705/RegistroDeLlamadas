@@ -1,0 +1,254 @@
+﻿@model List<RegistroLlamadas.UI.Models.ClienteModel>
+
+@{
+    ViewData["Title"] = "Clientes";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3><i class="bi bi-people"></i> Gestión de Clientes</h3>
+        <button class="btn btn-primary" onclick="nuevoCliente()">
+            <i class="bi bi-plus-circle"></i> Nuevo Cliente
+        </button>
+    </div>
+
+    <div class="table-responsive">
+        <table id="tablaClientes" class="table table-striped table-bordered w-100">
+            <thead>
+                <tr>
+                    <th>Identificación</th>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var c in Model)
+                {
+                    <tr>
+                        <td>@c.Identificacion</td>
+                        <td>@c.Nombre @c.PrimerApellido</td>
+                        <td>@c.Correo</td>
+                        <td>
+                            <span class="badge bg-success">@c.EstadoNombre</span>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-sm btn-warning"
+                                    onclick="editarCliente(@c.IdCliente)">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- ================= MODAL ================= -->
+<div class="modal fade" id="modalCliente" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="tituloModal">Cliente</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <input type="hidden" id="IdCliente" />
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label>Identificación</label>
+                        <input class="form-control" id="Identificacion" />
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label>Correo</label>
+                        <input class="form-control" id="Correo" />
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label>Nombre</label>
+                        <input class="form-control" id="Nombre" />
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label>Primer Apellido</label>
+                        <input class="form-control" id="PrimerApellido" />
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label>Segundo Apellido</label>
+                        <input class="form-control" id="SegundoApellido" />
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label>Teléfono</label>
+                        <input class="form-control" id="Telefono" />
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label>Estado</label>
+                        <select class="form-select" id="EstadoId">
+                            @foreach (var estado in ViewBag.Estados)
+                            {
+                                <option value="@estado.ID">@estado.Nombre</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button class="btn btn-success" onclick="guardarCliente()">
+                    <i class="bi bi-save"></i> Guardar
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        let modal;
+
+        $(document).ready(function () {
+
+            modal = new bootstrap.Modal(
+                document.getElementById('modalCliente'),
+                { backdrop: 'static', keyboard: false }
+            );
+
+            $('#tablaClientes').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
+                }
+            });
+
+            $('input').on('input', function () {
+                $(this).removeClass('is-invalid')
+                       .next('.invalid-feedback').text('');
+            });
+        });
+
+        function nuevoCliente() {
+            limpiarFormulario();
+            $('#tituloModal').text('Nuevo Cliente');
+            modal.show();
+        }
+
+        function editarCliente(id) {
+            $.get(`/Cliente/ObtenerClientePorId?idCliente=${id}`, function (resp) {
+                if (resp.success) {
+                    const c = resp.data;
+
+                    $('#IdCliente').val(c.idCliente);
+                    $('#Identificacion').val(c.identificacion);
+                    $('#Correo').val(c.correo);
+                    $('#Nombre').val(c.nombre);
+                    $('#PrimerApellido').val(c.primerApellido);
+                    $('#SegundoApellido').val(c.segundoApellido);
+                    $('#Telefono').val(c.telefono);
+                    $('#EstadoId').val(c.estadoId);
+
+                    $('#tituloModal').text('Editar Cliente');
+                    modal.show();
+                }
+            });
+        }
+
+        function guardarCliente() {
+
+            $('input').removeClass('is-invalid');
+            $('.invalid-feedback').text('');
+
+            const cliente = {
+                IdCliente: $('#IdCliente').val() || 0,
+                Identificacion: $('#Identificacion').val(),
+                Correo: $('#Correo').val(),
+                Nombre: $('#Nombre').val(),
+                PrimerApellido: $('#PrimerApellido').val(),
+                SegundoApellido: $('#SegundoApellido').val(),
+                Telefono: $('#Telefono').val(),
+                EstadoId: $('#EstadoId').val()
+            };
+
+            const url = cliente.IdCliente > 0
+                ? '/Cliente/ActualizarCliente'
+                : '/Cliente/RegistrarCliente';
+
+            $.ajax({
+                url: url,
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(cliente),
+
+                success: function () {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Cliente guardado',
+                        confirmButtonColor: '#198754'
+                    }).then(() => location.reload());
+                },
+
+                error: function (xhr) {
+
+                    let mensaje = 'Error inesperado';
+                    let codigo = '';
+
+                    if (xhr.responseJSON) {
+                        mensaje = xhr.responseJSON.mensaje;
+                        codigo = xhr.responseJSON.code;
+                    } else if (xhr.responseText) {
+                        try {
+                            const resp = JSON.parse(xhr.responseText);
+                            mensaje = resp.mensaje;
+                            codigo = resp.code;
+                        } catch { }
+                    }
+
+                    $('#Identificacion, #Correo')
+                        .removeClass('is-invalid')
+                        .next('.invalid-feedback').text('');
+
+                    if (codigo === 'IDENTIFICACION_DUPLICADA') {
+                        $('#Identificacion')
+                            .addClass('is-invalid')
+                            .next('.invalid-feedback')
+                            .text(mensaje);
+                        return;
+                    }
+
+                    if (codigo === 'CORREO_DUPLICADO') {
+                        $('#Correo')
+                            .addClass('is-invalid')
+                            .next('.invalid-feedback')
+                            .text(mensaje);
+                        return;
+                    }
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'No se pudo guardar',
+                        text: mensaje,
+                        confirmButtonColor: '#dc3545'
+                    });
+                }
+            });
+        }
+
+        function limpiarFormulario() {
+            $('input').val('').removeClass('is-invalid');
+            $('.invalid-feedback').text('');
+            $('#EstadoId').val('1');
+            $('#IdCliente').val('');
+        }
+    </script>
+}

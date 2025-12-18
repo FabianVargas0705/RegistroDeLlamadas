@@ -30,11 +30,12 @@ namespace RegistroLlamadas.Api.Controllers
 
                 var result = new CatalogosDTO
                 {
-                    Equipos = multi.Read<CatalogoItemModels>().ToList(),
+                    Equipos = multi.Read<EquipoItem>().ToList(),
                     Centros = multi.Read<CatalogoItemModels>().ToList(),
                     Usuarios = multi.Read<CataogoUsuarioModel>().ToList(),
                     Estados = multi.Read<CatalogoItemModels>().ToList(),
-                    Clientes = multi.Read<ClienteItemModels>().ToList()
+                    Clientes = multi.Read<ClienteItemModels>().ToList(),
+                    Roles = multi.Read<RolItem>().ToList()
                 };
 
                 return Ok(result);

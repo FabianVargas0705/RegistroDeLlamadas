@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace RegistroLlamadas.UI.Models
+namespace RegistroLlamadas.Api.Models
 {
-    public class CatalogoItem
+    public class EquipoItem
     {
         [JsonPropertyName("id")]
         public int ID { get; set; }
@@ -12,5 +12,7 @@ namespace RegistroLlamadas.UI.Models
 
         [JsonPropertyName("tipoestado")]
         public int TipoEstado { get; set; }
+
+        public string? NombreCentro { get; set; }
     }
 }

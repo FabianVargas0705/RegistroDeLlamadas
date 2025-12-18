@@ -1,101 +1,220 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Data;
-using System.Data.SqlClient;
 using Dapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using RegistroLlamadas.Api.Models;
+using System.Data;
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace RegistroLlamadas.Api.Controllers
 {
-    public class ClienteController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ClienteController : ControllerBase
     {
-        private readonly IConfiguration _config;
+        private readonly IConfiguration _configuration;
 
-        public ClienteController1(IConfiguration config)
+        public ClienteController(IConfiguration configuration)
         {
-            _config = config;
+            _configuration = configuration;
         }
 
-        private IDbConnection Connection
-        {
-            get
-            {
-                return new SqlConnection(_config.GetConnectionString("DefaultConnection"));
-            }
-        }
-
-        [Route("obtener")]
+        #region Obtener clientes
+        [HttpGet("obtenerClientes")]
         public async Task<IActionResult> ObtenerClientes()
         {
-            using var db = Connection;
+            try
+            {
+                using var con = new SqlConnection(_configuration["ConnectionStrings:BDConnection"]);
 
-            var clientes = await db.QueryAsync<ClienteModel>(
-                "sp_obtener_clientes",
-                commandType: CommandType.StoredProcedure
-            );
+                var clientes = await con.QueryAsync<ClienteModel>(
+                    "sp_ObtenerClientes",
+                    commandType: CommandType.StoredProcedure
+                );
 
-            return Ok(clientes);
-        }
-
-        [Route("insertar")]
-        public async Task<IActionResult> InsertarCliente([FromBody] ClienteModel cliente)
-        {
-            using var db = Connection;
-
-            var result = await db.ExecuteAsync(
-                "sp_insertar_cliente",
-                new
+                return Ok(clientes);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
                 {
-                    cliente.Nombre,
-                    cliente.PrimerApellido,
-                    cliente.SegundoApellido,
-                    cliente.Telefono,
-                    cliente.Correo
-                },
-                commandType: CommandType.StoredProcedure
-            );
-
-            return Ok(new { mensaje = "Cliente insertado correctamente" });
+                    success = false,
+                    mensaje = ex.Message
+                });
+            }
         }
+        #endregion
 
-        [Route("actualizar")]
+        #region Obtener cliente por ID
+        [HttpGet("obtenerClientePorId/{idCliente}")]
+        public async Task<IActionResult> ObtenerClientePorId(int idCliente)
+        {
+            try
+            {
+                using var con = new SqlConnection(_configuration["ConnectionStrings:BDConnection"]);
+
+                var cliente = await con.QueryFirstOrDefaultAsync<ClienteModel>(
+                    "sp_ObtenerClientePorId",
+                    new { IdCliente = idCliente },
+                    commandType: CommandType.StoredProcedure
+                );
+
+                return Ok(cliente);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    mensaje = ex.Message
+                });
+            }
+        }
+        #endregion
+
+        #region Registrar cliente
+        [HttpPost("registrarCliente")]
+        public async Task<IActionResult> RegistrarCliente([FromBody] ClienteModel cliente)
+        {
+            try
+            {
+                using var con = new SqlConnection(_configuration["ConnectionStrings:BDConnection"]);
+
+                var parametros = new DynamicParameters();
+                parametros.Add("@Identificacion", cliente.Identificacion);
+                parametros.Add("@Nombre", cliente.Nombre);
+                parametros.Add("@PrimerApellido", cliente.PrimerApellido);
+                parametros.Add("@SegundoApellido", cliente.SegundoApellido);
+                parametros.Add("@Correo", cliente.Correo);
+                parametros.Add("@Telefono", cliente.Telefono);
+                parametros.Add("@EstadoId", cliente.EstadoId);
+
+                await con.ExecuteAsync(
+                    "sp_RegistrarCliente",
+                    parametros,
+                    commandType: CommandType.StoredProcedure
+                );
+
+                return Ok(new
+                {
+                    success = true,
+                    mensaje = "Cliente registrado correctamente"
+                });
+            }
+            catch (SqlException ex)
+            {
+   
+                if (ex.Message.Contains("IDENTIFICACION_DUPLICADA"))
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        code = "IDENTIFICACION_DUPLICADA",
+                        mensaje = "La identificación ya está registrada."
+                    });
+                }
+
+      
+                if (ex.Message.Contains("CORREO_DUPLICADO"))
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        code = "CORREO_DUPLICADO",
+                        mensaje = "El correo electrónico ya está registrado."
+                    });
+                }
+
+                return BadRequest(new
+                {
+                    success = false,
+                    code = "ERROR_SQL",
+                    mensaje = "Error al registrar el cliente."
+                });
+            }
+        }
+        #endregion
+
+        #region Actualizar cliente
+        [HttpPut("actualizarCliente")]
         public async Task<IActionResult> ActualizarCliente([FromBody] ClienteModel cliente)
         {
-            using var db = Connection;
+            try
+            {
+                using var con = new SqlConnection(_configuration["ConnectionStrings:BDConnection"]);
 
-            await db.ExecuteAsync(
-                "sp_actualizar_cliente",
-                new
+                var parametros = new DynamicParameters();
+                parametros.Add("@IdCliente", cliente.IdCliente);
+                parametros.Add("@Identificacion", cliente.Identificacion);
+                parametros.Add("@Nombre", cliente.Nombre);
+                parametros.Add("@PrimerApellido", cliente.PrimerApellido);
+                parametros.Add("@SegundoApellido", cliente.SegundoApellido);
+                parametros.Add("@Correo", cliente.Correo);
+                parametros.Add("@Telefono", cliente.Telefono);
+                parametros.Add("@EstadoId", cliente.EstadoId);
+
+                await con.ExecuteAsync(
+                    "sp_ActualizarCliente",
+                    parametros,
+                    commandType: CommandType.StoredProcedure
+                );
+
+                return Ok(new
                 {
-                    cliente.IdCliente,
-                    cliente.Nombre,
-                    cliente.PrimerApellido,
-                    cliente.SegundoApellido,
-                    cliente.Telefono,
-                    cliente.Correo
-                },
-                commandType: CommandType.StoredProcedure
-            );
+                    success = true,
+                    mensaje = "Cliente actualizado correctamente"
+                });
+            }
+            catch (SqlException ex)
+            {
+               
+                if (ex.Message.Contains("IDENTIFICACION_DUPLICADA"))
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        code = "IDENTIFICACION_DUPLICADA",
+                        mensaje = "La identificación ya pertenece a otro cliente."
+                    });
+                }
 
-            return Ok(new { mensaje = "Cliente actualizado correctamente" });
+        
+                if (ex.Message.Contains("CORREO_DUPLICADO"))
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        code = "CORREO_DUPLICADO",
+                        mensaje = "El correo ya pertenece a otro cliente."
+                    });
+                }
+
+                if (ex.Message.Contains("CLIENTE_NO_EXISTE"))
+                {
+                    return NotFound(new
+                    {
+                        success = false,
+                        mensaje = "El cliente no existe."
+                    });
+                }
+
+                return StatusCode(500, new
+                {
+                    success = false,
+                    code = "ERROR_SQL",
+                    mensaje = "Error al actualizar el cliente."
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    mensaje = "Error inesperado: " + ex.Message
+                });
+            }
         }
+        #endregion
 
-        [Route("eliminar/{id}")]
-        public async Task<IActionResult> EliminarCliente(int id)
-        {
-            using var db = Connection;
-
-            await db.ExecuteAsync(
-                "sp_eliminar_cliente",
-                new { IdCliente = id },
-                commandType: CommandType.StoredProcedure
-            );
-
-            return Ok(new { mensaje = "Cliente eliminado correctamente" });
-        }
-
-        [Route("api/[controller]")]
-        public class ClienteController : ControllerBase
-        {
-        }
     }
 }
