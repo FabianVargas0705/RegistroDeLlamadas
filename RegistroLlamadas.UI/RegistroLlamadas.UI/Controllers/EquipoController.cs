@@ -211,6 +211,58 @@ namespace RegistroLlamadas.UI.Controllers
             return RedirectToAction(nameof(ConsultarEquipos));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ObtenerEquiposPorCentro(int idCentro)
+        {
+            try
+            {
+                var equipos = await ObtenerEquiposPorCentroAPI(idCentro);
+
+                return Ok(equipos);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    mensaje = "Error al obtener los equipos del centro: " + ex.Message
+                });
+            }
+        }
+
+        #region Obtener equipos por centro 
+        private async Task<List<EquipoModel>> ObtenerEquiposPorCentroAPI(int idCentro)
+        {
+            using (var client = _http.CreateClient())
+            {
+                var urlApi = _configuration["Valores:UrlAPI"] + $"Equipo/ObtenerEquiposPorCentro/{idCentro}";
+
+                var token = HttpContext.Session.GetString("Token");
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization =
+                        new AuthenticationHeaderValue("Bearer", token);
+
+                var respuesta = await client.GetAsync(urlApi);
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    var options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+
+                    var equipos = await respuesta.Content
+                        .ReadFromJsonAsync<List<EquipoModel>>(options);
+
+                    return equipos ?? new List<EquipoModel>();
+                }
+
+                return new List<EquipoModel>();
+            }
+        }
+        #endregion
+
+
         // POST: Equipo/EliminarEquipos - Procesar la eliminación
         [HttpPost]
         [ValidateAntiForgeryToken]
